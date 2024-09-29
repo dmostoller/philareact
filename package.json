@@ -3,24 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0",
     "build": "next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.1.5",
+    "@popperjs/core": "^2.11.8",
+    "@prisma/client": "^5.20.0",
+    "axios": "^1.7.7",
+    "boring-avatars": "^1.11.2",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^11.11.11",
+    "next": "14.2.13",
+    "next-auth": "^4.24.8",
+    "prisma": "^5.20.0",
     "react": "^18",
+    "react-big-calendar": "^1.14.1",
     "react-dom": "^18",
-    "next": "14.2.13"
+    "react-loading-skeleton": "^3.5.0",
+    "react-popper": "^2.3.0",
+    "rss-parser": "^3.13.0",
+    "sonner": "^1.7.0"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-big-calendar": "^1.8.12",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8",
-    "eslint-config-next": "14.2.13"
+    "eslint-config-next": "14.2.13",
+    "postcss": "^8.4.47",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5"
   }
 }

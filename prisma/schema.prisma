@@ -1,0 +1,87 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Thread {
+  id        Int      @id @default(autoincrement())
+  title     String
+  posts     Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  author    String
+  createdAt DateTime @default(now())
+  threadId  Int
+  thread    Thread   @relation(fields: [threadId], references: [id])
+  replies   Reply[]  // Relation to Reply model
+  upvotes   Int      @default(0)
+  downvotes Int      @default(0)
+  votes     Vote[]
+}
+
+model Reply {
+  id        Int      @id @default(autoincrement())
+  content   String
+  author    String
+  createdAt DateTime @default(now())
+  postId    Int      // Foreign key to Post model
+  post      Post     @relation(fields: [postId], references: [id])
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  type      VoteType
+  createdAt DateTime @default(now())
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  start       DateTime
+  end         DateTime
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id        String   @id
+  email     String   @unique
+  name      String?
+  votes     Vote[]
+  provider  String?
+  events    Event[]
+}
+
+model BugReport {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  error       String
+  description String
+  browser     String
+  os          String
+  steps       String
+  expected    String
+  actual      String
+  severity    String
+  status      String   @default("Open") // Add this line
+  createdAt   DateTime @default(now())
+}
+
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
+}
