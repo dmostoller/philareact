@@ -10,11 +10,12 @@ const LandingPage = () => {
         <p className="text-gray-600 mb-10">
           A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.
         </p>
-        <a href="/news" className="px-6 py-2 bg-primary text-white rounded-full">
+        <a href="/news" className="px-6 py-2 bg-primary text-white rounded-full hover:bg-blue-600 transition-colors duration-300">
           View News Feed
         </a>
         <div className="mt-10 flex justify-center">
-          <Image src="/react-bell.jpg" alt="React Bell Logo" width={500} height={500} />
+          {/* <Image src="/react-bell.jpg" alt="React Bell Logo" width={500} height={500} /> */}
+          <Image src="/philly-react-2.png" alt="React Bell Logo" width={500} height={500} />
         </div>
       </section>
   );
