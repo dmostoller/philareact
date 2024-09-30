@@ -1,6 +1,15 @@
-import NextAuth from 'next-auth';
+import NextAuth, { DefaultSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { NextAuthOptions } from 'next-auth';
+
+// Extend the Session type to include user id
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string;
+    } & DefaultSession['user'];
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,11 +25,13 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   callbacks: {
-    async session({ session, token, user }) {
-      session.user.id = token.sub;
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.sub ?? '';
+      }
       return session;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       return baseUrl; // Redirect to homepage after sign-in
     },
   },
