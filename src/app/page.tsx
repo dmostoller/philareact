@@ -36,12 +36,12 @@ const Home = () => {
                   A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.
                 </p>
                 <div className="mt-6 flex justify-center md:justify-start space-x-4">
-                  <Link href="/join">
+                  <Link href="">
                   <div className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition transform hover:scale-105 duration-300">
                     Join the Community
                   </div>
                   </Link>
-                  <Link href="/learn-more">
+                  <Link href="">
                   <div className="px-6 py-3 bg-gray-200 text-gray-900 rounded-md hover:bg-gray-300 transition transform hover:scale-105 duration-300">
                     Learn More
                   </div>
