@@ -60,7 +60,7 @@ const EventCalendar: React.FC = () => {
     return <div>Error: {error}</div>;
   }
 
-  const eventStyleGetter = (event: Event) => {
+  const eventStyleGetter = () => {
     return {
       style: {
         backgroundColor: '#6366F1', // Tailwind Indigo-600 for event background

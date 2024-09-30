@@ -3,8 +3,13 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 
+interface Post {
+  title: string;
+  content: string;
+}
+
 interface CreatePostFormProps {
-  onPostCreated: (post: any) => void;
+  onPostCreated: (post: Post) => void;
 }
 
 export default function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
