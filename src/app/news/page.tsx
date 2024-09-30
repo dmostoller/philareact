@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import LoadingSkeleton from '../components/LoadingSkeleton'; // Adjust the import path as needed
+import Image from 'next/image';
 
 // Define the decode function at the top of your file
 function decodeCloudflareImageUrl(cloudflareUrl: string): string | null {
@@ -37,7 +38,7 @@ const Articles = ({ articles }: { articles: Article[] }) => (
         <div key={article.id} className="bg-white p-6 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300">
           <div className='flex space-x-4'>
             {decodedProfileImageUrl && (
-              <img
+              <Image
                 src={decodedProfileImageUrl}
                 alt={article.user.name}
                 className="h-10 w-10 rounded-full m-1"
