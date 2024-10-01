@@ -9,15 +9,15 @@ interface ResourceCardProps {
 
 const ResourceCard: React.FC<ResourceCardProps> = ({ title, description, link, logoSrc }) => {
   return (
-    <div className="bg-white p-4 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+    <div className="bg-dark-slate-600 p-4 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
       <img src={logoSrc} alt={`${title} logo`} className="h-16 w-16 mb-4" />
       <h3 className="text-lg font-bold mb-2">{title}</h3>
-      <p className="text-sm text-gray-600 mb-4">{description}</p>
+      <p className="text-sm text-dark-slate-100 mb-4">{description}</p>
       <a
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-primary font-semibold hover:underline"
+        className="text-deep-sapphire-400 font-semibold hover:underline"
       >
         Visit {title}
       </a>

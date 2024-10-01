@@ -34,7 +34,7 @@ const Articles = ({ articles }: { articles: Article[] }) => (
     {articles.map((article) => {
       const decodedProfileImageUrl = decodeCloudflareImageUrl(article.user.profile_image_90);
       return (
-        <div key={article.id} className="bg-white p-6 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300">
+        <div key={article.id} className="bg-dark-slate-600 p-6 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300">
           <div className='flex space-x-4'>
             {decodedProfileImageUrl && (
               <img
@@ -45,7 +45,7 @@ const Articles = ({ articles }: { articles: Article[] }) => (
             )}
             <h3 className="text-lg font-bold mb-2">{article.title}</h3>
           </div>
-          <p className="text-sm text-gray-600 mb-4">{article.description}</p>
+          <p className="text-sm text-dark-slate-100 mb-4">{article.description}</p>
           <div className="flex space-x-2 mb-4">
             {article.tag_list.map((tag) => (
               <span key={tag} className="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs">
@@ -57,7 +57,7 @@ const Articles = ({ articles }: { articles: Article[] }) => (
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary font-semibold hover:underline flex items-center"
+            className="text-deep-sapphire-400 font-semibold hover:underline flex items-center"
           >
             <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2" />
             Read Full Article

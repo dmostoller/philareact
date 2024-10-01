@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt, faSignOutAlt, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 const Navbar = () => {
@@ -14,58 +14,59 @@ const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-
   return (
-    <nav className="bg-gray-100 p-4 shadow">
+    <nav className="p-4 shadow bg-dark-slate-900">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className='flex items-center'>
           <Image src="/philly-react3.png" alt="React Bell Logo" width={64} height={64} className="mr-2 py-0" />
-          <span className="text-2xl font-bold text-blue-950">PhilaReact</span>
+          <span className="text-2xl font-bold">PhilaReact</span>
         </Link>
         <div className="hidden md:flex align-center space-x-8">
-          <Link href="/news" className="mx-2 text-gray-700 hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300">Articles</Link>
-          <Link href="/events" className="mx-2 text-gray-700 hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300">Events</Link>
-          <Link href="/forum" className="mx-2 text-gray-700 hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300">Forum</Link>
-          <Link href="/resources" className="mx-2 text-gray-700 hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300">Resources</Link>
+          <Link href="/news" className="mx-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full hover:px-4 py-2 transition-all duration-300 font-semibold">Articles</Link>
+          <Link href="/events" className="mx-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full hover:px-4 py-2 transition-all duration-300 font-semibold">Events</Link>
+          <Link href="/forum" className="mx-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full hover:px-4 py-2 transition-all duration-300 font-semibold">Forum</Link>
+          <Link href="/resources" className="mx-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full hover:px-4 py-2 transition-all duration-300 font-semibold">Resources</Link>
         </div>
         <div className="hidden md:flex items-center space-x-4">
           {status === 'authenticated' ? (
             <>
-              <span className="mx-2">Hello, {session.user?.name}</span>
-              <button onClick={() => signOut()} className="button text-blue-500 border border-blue-500 rounded py-2 px-4 transition-all duration-300 flex items-center hover:bg-blue-500 hover:text-white">
+              <span className="mx-2 font-semibold text-dark-slate-200">Hello, {session.user?.name}</span>
+              <button onClick={() => signOut()} className="button text-deep-sapphire-500 border-2 font-semibold border-deep-sapphire-500 rounded-full py-2 px-4 
+              transition-all duration-300 flex items-center hover:border-deep-sapphire-600 hover:text-deep-sapphire-600">
                 <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
                 Logout
               </button>
             </>
           ) : (
-            <button onClick={() => signIn()} className="button text-blue-500 border border-blue-500 rounded py-2 px-4 transition-all duration-300 flex items-center hover:bg-blue-500 hover:text-white">
+            <button onClick={() => signIn()} className="button text-deep-sapphire-500 border border-2 font-semibold border-deep-sapphire-500 rounded-full py-2 px-4 
+            transition-all duration-300 flex items-center hover:text-deep-sapphire-600 hover:border-deep-sapphire-600">
               <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
               Login
             </button>
           )}
         </div>
         <div className="md:hidden flex items-center">
-          <button onClick={toggleMobileMenu} className="text-gray-700 focus:outline-none mr-4">
+          <button onClick={toggleMobileMenu} className="text-dark-slate-100 focus:outline-none mr-4">
             <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} size="2xl" />
           </button>
         </div>
       </div>
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gray-100 p-4 absolute top-20 left-0 w-full h-[calc(100vh-4rem)] z-50 flex flex-col items-center justify-center">
-          <Link href="/news" className="text-gray-700 text-2xl hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4" onClick={toggleMobileMenu}>Articles</Link>
-          <Link href="/events" className="text-gray-700 text-2xl hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4" onClick={toggleMobileMenu}>Events</Link>
-          <Link href="/forum" className="text-gray-700 text-2xl hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4" onClick={toggleMobileMenu}>Forum</Link>
-          <Link href="/resources" className="text-gray-700 text-2xl hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4" onClick={toggleMobileMenu}>Resources</Link>
+        <div className="md:hidden bg-dark-slate-900 p-4 absolute top-20 left-0 w-full h-[calc(100vh-4rem)] z-50 flex flex-col items-center justify-center">
+          <Link href="/news" className="text-dark-slate-100 text-2xl hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4 font-semibold" onClick={toggleMobileMenu}>Articles</Link>
+          <Link href="/events" className="text-dark-slate-100 text-2xl hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4 font-semibold" onClick={toggleMobileMenu}>Events</Link>
+          <Link href="/forum" className="text-dark-slate-100 text-2xl hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4 font-semibold" onClick={toggleMobileMenu}>Forum</Link>
+          <Link href="/resources" className="text-dark-slate-100 text-2xl hover:bg-gray-200 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4 font-semibold" onClick={toggleMobileMenu}>Resources</Link>
           {status === 'authenticated' ? (
             <>
-              <span className="text-gray-700 text-2xl mb-4">Hello, {session.user?.name}</span>
-              <button onClick={() => { signOut(); toggleMobileMenu(); }} className="button text-blue-500 border text-2xl border-blue-500 rounded py-3 px-6 transition-all duration-300 flex items-center hover:bg-blue-500 hover:text-white">
-                <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
+              <span className="text-dark-slate-100 text-2xl font-semibold mb-4">Hello, {session.user?.name}</span>
+              <button onClick={() => { signOut(); toggleMobileMenu(); }} className="button font-semibold text-blue-500 border-2 text-2xl border-blue-500 rounded-full py-3 px-6 transition-all duration-300 flex items-center hover:bg-blue-500 hover:text-white">
+                <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                 Logout
               </button>
             </>
           ) : (
-            <button onClick={() => { signIn(); toggleMobileMenu(); }} className="button text-blue-500 border border-blue-500 rounded py-2 px-4 transition-all duration-300 flex items-center hover:bg-blue-500 hover:text-white">
+            <button onClick={() => { signIn(); toggleMobileMenu(); }} className="button font-semibold text-blue-500 border-2 border-blue-500 rounded-full py-2 px-4 transition-all duration-300 flex items-center hover:bg-blue-500 hover:text-white">
               <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
               Login
             </button>

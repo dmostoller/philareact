@@ -3,21 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --background: #f3f4f6;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-} */
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('./fonts/GeistVF.woff') format('woff');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  src: url('./fonts/GeistMonoVF.woff') format('woff');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-dark-slate-900 text-gray-100 dark:bg-dark-slate-900 dark:text-gray-100;
+  font-family: 'Geist', Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
@@ -25,3 +38,4 @@ body {
     text-wrap: balance;
   }
 }
+

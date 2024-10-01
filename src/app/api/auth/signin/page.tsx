@@ -26,8 +26,7 @@ export default function SignInPage() {
       <p className="mb-4">Sign in with your Google account to join the community.</p>
       <button
         onClick={() => signIn('google')}
-        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-      >
+        className="px-6 py-3 bg-gradient-to-b from-deep-sapphire-500 to-deep-sapphire-600 text-white rounded-lg transition transform hover:scale-105 duration-300 hover:from-deep-sapphire-600 hover:to-deep-sapphire-700"      >
         Sign in with Google
       </button>
     </div>

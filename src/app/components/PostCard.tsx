@@ -12,15 +12,15 @@ interface PostCardProps {
 
 export default function PostCard({ post }: PostCardProps) {
   return (
-    <div className="bg-white p-6 shadow-md rounded-lg">
+    <div className="bg-dark-slate-600 p-6 shadow-md rounded-lg">
       {/* Post Title */}
       <h2 className="text-xl font-bold mb-2">{post.title}</h2>
 
       {/* Post Content */}
-      <p className="text-gray-700 mb-4">{post.content}</p>
+      <p className="mb-4">{post.content}</p>
 
       {/* Post Author and CreatedAt */}
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-dark-slate-100">
         Posted by <span className="font-medium">{post.author}</span> on{' '}
         {new Date(post.createdAt).toLocaleString()}
       </p>

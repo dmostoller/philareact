@@ -4,7 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const LoadingSkeleton = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
     {Array(6).fill(null).map((_, index) => (
-      <div key={index} className="bg-white p-6 shadow-md rounded-lg">
+      <div key={index} className="bg-dark-slate-600 p-6 shadow-md rounded-lg">
         <div className="flex space-x-4 mb-4">
           <Skeleton circle={true} height={40} width={40} />
           <Skeleton height={20} width={`80%`} />
