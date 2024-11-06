@@ -5,10 +5,9 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signIn } from 'next-auth/react';
-
+import PrimaryButton from "./components/PrimaryButton";
 
 import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/outline';
-
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -26,25 +25,28 @@ const Home = () => {
                     alt="PhilaReact Logo"
                     layout="fill"
                     objectFit="contain"
+                    className="rounded-full"
                   />
                 </div>
               </div>
 
-
               {/* Left Column: Text and Buttons */}
                 <div className="col-span-1">
                 <h1 className="text-4xl md:text-4xl font-bold">
+                  { status === 'authenticated' && (
+                  <div className="text-dark-slate-100 text-2xl font-semibold mb-4">Hello, {session.user?.name}</div>
+                  )}
                   <span className="font-semibold font-xl text-dark-slate-200">Welcome to PhilaReact</span>
+
                 </h1>
                 <p className="text-lg md:text-xl mt-4 max-w-xl mx-auto md:mx-0">
                   A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.
                 </p>
                 <div className="mt-6 flex justify-center md:justify-start space-x-4">
-                  {session && status !== 'authenticated' && (
-                  <button onClick={() => signIn()}
-                      className="px-6 py-3 font-semibold bg-gradient-to-b from-deep-sapphire-500 to-deep-sapphire-600 text-white rounded-lg transition transform hover:scale-105 duration-300 hover:from-deep-sapphire-600 hover:to-deep-sapphire-700"      >
+                  {status !== 'authenticated' && (
+                  <PrimaryButton type="button" onClick={() => signIn()} className="transition transform hover:scale-105 duration-300">
                     Join the Community
-                  </button>
+                  </PrimaryButton>
                   )}
                 </div>
               </div>
@@ -54,8 +56,6 @@ const Home = () => {
           </section>
 
           
-
-
       {/* About Section */}
       <section className="py-16 px-4 bg-dark-slate-600 animate-fade-in-up">
         <div className="container mx-auto text-center">

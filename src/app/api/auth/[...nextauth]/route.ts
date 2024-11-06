@@ -1,8 +1,8 @@
 import NextAuth, { DefaultSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { NextAuthOptions } from 'next-auth';
+import prisma from '../../../../lib/prisma';
 
-// Extend the Session type to include user id
 declare module 'next-auth' {
   interface Session {
     user: {
@@ -19,24 +19,34 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
-  pages: {
-    signIn: '/auth/signin', // Custom sign-in page
-  },
-  session: {
-    strategy: 'jwt',
-  },
   callbacks: {
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.sub ?? '';
+        session.user.id = token.sub!;
         const adminEmails = process.env.ADMIN_EMAILS?.split(',') ?? [];
         session.user.role = adminEmails.includes(session.user.email!) ? 'ADMIN' : 'USER';
       }
       return session;
     },
-    async redirect({ baseUrl }) {
-      return baseUrl; // Redirect to homepage after sign-in
+    async signIn({ user }) {
+      if (!user?.email) return false;
+
+      // Create the user if they don't exist
+      await prisma.user.upsert({
+        where: { id: user.id },
+        update: { name: user.name },
+        create: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        },
+      });
+
+      return true;
     },
+  },
+  pages: {
+    signIn: '/auth/signin',
   },
 };
 

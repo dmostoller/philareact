@@ -1,6 +1,6 @@
 // prisma/schema.prisma
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -23,6 +23,9 @@ model Post {
   threadId  Int
   thread    Thread   @relation(fields: [threadId], references: [id])
   replies   Reply[]  // Relation to Reply model
+  upvotes   Int      @default(0)
+  downvotes Int      @default(0)
+  votes     Vote[]
 }
 
 model Reply {
@@ -32,4 +35,26 @@ model Reply {
   createdAt DateTime @default(now())
   postId    Int      // Foreign key to Post model
   post      Post     @relation(fields: [postId], references: [id])
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  type      VoteType
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id        String   @id
+  email     String   @unique
+  name      String?
+  votes     Vote[]
+}
+
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
 }

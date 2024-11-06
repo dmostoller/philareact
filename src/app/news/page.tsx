@@ -1,9 +1,9 @@
 'use client'; // If required to ensure the page renders client-side
 
 import { useEffect, useState, Suspense } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import LoadingSkeleton from '../components/LoadingSkeleton'; // Adjust the import path as needed
+import { ExpandIcon } from '../components/icons';
+import LoadingSkeleton from '../components/LoadingSkeleton';
+import BasicButton from '../components/BasicButton';
 
 // Define the decode function at the top of your file
 function decodeCloudflareImageUrl(cloudflareUrl: string): string | null {
@@ -34,8 +34,11 @@ const Articles = ({ articles }: { articles: Article[] }) => (
     {articles.map((article) => {
       const decodedProfileImageUrl = decodeCloudflareImageUrl(article.user.profile_image_90);
       return (
-        <div key={article.id} className="bg-dark-slate-600 p-6 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300">
-          <div className='flex space-x-4'>
+        <div
+          key={article.id}
+          className="bg-dark-slate-600 p-6 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300"
+        >
+          <div className="flex space-x-4">
             {decodedProfileImageUrl && (
               <img
                 src={decodedProfileImageUrl}
@@ -53,15 +56,17 @@ const Articles = ({ articles }: { articles: Article[] }) => (
               </span>
             ))}
           </div>
-          <a
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-deep-sapphire-400 font-semibold hover:underline flex items-center"
-          >
-            <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2" />
-            Read Full Article
-          </a>
+          <div className="flex items-center">
+            <BasicButton
+              as="a"
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              icon={<ExpandIcon />}
+            >
+              Read Full Article
+            </BasicButton>
+          </div>
         </div>
       );
     })}

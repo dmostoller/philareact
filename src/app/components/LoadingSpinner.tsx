@@ -4,7 +4,7 @@ import React from "react";
 
 const LoadingSpinner: React.FC = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-white">
+    <div className="flex justify-center items-center h-screen bg-dark-slate-700">
       <div className="relative w-16 h-16">
         {/* Outer blue circle */}
         <div className="absolute inset-0 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
