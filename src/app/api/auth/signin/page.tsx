@@ -3,10 +3,8 @@
 import { useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import LoadingSpinner from "../../../components/LoadingSpinner";
-import PrimaryButton from "../../../components/PrimaryButton";
-
-
+import LoadingSpinner from '../../../components/LoadingSpinner';
+import PrimaryButton from '../../../components/PrimaryButton';
 
 export default function SignInPage() {
   const { status } = useSession();
@@ -29,7 +27,6 @@ export default function SignInPage() {
       <PrimaryButton onClick={() => signIn('google')} className="mt-4">
         Sign in with Google
       </PrimaryButton>
-
     </div>
   );
 }
