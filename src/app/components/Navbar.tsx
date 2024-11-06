@@ -1,12 +1,10 @@
 'use client'
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faSignOutAlt, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { HomeIcon } from './icons/home';
-import { SettingsGearIcon } from './icons/gear';
 
 
 const Navbar = () => {

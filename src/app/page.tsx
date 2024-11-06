@@ -11,7 +11,7 @@ import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from '@heroico
 
 
 const Home = () => {
-  const { data: session, status } = useSession();
+  const { data: status } = useSession();
   return (
     <div className="min-h-screen">
       {/* Hero Section */}

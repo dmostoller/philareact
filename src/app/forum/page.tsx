@@ -4,7 +4,6 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import PostCard from '../components/PostCard';
-import LoadingSpinner from '../components/LoadingSpinner';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
