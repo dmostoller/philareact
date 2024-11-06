@@ -11,7 +11,7 @@ import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from '@heroico
 
 
 const Home = () => {
-  const { data: status } = useSession();
+  const { data: session, status } = useSession();
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -40,7 +40,7 @@ const Home = () => {
                   A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.
                 </p>
                 <div className="mt-6 flex justify-center md:justify-start space-x-4">
-                  {status !== 'authenticated' && (
+                  {session && status !== 'authenticated' && (
                   <button onClick={() => signIn()}
                       className="px-6 py-3 font-semibold bg-gradient-to-b from-deep-sapphire-500 to-deep-sapphire-600 text-white rounded-lg transition transform hover:scale-105 duration-300 hover:from-deep-sapphire-600 hover:to-deep-sapphire-700"      >
                     Join the Community
