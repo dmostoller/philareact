@@ -1,5 +1,5 @@
-import React from 'react';
-import LoadingButtonSpinner from './LoadingButtonSpinner';
+import React from "react";
+import LoadingButtonSpinner from "./LoadingButtonSpinner";
 
 interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
@@ -10,7 +10,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({ loading, className, child
   return (
     <button
       type="submit"
-      className={`px-4 py-2 font-semibold bg-gradient-to-b from-deep-sapphire-500 to-deep-sapphire-600 text-white rounded-lg hover:from-deep-sapphire-600 hover:to-deep-sapphire-700 ${className}`}
+      className={`px-4 py-2 font-semibold bg-gradient-to-b from-dark-slate-300 to-dark-slate-500 text-dark-slate-50 rounded-lg hover:from-dark-slate-400 hover:to-dark-slate-600 ${className}`}
       disabled={loading}
       {...props}
     >

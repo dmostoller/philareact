@@ -1,9 +1,8 @@
-'use client'; // If required to ensure the page renders client-side
+"use client"; // If required to ensure the page renders client-side
 
-import { useEffect, useState, Suspense } from 'react';
-import { ExpandIcon } from '../components/icons';
-import LoadingSkeleton from '../components/LoadingSkeleton';
-import BasicButton from '../components/BasicButton';
+import { useEffect, useState, Suspense } from "react";
+import LoadingSkeleton from "../components/LoadingSkeleton";
+import Link from "next/link";
 
 // Define the decode function at the top of your file
 function decodeCloudflareImageUrl(cloudflareUrl: string): string | null {
@@ -31,7 +30,7 @@ interface Article {
 
 const Articles = ({ articles }: { articles: Article[] }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
-    {articles.map((article) => {
+    {articles.map(article => {
       const decodedProfileImageUrl = decodeCloudflareImageUrl(article.user.profile_image_90);
       return (
         <div
@@ -50,23 +49,17 @@ const Articles = ({ articles }: { articles: Article[] }) => (
           </div>
           <p className="text-sm text-dark-slate-100 mb-4">{article.description}</p>
           <div className="flex space-x-2 mb-4">
-            {article.tag_list.map((tag) => (
+            {article.tag_list.map(tag => (
               <span key={tag} className="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs">
                 {tag}
               </span>
             ))}
           </div>
-          <div className="flex items-center">
-            <BasicButton
-              as="a"
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              icon={<ExpandIcon />}
-            >
-              Read Full Article
-            </BasicButton>
-          </div>
+          <Link href={article.url} target="_blank" rel="noopener norefferer">
+            <div className=" mt-4 font-semibold inline-block hover:underline transition-colors">
+              Read Full Article →
+            </div>
+          </Link>
         </div>
       );
     })}
@@ -80,11 +73,11 @@ export default function NewsPage() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const res = await fetch('/api/news');
+        const res = await fetch("/api/news");
         const data = await res.json();
         setArticles(data);
       } catch (error) {
-        console.error('Error fetching articles:', error);
+        console.error("Error fetching articles:", error);
       } finally {
         setLoading(false);
       }

@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useSession } from 'next-auth/react';
-import PrimaryButton from '../components/PrimaryButton';
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import PrimaryButton from "../components/PrimaryButton";
+import { toast } from "sonner";
 
 interface Post {
   id: number;
@@ -22,8 +23,8 @@ interface CreatePostFormProps {
 }
 
 export default function CreatePostForm({ onPostCreated, threadId }: CreatePostFormProps) {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
 
@@ -32,43 +33,44 @@ export default function CreatePostForm({ onPostCreated, threadId }: CreatePostFo
     setLoading(true);
 
     if (!session) {
-      alert('You must be logged in to create a post.');
+      toast.error("You must be logged in to create a post.");
       setLoading(false);
       return;
     }
 
     if (!title || !content) {
-      alert('Please fill out all fields.');
+      toast.error("Please fill out all fields.");
       setLoading(false);
       return;
     }
 
     try {
-      const res = await fetch('/api/forum/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/forum/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title,
           content,
           threadId,
-          author: session.user.name, // Use session's user name as the author
-        }),
+          author: session.user.name // Use session's user name as the author
+        })
       });
 
       if (!res.ok) {
-        throw new Error('Failed to create post');
+        throw new Error("Failed to create post");
       }
 
       const newPost: Post = await res.json();
       onPostCreated(newPost);
 
       // Clear form fields
-      setTitle('');
-      setContent('');
+      setTitle("");
+      setContent("");
     } catch (error) {
-      console.error('Error creating post:', error);
-      alert('An error occurred while creating the post.');
+      console.error("Error creating post:", error);
+      toast.error("An error occurred while creating the post.");
     } finally {
+      toast.success("Post created successfully");
       setLoading(false);
     }
   };
@@ -80,14 +82,14 @@ export default function CreatePostForm({ onPostCreated, threadId }: CreatePostFo
         type="text"
         placeholder="Title"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={e => setTitle(e.target.value)}
         className="w-full p-2 mb-4 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
         aria-label="Post title"
       />
       <textarea
         placeholder="What's on your mind?"
         value={content}
-        onChange={(e) => setContent(e.target.value)}
+        onChange={e => setContent(e.target.value)}
         className="w-full p-2 mb-4 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
         aria-label="Post content"
       />
