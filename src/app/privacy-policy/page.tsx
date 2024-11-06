@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
     <div className="container mx-auto py-12">
       <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
       <p className="mb-4">
-        Your privacy is important to us. It is PhilaReact's policy to respect your privacy regarding any
+        Your privacy is important to us. It is PhilaReact&apos;s policy to respect your privacy regarding any
         information we may collect from you across our website, https://philareact.vercel.app, and other sites
         we own and operate.
       </p>
