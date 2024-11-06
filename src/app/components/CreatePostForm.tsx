@@ -8,14 +8,17 @@ interface Post {
   title: string;
   content: string;
   author: string;
+  threadId: number;
   createdAt: string;
-}
+  replies: [];
+  }
 
 interface CreatePostFormProps {
   onPostCreated: (post: Post) => void;
+  threadId: number;
 }
 
-export default function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
+export default function CreatePostForm({ onPostCreated, threadId }: CreatePostFormProps) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const { data: session } = useSession();
@@ -40,6 +43,7 @@ export default function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
         body: JSON.stringify({
           title,
           content,
+          threadId,
           author: session.user.name, // Use session's user name as the author
         }),
       });
@@ -61,26 +65,26 @@ export default function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-50 p-4 shadow-md rounded-lg mb-6">
+    <form onSubmit={handleSubmit} className="bg-dark-slate-600 p-4 shadow-md rounded-lg mb-6 mx-2">
       <h3 className="text-xl font-semibold mb-4">Create a new post</h3>
       <input
         type="text"
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full p-2 mb-4 border rounded"
+        className="w-full p-2 mb-4 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
         aria-label="Post title"
       />
       <textarea
         placeholder="What's on your mind?"
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="w-full p-2 mb-4 border rounded"
+        className="w-full p-2 mb-4 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
         aria-label="Post content"
       />
       <button
         type="submit"
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        className="w-full px-4 py-2 font-semibold bg-gradient-to-b from-deep-sapphire-500 to-deep-sapphire-600 text-white rounded-lg hover:from-deep-sapphire-600 hover:to-deep-sapphire-700"
       >
         Post
       </button>

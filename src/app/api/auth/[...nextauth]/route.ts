@@ -7,6 +7,7 @@ declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
+      role: string;
     } & DefaultSession['user'];
   }
 }
@@ -28,6 +29,8 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub ?? '';
+        const adminEmails = process.env.ADMIN_EMAILS?.split(',') ?? [];
+        session.user.role = adminEmails.includes(session.user.email!) ? 'ADMIN' : 'USER';
       }
       return session;
     },

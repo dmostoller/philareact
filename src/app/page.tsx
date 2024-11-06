@@ -1,13 +1,17 @@
 // pages/index.tsx
+'use client';
 
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSession, signIn } from 'next-auth/react';
+
 
 import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/outline';
 
 
 const Home = () => {
+  const { data: session, status } = useSession();
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -29,19 +33,19 @@ const Home = () => {
 
               {/* Left Column: Text and Buttons */}
                 <div className="col-span-1">
-                <h1 className="text-4xl md:text-5xl font-bold">
-                  Welcome to PhilaReact
+                <h1 className="text-4xl md:text-4xl font-bold">
+                  <span className="font-semibold font-xl text-dark-slate-200">Welcome to PhilaReact</span>
                 </h1>
                 <p className="text-lg md:text-xl mt-4 max-w-xl mx-auto md:mx-0">
                   A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.
                 </p>
                 <div className="mt-6 flex justify-center md:justify-start space-x-4">
-                  <Link href="">
-                  <div
+                  {status !== 'authenticated' && (
+                  <button onClick={() => signIn()}
                       className="px-6 py-3 font-semibold bg-gradient-to-b from-deep-sapphire-500 to-deep-sapphire-600 text-white rounded-lg transition transform hover:scale-105 duration-300 hover:from-deep-sapphire-600 hover:to-deep-sapphire-700"      >
                     Join the Community
-                  </div>
-                  </Link>
+                  </button>
+                  )}
                 </div>
               </div>
 

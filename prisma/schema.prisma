@@ -8,10 +8,28 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Thread {
+  id        Int      @id @default(autoincrement())
+  title     String
+  posts     Post[]
+}
+
 model Post {
   id        Int      @id @default(autoincrement())
   title     String
   content   String
-  author    String   // Author is stored as a string
+  author    String
   createdAt DateTime @default(now())
+  threadId  Int
+  thread    Thread   @relation(fields: [threadId], references: [id])
+  replies   Reply[]  // Relation to Reply model
+}
+
+model Reply {
+  id        Int      @id @default(autoincrement())
+  content   String
+  author    String
+  createdAt DateTime @default(now())
+  postId    Int      // Foreign key to Post model
+  post      Post     @relation(fields: [postId], references: [id])
 }
