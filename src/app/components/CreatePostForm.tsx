@@ -9,10 +9,12 @@ interface Post {
   title: string;
   content: string;
   author: string;
+  upvotes: number;
+  downvotes: number;
   threadId: number;
   createdAt: string;
   replies: [];
-  }
+}
 
 interface CreatePostFormProps {
   onPostCreated: (post: Post) => void;
@@ -57,7 +59,7 @@ export default function CreatePostForm({ onPostCreated, threadId }: CreatePostFo
         throw new Error('Failed to create post');
       }
 
-      const newPost = await res.json();
+      const newPost: Post = await res.json();
       onPostCreated(newPost);
 
       // Clear form fields
@@ -90,7 +92,7 @@ export default function CreatePostForm({ onPostCreated, threadId }: CreatePostFo
         aria-label="Post content"
       />
       <PrimaryButton type="submit" loading={loading} className="w-full">
-          Post
+        Post
       </PrimaryButton>
     </form>
   );
