@@ -47,11 +47,22 @@ model Vote {
   createdAt DateTime @default(now())
 }
 
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  start       DateTime
+  end         DateTime
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
 model User {
   id        String   @id
   email     String   @unique
   name      String?
   votes     Vote[]
+  events    Event[]
 }
 
 enum VoteType {

@@ -10,7 +10,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({ loading, className, child
   return (
     <button
       type="submit"
-      className={`px-4 py-2 font-semibold bg-gradient-to-b from-dark-slate-300 to-dark-slate-500 text-dark-slate-50 rounded-lg hover:from-dark-slate-400 hover:to-dark-slate-600 ${className}`}
+      className={`px-4 py-2 font-semibold border border-dark-slate-700 bg-gradient-to-b from-dark-slate-300 to-dark-slate-500 text-dark-slate-50 rounded-lg hover:from-dark-slate-400 hover:to-dark-slate-600 ${className}`}
       disabled={loading}
       {...props}
     >

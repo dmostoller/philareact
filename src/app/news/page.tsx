@@ -35,7 +35,7 @@ const Articles = ({ articles }: { articles: Article[] }) => (
       return (
         <div
           key={article.id}
-          className="bg-dark-slate-600 p-6 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300"
+          className="bg-dark-slate-600 p-6 shadow-md rounded-lg border border-dark-slate-500 hover:shadow-lg transition-shadow duration-300"
         >
           <div className="flex space-x-4">
             {decodedProfileImageUrl && (
@@ -68,29 +68,44 @@ const Articles = ({ articles }: { articles: Article[] }) => (
 
 export default function NewsPage() {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
+  const fetchArticles = async (currentPage: number) => {
+    try {
+      const res = await fetch(`/api/news?page=${currentPage}`);
+      const data = await res.json();
+      setArticles(prev => [...prev, ...data]);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const res = await fetch("/api/news");
-        const data = await res.json();
-        setArticles(data);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-      } finally {
-        setLoading(false);
+    fetchArticles(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !loading) {
+        setPage(prev => prev + 1);
+        setLoading(true);
       }
     };
 
-    fetchArticles();
-  }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading]);
 
   return (
     <section className="container mx-auto py-12">
       <h1 className="text-4xl font-bold text-center mb-10">Latest React & Next.js Articles</h1>
       <Suspense fallback={<LoadingSkeleton />}>
-        {loading ? <LoadingSkeleton /> : <Articles articles={articles} />}
+        <Articles articles={articles} />
+        {loading && <LoadingSkeleton />}
       </Suspense>
     </section>
   );

@@ -44,11 +44,13 @@ const Home = () => {
             </p>
             <div className="mt-6 flex justify-center md:justify-start space-x-4">
               {session ? (
-                <Link href="/dashboard">
-                  <PrimaryButton className="transition transform hover:scale-105 duration-300">
-                    Go to Dashboard
-                  </PrimaryButton>
-                </Link>
+                <>
+                  {/* <Link href="/forum">
+                    <PrimaryButton className="transition transform hover:scale-105 duration-300">
+                      Go to Forum
+                    </PrimaryButton>
+                  </Link> */}
+                </>
               ) : (
                 <PrimaryButton
                   onClick={() => signIn()}
@@ -71,13 +73,13 @@ const Home = () => {
               PhilaReact is a community where developers meet to discuss and share knowledge on React,
               Next.js, and JavaScript technologies.
             </h2>
-            <ul className="list-disc list-inside text-lg mb-4">
+            <ul className="list-disc list-inside text-lg mb-4 px-4 text-center">
               <li>Join and participate in community meetups</li>
               <li>Access and share resources on React, Next.js, and JavaScript</li>
               <li>Engage in discussions and ask questions in the forum</li>
               <li>Stay updated with the latest news and articles</li>
             </ul>
-            <p className="text-lg">
+            <p className="text-lg px-4 text-center">
               We request your Google account information to personalize your experience and allow you to
               participate in community activities.
             </p>

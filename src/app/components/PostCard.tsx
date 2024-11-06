@@ -247,7 +247,7 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
   };
 
   return (
-    <div className="bg-dark-slate-600 p-6 shadow-md rounded-lg mx-2 mb-4 relative">
+    <div className="bg-dark-slate-600 border border-dark-slate-500 p-6 shadow-md rounded-lg mx-2 mb-4 relative">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold mb-2">{post.title}</h2>
         {(session?.user.name === post.author || session?.user.role === "ADMIN") && (

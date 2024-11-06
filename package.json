@@ -13,7 +13,9 @@
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
+    "@popperjs/core": "^2.11.8",
     "@prisma/client": "^5.20.0",
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
@@ -25,6 +27,7 @@
     "react-big-calendar": "^1.14.1",
     "react-dom": "^18",
     "react-loading-skeleton": "^3.5.0",
+    "react-popper": "^2.3.0",
     "rss-parser": "^3.13.0",
     "sonner": "^1.7.0"
   },
