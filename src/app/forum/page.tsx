@@ -145,8 +145,10 @@ const ForumPage: React.FC = () => {
       <div className="flex flex-col md:flex-row md:space-x-6">
         {/* Threads Section */}
         <div className="w-full md:w-1/3 mb-8 md:mb-0">
-          <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">Threads</h2>
-
+          <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
+            <span className="block md:hidden text-3xl">Forum</span>
+            <span className="hidden md:block">Threads</span>
+          </h2>
           {/* Horizontal scroll on mobile, vertical list on desktop */}
           <div className="relative">
             <ul className="mb-4 flex overflow-x-auto md:block md:overflow-visible pb-2 md:pb-0 space-x-2 md:space-x-0 scrollbar-hide">

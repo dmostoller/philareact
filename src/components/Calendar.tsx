@@ -109,18 +109,18 @@ const EventCalendar: React.FC = () => {
   const eventStyleGetter = () => {
     return {
       style: {
-        backgroundColor: "#4f4f4f", // Tailwind Dark Slate-700 for event background
+        backgroundColor: "#454545", // Tailwind Dark Slate-700 for event background
         color: "#d1d1d1", // Tailwind Slate-200 for text color
         borderRadius: "4px",
         padding: "5px",
-        border: "1px solid #5d5d5d" // Tailwind Dark Slate-600 for border color
+        border: "1px solid #4f4f4f" // Tailwind Dark Slate-600 for border color
       }
     };
   };
 
   return (
     <>
-      <div className="container mx-auto mt-4 p-6 bg-dark-slate-600 border border-dark-slate-500 rounded-lg">
+      <div className="container mx-auto mt-6 p-6 bg-dark-slate-950 border-2 border-dark-slate-700 rounded-lg">
         <h1 className="text-2xl font-semibold mb-6">Community Events</h1>
         <Calendar
           localizer={localizer}

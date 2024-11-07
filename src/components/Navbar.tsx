@@ -9,14 +9,14 @@ import { usePathname } from "next/navigation";
 import { SettingsGearIcon } from "./icons";
 import { LogoutIcon } from "./icons/logout";
 import { MenuIcon } from "./icons/menu";
-import { SunIcon } from "./icons/sun";
-import { useTheme } from "../components/context/ThemeProvider";
+// import { SunIcon } from "./icons/sun";
+// import { useTheme } from "../components/context/ThemeProvider";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
+  // const { theme, toggleTheme } = useTheme();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -34,21 +34,15 @@ const Navbar = () => {
   const mobileLinkClasses = (href: string) => `${linkClasses(href)} text-3xl my-4 block`;
 
   return (
-    <nav
-      className="p-4 shadow 
-  bg-dark-slate-900 
-  transition-all duration-300 ease-in-out 
-  md:fixed md:top-0 md:left-0 md:right-0 md:w-full md:z-50"
-    >
-      {" "}
-      <div className="mx-auto w-full flex justify-between items-center">
+    <nav className="p-4 shadow bg-dark-slate-900 transition-all duration-300 ease-in-out md:fixed md:top-0 md:left-0 md:right-0 md:w-full md:z-50">
+      <div className="container mx-auto w-full flex justify-between items-center">
         <div className="flex items-start">
           <Link href="/">
             <HomeIcon />
           </Link>
-          <button onClick={toggleTheme} title={`Theme: ${theme}`}>
+          {/* <button onClick={toggleTheme} title={`Theme: ${theme}`}>
             <SunIcon />
-          </button>
+          </button> */}
         </div>
         <div className="hidden md:flex align-center space-x-8">
           <Link href="/news" className={linkClasses("/news")}>
@@ -96,7 +90,7 @@ const Navbar = () => {
           )}
         </div>
         <div className="md:hidden flex items-center">
-          <button onClick={toggleMobileMenu} className="text-dark-slate-100 focus:outline-none mr-4">
+          <button onClick={toggleMobileMenu} className="text-dark-slate-100 focus:outline-none">
             <MenuIcon isOpen={isMobileMenuOpen} />
           </button>
         </div>

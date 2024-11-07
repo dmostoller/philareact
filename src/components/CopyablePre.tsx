@@ -22,8 +22,8 @@ const CopyablePre: React.FC<CopyablePreProps> = ({
   };
 
   return (
-    <div className="flex items-center w-full">
-      <pre className="bg-dark-slate-800 flex-1 text-[11px] sm:text-sm p-1.5 sm:p-2 border border-dark-slate-500 rounded m-1.5 sm:m-4">
+    <div className="flex items-center max-w-3xl">
+      <pre className="bg-dark-slate-900 flex-1 text-[11px] sm:text-xs md:text-sm p-1.5 sm:p-2 border border-dark-slate-600 rounded m-1.5 sm:m-4">
         <code>{children}</code>
       </pre>
       {showCopyIcon && (
