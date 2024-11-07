@@ -12,7 +12,7 @@ const EventsPage = () => {
           href="https://www.eventbrite.com/o/philareact-102755209461"
           target="_blank"
           rel="noreferrer"
-          className="text-white bg-[#F05537] mt-2 py-3 px-4 rounded-full items-center justify-center hover:bg-[#D9472F] transition"
+          className="text-white bg-[#F05537] mt-2 py-3 px-4 rounded-lg items-center justify-center hover:bg-[#D9472F] transition"
         >
           <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />
           Visit Eventbrite

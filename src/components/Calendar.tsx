@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { Calendar, momentLocalizer, Views, View } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -9,6 +8,9 @@ import AddEventForm from "../components/AddEventForm";
 import Tooltip from "../components/Tooltip";
 import LoadingSpinner from "./LoadingSpinner";
 import Link from "next/link";
+import PrimaryButton from "./PrimaryButton";
+import { toast } from "sonner";
+import { DeleteIcon } from "../components/icons/delete";
 
 const localizer = momentLocalizer(moment);
 
@@ -18,6 +20,7 @@ interface Event {
   start: Date;
   end: Date;
   description: string;
+  userId: string;
 }
 
 const EventCalendar: React.FC = () => {
@@ -27,6 +30,11 @@ const EventCalendar: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentView, setCurrentView] = useState<View>(Views.MONTH);
+  const [showForm, setShowForm] = useState(false);
+
+  const toggleFormVisibility = () => {
+    setShowForm(!showForm);
+  };
 
   useEffect(() => {
     async function fetchEvents() {
@@ -71,6 +79,32 @@ const EventCalendar: React.FC = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  const handleDelete = async (eventId: number, eventUserId: string) => {
+    if (!session?.user) return;
+
+    const isAdmin = session.user.role === "ADMIN";
+    if (session.user.id !== eventUserId && !isAdmin) {
+      toast.error("Not authorized to delete this event");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/events/${eventId}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete event");
+      }
+
+      setEvents(prev => prev.filter(event => event.id !== eventId));
+      toast.success("Event deleted successfully");
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      toast.error("Failed to delete event");
+    }
+  };
 
   const eventStyleGetter = () => {
     return {
@@ -135,19 +169,59 @@ const EventCalendar: React.FC = () => {
           }}
         />
       </div>
-      <div className="container w-full md:w-3/4 lg:w-2/3 mx-auto p-4 border border-dark-slate-500 rounded-lg mt-4">
-        {session ? (
-          <AddEventForm onEventAdded={handleEventAdded} />
-        ) : (
-          <div className="text-center">
-            <p className="text-lg font-semibold">
-              <Link href="/api/auth/signin" className="hover:underline ">
-                Sign into add events to the calendar
-              </Link>
-            </p>
+      {session ? (
+        <>
+          <div className="text-center mt-8">
+            <PrimaryButton onClick={toggleFormVisibility}>
+              {showForm ? "Hide Event Form" : "Create an Event"}
+            </PrimaryButton>
           </div>
-        )}
-      </div>
+          {showForm && (
+            <div className="container w-full md:w-3/4 lg:w-2/3 mx-auto p-4 border border-dark-slate-500 rounded-lg mt-4">
+              <AddEventForm onEventAdded={handleEventAdded} />
+            </div>
+          )}
+          <div className="mt-8 container w-full md:w-3/4 lg:w-2/3 mx-auto ">
+            {events.length > 0 && (
+              <>
+                <h2 className="text-xl font-semibold mb-4 text-center">Upcoming Events</h2>
+                <div className="space-y-4">
+                  {events.map(event => (
+                    <div
+                      key={event.id}
+                      className="flex justify-between items-center p-5 mx-4 bg-dark-slate-600 border border-dark-slate-500 rounded-lg"
+                    >
+                      <div>
+                        <h3 className="font-semibold">{event.title}</h3>
+                        <p className="text-sm text-gray-300">{event.description}</p>
+                        <p className="text-sm text-gray-400">
+                          {event.start.toLocaleString()} - {event.end.toLocaleString()}
+                        </p>
+                      </div>
+                      {(session?.user?.id === event.userId || session?.user?.role === "ADMIN") && (
+                        <button
+                          onClick={() => handleDelete(event.id, event.userId)}
+                          className="text-dark-slate-200 px-4 py-2"
+                        >
+                          <DeleteIcon />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="container w-full md:w-3/4 lg:w-2/3 mx-auto text-center p-4 border border-dark-slate-500 rounded-lg mt-4">
+          <p className="text-lg font-semibold">
+            <Link href="/api/auth/signin" className="hover:underline ">
+              Sign into add events to the calendar
+            </Link>
+          </p>
+        </div>
+      )}
     </>
   );
 };

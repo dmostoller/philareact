@@ -141,135 +141,166 @@ const ForumPage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto py-12 flex">
-      <div className="w-1/3 pr-4">
-        <h2 className="text-2xl font-bold mb-4 text-center">Threads</h2>
-        <ul className="mb-4 bordder">
-          {threads.map(thread => (
-            <li
-              key={thread.id}
-              className={`relative mb-1 cursor-pointer p-4 font-semibold rounded border ${
-                selectedThread?.id === thread.id
-                  ? "bg-dark-slate-500 border-dark-slate-400"
-                  : "bg-dark-slate-600 border-dark-slate-500"
-              }`}
-              onClick={() => handleThreadSelect(thread)}
-            >
-              {thread.title}
-              {isAdmin && (
-                <button
-                  type="button"
-                  className="absolute right-1 bottom-3.5 size-9 text-dark-slate-400 hover:text-dark-slate-300"
-                >
-                  <DeleteIcon />
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
+    <div className="container mx-auto px-4 py-6 md:py-12">
+      <div className="flex flex-col md:flex-row md:space-x-6">
+        {/* Threads Section */}
+        <div className="w-full md:w-1/3 mb-8 md:mb-0">
+          <h2 className="text-xl md:text-2xl font-bold mb-4 text-center">Threads</h2>
 
-        {session && (
-          <div className="relative w-full">
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                if (inputRef.current && inputRef.current.value.trim()) {
-                  handleCreateThread(inputRef.current.value.trim());
-                  inputRef.current.value = "";
-                }
-              }}
-              className="flex items-center"
-            >
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="New thread title"
-                className="w-full p-2 mb-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500 pr-10 "
-                onKeyDown={e => {
-                  if (e.key === "Enter" && inputRef.current && inputRef.current.value.trim()) {
-                    e.preventDefault();
-                    const form = e.currentTarget.closest("form");
-                    if (form) {
-                      form.requestSubmit();
-                    }
+          {/* Horizontal scroll on mobile, vertical list on desktop */}
+          <div className="relative">
+            <ul className="mb-4 flex overflow-x-auto md:block md:overflow-visible pb-2 md:pb-0 space-x-2 md:space-x-0 scrollbar-hide">
+              {threads.map(thread => (
+                <li
+                  key={thread.id}
+                  className={`
+                  flex-shrink-0 
+                  w-[85vw] 
+                  md:w-full 
+                  relative 
+                  mb-0 
+                  md:mb-2 
+                  cursor-pointer 
+                  p-4 
+                  font-semibold 
+                  rounded 
+                  border
+                  ${
+                    selectedThread?.id === thread.id
+                      ? "bg-dark-slate-500 border-dark-slate-400"
+                      : "bg-dark-slate-600 border-dark-slate-500"
+                  }
+                `}
+                  onClick={() => handleThreadSelect(thread)}
+                >
+                  <div className="truncate pr-10">{thread.title}</div>
+                  {isAdmin && (
+                    <button
+                      type="button"
+                      className="absolute right-2 top-1/2 -translate-y-2/3 size-9 text-dark-slate-400 hover:text-dark-slate-300"
+                    >
+                      <DeleteIcon />
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* New Thread Form */}
+          {session && (
+            <div className="relative w-full px-2 md:px-0">
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  if (inputRef.current && inputRef.current.value.trim()) {
+                    handleCreateThread(inputRef.current.value.trim());
+                    inputRef.current.value = "";
                   }
                 }}
-              />
-              <button type="submit" className="absolute right-0 bottom-2 text-dark-slate-400">
-                <CircleCheckIcon />
-              </button>
-            </form>
-          </div>
-        )}
-      </div>
+                className="flex items-center"
+              >
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="New thread title"
+                  className="w-full p-3 md:p-2 mb-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500 pr-12"
+                  onKeyDown={e => {
+                    if (e.key === "Enter" && inputRef.current && inputRef.current.value.trim()) {
+                      e.preventDefault();
+                      const form = e.currentTarget.closest("form");
+                      if (form) {
+                        form.requestSubmit();
+                      }
+                    }
+                  }}
+                />
+                <button
+                  type="submit"
+                  className="absolute right-4 md:right-2 top-1/2 -translate-y-2/3 text-dark-slate-400"
+                >
+                  <CircleCheckIcon />
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
 
-      <div className="w-2/3">
-        {selectedThread && <h2 className="text-2xl font-bold mb-4 text-center">{selectedThread.title}</h2>}
-        {session && selectedThread && (
-          <CreatePostForm onPostCreated={handlePostCreated} threadId={selectedThread.id} />
-        )}
-        <div className="grid grid-cols-1 gap-6">
-          {loading ? (
-            <>
-              {Array(3)
-                .fill(null)
-                .map((_, index) => (
-                  <div key={index} className="bg-dark-slate-600 p-6 shadow-md rounded-lg">
-                    <div className="flex space-x-4 mb-4">
+        {/* Posts Section */}
+        <div className="w-full md:w-2/3">
+          {selectedThread && (
+            <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">{selectedThread.title}</h2>
+          )}
+
+          {session && selectedThread && (
+            <div className="mb-6">
+              <CreatePostForm onPostCreated={handlePostCreated} threadId={selectedThread.id} />
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 gap-4 md:gap-6">
+            {loading ? (
+              <>
+                {Array(3)
+                  .fill(null)
+                  .map((_, index) => (
+                    <div key={index} className="bg-dark-slate-600 p-4 md:p-6 shadow-md rounded-lg">
+                      <div className="flex space-x-4 mb-4">
+                        <Skeleton
+                          circle={true}
+                          height={40}
+                          width={40}
+                          baseColor="#737373"
+                          highlightColor="#454545"
+                        />
+                        <Skeleton height={20} width="80%" baseColor="#737373" highlightColor="#454545" />
+                      </div>
                       <Skeleton
-                        circle={true}
-                        height={40}
-                        width={40}
+                        height={20}
+                        width="60%"
+                        className="mb-4"
                         baseColor="#737373"
                         highlightColor="#454545"
                       />
-                      <Skeleton height={20} width={`80%`} baseColor="#737373" highlightColor="#454545" />
+                      <Skeleton count={3} baseColor="#737373" highlightColor="#454545" />
+                      <Skeleton
+                        height={20}
+                        width="40%"
+                        className="mt-4"
+                        baseColor="#737373"
+                        highlightColor="#454545"
+                      />
                     </div>
-                    <Skeleton
-                      height={20}
-                      width={`60%`}
-                      className="mb-4"
-                      baseColor="#737373"
-                      highlightColor="#454545"
-                    />
-                    <Skeleton count={3} baseColor="#737373" highlightColor="#454545" />
-                    <Skeleton
-                      height={20}
-                      width={`40%`}
-                      className="mt-4"
-                      baseColor="#737373"
-                      highlightColor="#454545"
-                    />
-                  </div>
-                ))}
-            </>
-          ) : (
-            <>
-              {posts.length > 0 ? (
-                <>
-                  {posts.map((post: Post) => (
-                    <PostCard key={post.id} post={post} onDeletePost={handleDeletePost} />
                   ))}
-                </>
-              ) : (
-                <div className="px-4 mx-2 py-28 text-center bg-dark-slate-600 border border-dark-slate-500 rounded-lg">
-                  <p className="text-gray-400">
-                    No posts in this thread yet.
-                    {session ? (
-                      " Start the discussion!"
-                    ) : (
-                      <>
-                        <Link href="/api/auth/signin" className="text-blue-400 hover:text-blue-300 ml-1">
-                          Sign in
-                        </Link>{" "}
-                        to start the discussion!
-                      </>
-                    )}
-                  </p>
-                </div>
-              )}
-            </>
-          )}
+              </>
+            ) : (
+              <>
+                {posts.length > 0 ? (
+                  <>
+                    {posts.map((post: Post) => (
+                      <PostCard key={post.id} post={post} onDeletePost={handleDeletePost} />
+                    ))}
+                  </>
+                ) : (
+                  <div className="px-4 py-16 md:py-28 text-center bg-dark-slate-600 border border-dark-slate-500 rounded-lg">
+                    <p className="text-gray-400">
+                      No posts in this thread yet.
+                      {session ? (
+                        " Start the discussion!"
+                      ) : (
+                        <>
+                          <Link href="/api/auth/signin" className="text-blue-400 hover:text-blue-300 ml-1">
+                            Sign in
+                          </Link>{" "}
+                          to start the discussion!
+                        </>
+                      )}
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignInAlt, faSignOutAlt, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { HomeIcon } from "./icons/home";
 import { usePathname } from "next/navigation";
@@ -26,8 +26,11 @@ const Navbar = () => {
     `mx-2 text-gray-300 hover:border-b-2 hover:border-white hover:text-white hover:px-4 py-1 transition-all duration-300 font-semibold ${
       isActive(href) ? "border-b-2 border-white px-4 text-white" : ""
     }`;
+
+  const mobileLinkClasses = (href: string) => `${linkClasses(href)} text-3xl`;
+
   return (
-    <nav className="p-4 shadow bg-dark-slate-900">
+    <nav className="p-4 shadow bg-dark-slate-900 md:fixed md:top-0 md:left-0 md:right-0 md:w-full md:z-50">
       <div className="mx-auto w-full flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <HomeIcon />
@@ -50,7 +53,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="hidden md:flex items-center">
-          {status === "authenticated" ? (
+          {session ? (
             <>
               <Link href="/dashboard">
                 <SettingsGearIcon />
@@ -85,67 +88,52 @@ const Navbar = () => {
       </div>
       {isMobileMenuOpen && (
         <div className="md:hidden bg-dark-slate-900 p-4 absolute top-20 left-0 w-full h-[calc(100vh-4rem)] z-50 flex flex-col items-center justify-center">
-          <Link
-            href="/news"
-            className={`text-dark-slate-100 text-2xl hover:bg-dark-slate-500 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4 font-semibold ${
-              isActive("/news") ? "bg-dark-slate-500 rounded-full px-4" : ""
-            }`}
-            onClick={toggleMobileMenu}
-          >
+          <Link href="/news" className={mobileLinkClasses("/news")} onClick={toggleMobileMenu}>
             Articles
           </Link>
-          <Link
-            href="/events"
-            className={`text-dark-slate-100 text-2xl hover:bg-dark-slate-500 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4 font-semibold ${
-              isActive("/events") ? "bg-dark-slate-500 rounded-full px-4" : ""
-            }`}
-            onClick={toggleMobileMenu}
-          >
+          <Link href="/events" className={mobileLinkClasses("/events")} onClick={toggleMobileMenu}>
             Events
           </Link>
-          <Link
-            href="/forum"
-            className={`text-dark-slate-100 text-2xl hover:bg-dark-slate-500 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4 font-semibold ${
-              isActive("/forum") ? "bg-dark-slate-500 rounded-full px-4" : ""
-            }`}
-            onClick={toggleMobileMenu}
-          >
+          <Link href="/forum" className={mobileLinkClasses("/forum")} onClick={toggleMobileMenu}>
             Forum
           </Link>
-          <Link
-            href="/resources"
-            className={`text-dark-slate-100 text-2xl hover:bg-dark-slate-500 hover:rounded-full hover:px-4 py-2 transition-all duration-300 mb-4 font-semibold ${
-              isActive("/resources") ? "bg-dark-slate-500 rounded-full px-4" : ""
-            }`}
-            onClick={toggleMobileMenu}
-          >
+          <Link href="/resources" className={mobileLinkClasses("/resources")} onClick={toggleMobileMenu}>
             Resources
           </Link>
+          <Link href="/contribute" className={mobileLinkClasses("/contribute")} onClick={toggleMobileMenu}>
+            Contribute
+          </Link>
           {status === "authenticated" ? (
-            <>
-              <span className="text-dark-slate-100 text-2xl font-semibold mb-4">
-                Hello, {session.user?.name}
-              </span>
-              <button
+            <div className="flex flex-row items-center space-x-4 mt-8">
+              <Link href="/dashboard" onClick={toggleMobileMenu}>
+                <SettingsGearIcon />
+              </Link>
+              <div
                 onClick={() => {
                   signOut();
                   toggleMobileMenu();
                 }}
-                className="button font-semibold text-blue-500 border-2 text-2xl border-blue-500 rounded-full py-3 px-6 transition-all duration-300 flex items-center hover:bg-blue-500 hover:text-white"
+                className="cursor-pointer"
               >
-                <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
-                Logout
-              </button>
-            </>
+                <LogoutIcon />
+              </div>
+            </div>
           ) : (
             <button
               onClick={() => {
                 signIn();
                 toggleMobileMenu();
               }}
-              className="button font-semibold text-blue-500 border-2 border-blue-500 rounded-full py-2 px-4 transition-all duration-300 flex items-center hover:bg-blue-500 hover:text-white"
+              className="mt-8 px-2 button
+                text-gray-300
+                hover:border-b-2
+                hover:border-white
+                hover:text-white
+                hover:px-4
+                transition-all duration-300
+                py-1
+                font-semibold"
             >
-              <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
               Login
             </button>
           )}

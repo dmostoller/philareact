@@ -16,7 +16,7 @@ interface Event {
 }
 
 interface AddEventFormProps {
-  onEventAdded: (event: Event) => void;
+  onEventAdded: (event: Event & { userId: string }) => void;
 }
 
 const AddEventForm: React.FC<AddEventFormProps> = ({ onEventAdded }) => {
@@ -65,7 +65,7 @@ const AddEventForm: React.FC<AddEventFormProps> = ({ onEventAdded }) => {
 
   return (
     <form onSubmit={handleSubmit} className="mb-6">
-      <h2 className="text-xl font-semibold my-2 text-center">Add New Event</h2>
+      <h2 className="text-xl font-semibold my-2 text-center">Add An Event To The Calendar</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="col-span-1 md:col-span-2">
           <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-1">
