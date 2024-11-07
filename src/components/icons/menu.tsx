@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import type { Variants } from "framer-motion";
 import { motion } from "framer-motion";
 
