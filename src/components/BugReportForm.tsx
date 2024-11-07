@@ -67,6 +67,9 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
     }
   };
 
+  const inputClassNames =
+    "w-full p-2 border rounded bg-dark-slate-950 border-dark-slate-700 focus:outline-none focus:ring focus:ring-gray-500";
+
   return (
     <form onSubmit={handleSubmit} className="space-y-2">
       <div>
@@ -76,7 +79,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>
@@ -87,7 +90,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>
@@ -98,7 +101,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="browser"
           value={formData.browser}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>
@@ -109,7 +112,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="os"
           value={formData.os}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>
@@ -119,7 +122,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="steps"
           value={formData.steps}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>
@@ -129,7 +132,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="expected"
           value={formData.expected}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>
@@ -139,7 +142,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="actual"
           value={formData.actual}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>
@@ -149,7 +152,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="severity"
           value={formData.severity}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         >
           <option value="blocker">Blocker</option>
@@ -165,7 +168,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="error"
           value={formData.error}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>
@@ -175,7 +178,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+          className={inputClassNames}
           required
         />
       </div>

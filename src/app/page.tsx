@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useSession, signIn } from 'next-auth/react';
-import PrimaryButton from './../components/PrimaryButton';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useSession, signIn } from "next-auth/react";
+import PrimaryButton from "./../components/PrimaryButton";
 
-import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/outline';
+import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -15,7 +15,7 @@ const Home = () => {
       <section className="py-16 px-4 flex justify-center">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8 text-center md:text-left max-w-4xl">
           <div className="col-span-1 ">
-            <div className="relative w-96 h-96 mx-auto md:mx-0">
+            <div className="relative w-80 h-80 md:w-96 md:h-96 mx-auto md:mx-0">
               <Image
                 src="/philly-react-4.png"
                 alt="PhilaReact Logo"
@@ -29,7 +29,7 @@ const Home = () => {
 
           <div className="col-span-1">
             <h1 className="text-4xl md:text-4xl font-bold">
-              {status === 'authenticated' && (
+              {status === "authenticated" && (
                 <div className="text-dark-slate-100 text-2xl font-semibold mb-4">
                   Hello, {session.user?.name}
                 </div>
@@ -62,7 +62,7 @@ const Home = () => {
       <section className="py-10 px-4">
         <div className="container mx-auto">
           <div className="mx-auto p-6 border border-dark-slate-600 shadow-lg rounded-2xl bg-dark-slate-800">
-            <h2 className="text-2xl font-bold mb-4 text-center">How PhilaReact Works</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center">Who We Are</h2>
             <h2 className="text-lg font-semibold mt-4 mb-4 text-center">
               PhilaReact is a community where developers meet to discuss and share knowledge on React,
               Next.js, and JavaScript technologies.
@@ -75,8 +75,8 @@ const Home = () => {
               <li>Develop the website and build the community space together</li>
             </ul>
             <p className="text-lg px-4 text-center">
-              We request your Google account information to personalize your experience and allow you to
-              participate in community activities.
+              Ready to connect with fellow React developers in Philadelphia? Join our growing community today
+              and be part of something special!
             </p>
           </div>
         </div>

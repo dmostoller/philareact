@@ -4,9 +4,13 @@ import { CopyIcon } from "../components/icons/copy";
 
 interface CopyablePreProps {
   children: React.ReactNode;
+  showCopyIcon?: boolean; // Add optional prop
 }
 
-const CopyablePre: React.FC<CopyablePreProps> = ({ children }) => {
+const CopyablePre: React.FC<CopyablePreProps> = ({
+  children,
+  showCopyIcon = true // Default to true
+}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -18,21 +22,21 @@ const CopyablePre: React.FC<CopyablePreProps> = ({ children }) => {
   };
 
   return (
-    <div className="relative flex items-center">
-      <pre className="bg-dark-slate-800 w-full text-[11px] sm:text-sm p-1.5 sm:p-2 border border-dark-slate-500 rounded m-1.5 sm:m-4">
+    <div className="flex items-center w-full">
+      <pre className="bg-dark-slate-800 flex-1 text-[11px] sm:text-sm p-1.5 sm:p-2 border border-dark-slate-500 rounded m-1.5 sm:m-4">
         <code>{children}</code>
       </pre>
-      <button
-        onClick={handleCopy}
-        className="absolute top-0 right-0 mt-1.5 sm:mt-3 mr-2 sm:mr-4 text-gray-400 hover:text-white size-9"
-        aria-label="Copy to clipboard"
-      >
-        <CopyIcon />
-      </button>
-      {copied && (
-        <span className="absolute top-0 mt-3.5 sm:mt-5 mr-2 sm:mr-4 right-8 sm:right-10 text-green-500 text-[11px] sm:text-sm">
-          Copied!
-        </span>
+      {showCopyIcon && (
+        <div className="flex flex-col items-end mr-2 sm:mr-4 mt-1.5 sm:mt-3">
+          <button
+            onClick={handleCopy}
+            className="text-gray-400 hover:text-white size-9"
+            aria-label="Copy to clipboard"
+          >
+            <CopyIcon />
+          </button>
+          {copied && <span className="text-green-500 text-[11px] sm:text-sm">Copied!</span>}
+        </div>
       )}
     </div>
   );

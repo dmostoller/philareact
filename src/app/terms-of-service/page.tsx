@@ -2,8 +2,8 @@ import Link from "next/link";
 
 const TermsOfService = () => {
   return (
-    <div className="container mx-auto py-16 px-4">
-      <div className="max-w-4xl mx-auto p-6 border border-dark-slate-500 shadow-lg rounded-2xl bg-dark-slate-600">
+    <div className="container mx-auto py-12 px-4">
+      <div className="max-w-4xl mx-auto p-6 border border-dark-slate-700 shadow-lg rounded-2xl bg-dark-slate-900">
         <h1 className="text-3xl font-bold mb-4 text-center">Terms of Service</h1>
         <p className="mb-4">
           Welcome to PhilaReact! By using our website and services, you agree to comply with and be bound by

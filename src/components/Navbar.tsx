@@ -2,12 +2,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignInAlt, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { HomeIcon } from "./icons/home";
 import { usePathname } from "next/navigation";
 import { SettingsGearIcon } from "./icons";
 import { LogoutIcon } from "./icons/logout";
+import { MenuIcon } from "./icons/menu";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -27,7 +28,7 @@ const Navbar = () => {
       isActive(href) ? "border-b-2 border-white px-4 text-white" : ""
     }`;
 
-  const mobileLinkClasses = (href: string) => `${linkClasses(href)} text-3xl`;
+  const mobileLinkClasses = (href: string) => `${linkClasses(href)} text-3xl my-4 block`;
 
   return (
     <nav className="p-4 shadow bg-dark-slate-900 md:fixed md:top-0 md:left-0 md:right-0 md:w-full md:z-50">
@@ -82,12 +83,12 @@ const Navbar = () => {
         </div>
         <div className="md:hidden flex items-center">
           <button onClick={toggleMobileMenu} className="text-dark-slate-100 focus:outline-none mr-4">
-            <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} size="2xl" />
+            <MenuIcon isOpen={isMobileMenuOpen} />
           </button>
         </div>
       </div>
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-dark-slate-900 p-4 absolute top-20 left-0 w-full h-[calc(100vh-4rem)] z-50 flex flex-col items-center justify-center">
+        <div className="md:hidden bg-dark-slate-900 p-4 absolute top-18 left-0 w-full h-[calc(100vh-2rem)] z-50 flex flex-col items-center justify-center">
           <Link href="/news" className={mobileLinkClasses("/news")} onClick={toggleMobileMenu}>
             Articles
           </Link>
@@ -130,10 +131,14 @@ const Navbar = () => {
                 hover:border-white
                 hover:text-white
                 hover:px-4
+                flex
+                items-center
                 transition-all duration-300
                 py-1
+                text-3xl
                 font-semibold"
             >
+              <FontAwesomeIcon icon={faSignInAlt} className="mr-2 w-8 h-8" />
               Login
             </button>
           )}

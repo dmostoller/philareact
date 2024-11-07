@@ -64,7 +64,7 @@ const AddEventForm: React.FC<AddEventFormProps> = ({ onEventAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6">
+    <form onSubmit={handleSubmit} className="my-6">
       <h2 className="text-xl font-semibold my-2 text-center">Add An Event To The Calendar</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="col-span-1 md:col-span-2">
@@ -78,7 +78,7 @@ const AddEventForm: React.FC<AddEventFormProps> = ({ onEventAdded }) => {
             value={title}
             onChange={e => setTitle(e.target.value)}
             required
-            className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+            className="w-full p-2 border rounded bg-dark-slate-950 border-dark-slate-700 focus:outline-none focus:ring focus:ring-gray-500"
           />
         </div>
         <div>
@@ -92,7 +92,7 @@ const AddEventForm: React.FC<AddEventFormProps> = ({ onEventAdded }) => {
             value={start}
             onChange={e => setStart(e.target.value)}
             required
-            className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+            className="w-full p-2 border rounded bg-dark-slate-950 border-dark-slate-700 focus:outline-none focus:ring focus:ring-gray-500"
           />
         </div>
         <div>
@@ -106,7 +106,7 @@ const AddEventForm: React.FC<AddEventFormProps> = ({ onEventAdded }) => {
             value={end}
             onChange={e => setEnd(e.target.value)}
             required
-            className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+            className="w-full p-2 border rounded bg-dark-slate-950 border-dark-slate-700 focus:outline-none focus:ring focus:ring-gray-500"
           />
         </div>
         <div className="col-span-1 md:col-span-2">
@@ -118,7 +118,7 @@ const AddEventForm: React.FC<AddEventFormProps> = ({ onEventAdded }) => {
             placeholder="Description"
             value={description}
             onChange={e => setDescription(e.target.value)}
-            className="w-full p-2 border rounded bg-dark-slate-600 border-dark-slate-500 focus:outline-none focus:ring focus:ring-gray-500"
+            className="w-full p-2 border rounded bg-dark-slate-950 border-dark-slate-700 focus:outline-none focus:ring focus:ring-gray-500"
           />
         </div>
       </div>

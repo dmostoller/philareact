@@ -28,9 +28,11 @@ const ContributePageContent = () => {
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-4 md:py-6 relative mt-6">
-      <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 pr-16 md:pr-0">Contribute to PhilaReact</h1>
+      <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 pr-16 md:pr-0 text-center">
+        Contribute to PhilaReact
+      </h1>
 
-      <div className="absolute top-0 right-0 mt-4 mr-4 md:mt-6 md:mr-6">
+      <div className="absolute top-0 right-0 mt-2 mr-8 md:mt-6 md:mr-6">
         <Link href="https://github.com/dmostoller/philareact" target="_blank" rel="noopener noreferrer">
           <Image
             src="/github-mark-white.png"
@@ -42,7 +44,7 @@ const ContributePageContent = () => {
         </Link>
       </div>
 
-      <p className="mb-4 md:mb-6 text-sm md:text-base">
+      <p className="mb-4 md:mb-6 text-sm md:text-base text-center">
         We welcome contributions from the community! Here&apos;s how you can get involved:
       </p>
 
@@ -65,13 +67,15 @@ const ContributePageContent = () => {
           <strong>Clone your forked repository:</strong> Use the following command to clone the repository to
           your local machine:
           <div className="mt-2 mb-4">
-            <CopyablePre>git clone https://github.com/yourusername/philareact.git</CopyablePre>
+            <CopyablePre showCopyIcon={false}>
+              git clone https://github.com/username/philareact.git
+            </CopyablePre>
           </div>
         </li>
         <li>
           <strong>Create a new branch:</strong> Create a new branch for your feature or bug fix:
           <div className="mt-2 mb-4">
-            <CopyablePre>git checkout -b feature/YourFeatureName</CopyablePre>
+            <CopyablePre showCopyIcon={false}>git checkout -b feature/YourFeatureName</CopyablePre>
           </div>
         </li>
         <li>
@@ -80,13 +84,13 @@ const ContributePageContent = () => {
         <li>
           <strong>Commit your changes:</strong> Commit your changes with a descriptive commit message:
           <div className="mt-2 mb-4">
-            <CopyablePre>git commit -m &quot;Add new feature&quot;</CopyablePre>
+            <CopyablePre showCopyIcon={false}>git commit -m &quot;Add new feature&quot;</CopyablePre>
           </div>
         </li>
         <li>
           <strong>Push to your branch:</strong> Push your changes to your forked repository:
           <div className="mt-2 mb-4">
-            <CopyablePre>git push origin feature/YourFeatureName</CopyablePre>
+            <CopyablePre showCopyIcon={false}>git push origin feature/YourFeatureName</CopyablePre>
           </div>
         </li>
         <li>
