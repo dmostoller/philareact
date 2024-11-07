@@ -1,13 +1,14 @@
 "use client";
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import BugReportForm from "../../components/BugReportForm";
 import Link from "next/link";
 import Image from "next/image";
 import PrimaryButton from "../../components/PrimaryButton";
 import CopyablePre from "../../components/CopyablePre";
 import { useSearchParams } from "next/navigation";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
-const ContributePage = () => {
+const ContributePageContent = () => {
   const [showForm, setShowForm] = useState(false);
   const searchParams = useSearchParams();
 
@@ -98,6 +99,13 @@ const ContributePage = () => {
         </div>
       )}
     </div>
+  );
+};
+const ContributePage = () => {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <ContributePageContent />
+    </Suspense>
   );
 };
 
