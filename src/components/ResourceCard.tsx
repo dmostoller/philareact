@@ -1,5 +1,5 @@
-"use client"; // Ensure this is a Client Component
-import Image from "next/image";
+'use client'; // Ensure this is a Client Component
+import Image from 'next/image';
 
 interface ResourceCardProps {
   title: string;
@@ -10,7 +10,7 @@ interface ResourceCardProps {
 
 const ResourceCard: React.FC<ResourceCardProps> = ({ title, description, link, logoSrc }) => {
   return (
-    <div className="bg-dark-slate-600 p-4 border border-dark-slate-500 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+    <div className="bg-dark-slate-800 p-4 border border-dark-slate-600 shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
       <Image
         src={logoSrc}
         alt={`${title} logo`}

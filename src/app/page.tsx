@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useSession, signIn } from "next-auth/react";
-import PrimaryButton from "./../components/PrimaryButton";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useSession, signIn } from 'next-auth/react';
+import PrimaryButton from './../components/PrimaryButton';
 
-import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/outline';
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -29,7 +29,7 @@ const Home = () => {
 
           <div className="col-span-1">
             <h1 className="text-4xl md:text-4xl font-bold">
-              {status === "authenticated" && (
+              {status === 'authenticated' && (
                 <div className="text-dark-slate-100 text-2xl font-semibold mb-4">
                   Hello, {session.user?.name}
                 </div>
@@ -59,9 +59,9 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 px-4 bg-dark-slate-700">
+      <section className="py-10 px-4">
         <div className="container mx-auto">
-          <div className="mx-auto p-6 border border-dark-slate-500 shadow-lg rounded-2xl bg-dark-slate-600">
+          <div className="mx-auto p-6 border border-dark-slate-600 shadow-lg rounded-2xl bg-dark-slate-800">
             <h2 className="text-2xl font-bold mb-4 text-center">How PhilaReact Works</h2>
             <h2 className="text-lg font-semibold mt-4 mb-4 text-center">
               PhilaReact is a community where developers meet to discuss and share knowledge on React,
@@ -86,7 +86,7 @@ const Home = () => {
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">Explore PhilaReact</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-dark-slate-600 border border-dark-slate-500 p-6 rounded-lg shadow-lg">
+            <div className="bg-dark-slate-800 border border-dark-slate-600 p-6 rounded-lg shadow-lg">
               <div className="flex items-center mb-4">
                 <CalendarIcon className="h-8 w-8 mr-4" />
                 <h3 className="text-xl font-semibold">Upcoming Events</h3>
@@ -100,7 +100,7 @@ const Home = () => {
                 </div>
               </Link>
             </div>
-            <div className="bg-dark-slate-600 border border-dark-slate-500 p-6 rounded-lg shadow-lg">
+            <div className="bg-dark-slate-800 border border-dark-slate-600 p-6 rounded-lg shadow-lg">
               <div className="flex items-center mb-4">
                 <BookOpenIcon className="h-8 w-8 mr-4" />
                 <h3 className="text-xl font-semibold">Popular Articles</h3>
@@ -114,7 +114,7 @@ const Home = () => {
                 </div>
               </Link>
             </div>
-            <div className="bg-dark-slate-600 border border-dark-slate-500 p-6 rounded-lg shadow-lg">
+            <div className="bg-dark-slate-800 border border-dark-slate-600 p-6 rounded-lg shadow-lg">
               <div className="flex items-center mb-4">
                 <ChatBubbleLeftEllipsisIcon className="h-8 w-8 mr-4" />
                 <h3 className="text-xl font-semibold">Join the Forum</h3>

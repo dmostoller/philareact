@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,7 +10,7 @@ const Footer = () => {
         <Link href="/privacy-policy">
           <span className="text-gray-300 hover:text-gray-100">Privacy Policy</span>
         </Link>
-        {" | "}
+        {' | '}
         <Link href="/terms-of-service">
           <span className="text-gray-300 hover:text-gray-100">Terms of Service</span>
         </Link>

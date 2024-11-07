@@ -1,16 +1,16 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Calendar, momentLocalizer, Views, View } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import moment from "moment";
-import { useSession } from "next-auth/react";
-import AddEventForm from "../components/AddEventForm";
-import Tooltip from "../components/Tooltip";
-import LoadingSpinner from "./LoadingSpinner";
-import Link from "next/link";
-import PrimaryButton from "./PrimaryButton";
-import { toast } from "sonner";
-import { DeleteIcon } from "../components/icons/delete";
+'use client';
+import { useEffect, useState } from 'react';
+import { Calendar, momentLocalizer, Views, View } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import moment from 'moment';
+import { useSession } from 'next-auth/react';
+import AddEventForm from '../components/AddEventForm';
+import Tooltip from '../components/Tooltip';
+import LoadingSpinner from './LoadingSpinner';
+import Link from 'next/link';
+import PrimaryButton from './PrimaryButton';
+import { toast } from 'sonner';
+import { DeleteIcon } from '../components/icons/delete';
 
 const localizer = momentLocalizer(moment);
 
@@ -39,7 +39,7 @@ const EventCalendar: React.FC = () => {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch("/api/events");
+        const response = await fetch('/api/events');
         if (!response.ok) {
           throw new Error(`Error fetching events: ${response.statusText}`);
         }
@@ -50,7 +50,7 @@ const EventCalendar: React.FC = () => {
         const parsedEvents = data.map((event: Event) => ({
           ...event,
           start: new Date(event.start),
-          end: new Date(event.end)
+          end: new Date(event.end),
         }));
 
         // console.log("Parsed Events:", parsedEvents); // Log parsed events
@@ -59,7 +59,7 @@ const EventCalendar: React.FC = () => {
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError("An unknown error occurred");
+          setError('An unknown error occurred');
         }
       } finally {
         setLoading(false);
@@ -83,38 +83,38 @@ const EventCalendar: React.FC = () => {
   const handleDelete = async (eventId: number, eventUserId: string) => {
     if (!session?.user) return;
 
-    const isAdmin = session.user.role === "ADMIN";
+    const isAdmin = session.user.role === 'ADMIN';
     if (session.user.id !== eventUserId && !isAdmin) {
-      toast.error("Not authorized to delete this event");
+      toast.error('Not authorized to delete this event');
       return;
     }
 
     try {
       const response = await fetch(`/api/events/${eventId}`, {
-        method: "DELETE"
+        method: 'DELETE',
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete event");
+        throw new Error('Failed to delete event');
       }
 
-      setEvents(prev => prev.filter(event => event.id !== eventId));
-      toast.success("Event deleted successfully");
+      setEvents((prev) => prev.filter((event) => event.id !== eventId));
+      toast.success('Event deleted successfully');
     } catch (error) {
-      console.error("Error deleting event:", error);
-      toast.error("Failed to delete event");
+      console.error('Error deleting event:', error);
+      toast.error('Failed to delete event');
     }
   };
 
   const eventStyleGetter = () => {
     return {
       style: {
-        backgroundColor: "#4f4f4f", // Tailwind Dark Slate-700 for event background
-        color: "#d1d1d1", // Tailwind Slate-200 for text color
-        borderRadius: "4px",
-        padding: "5px",
-        border: "1px solid #5d5d5d" // Tailwind Dark Slate-600 for border color
-      }
+        backgroundColor: '#4f4f4f', // Tailwind Dark Slate-700 for event background
+        color: '#d1d1d1', // Tailwind Slate-200 for text color
+        borderRadius: '4px',
+        padding: '5px',
+        border: '1px solid #5d5d5d', // Tailwind Dark Slate-600 for border color
+      },
     };
   };
 
@@ -136,11 +136,11 @@ const EventCalendar: React.FC = () => {
           step={60}
           showMultiDayTimes
           defaultDate={currentDate}
-          onNavigate={date => {
+          onNavigate={(date) => {
             // console.log(`Navigated to ${view} view on ${date}`);
             setCurrentDate(date);
           }}
-          onView={view => {
+          onView={(view) => {
             // console.log(`Changed to ${view} view`);
             setCurrentView(view);
           }}
@@ -152,20 +152,20 @@ const EventCalendar: React.FC = () => {
                     <strong>{event.title}</strong>
                     <p>{event.description}</p>
                     <p>
-                      <strong>Start:</strong> {moment(event.start).format("MMMM Do YYYY, h:mm a")}
+                      <strong>Start:</strong> {moment(event.start).format('MMMM Do YYYY, h:mm a')}
                     </p>
                     <p>
-                      <strong>End:</strong> {moment(event.end).format("MMMM Do YYYY, h:mm a")}
+                      <strong>End:</strong> {moment(event.end).format('MMMM Do YYYY, h:mm a')}
                     </p>
                   </div>
                 }
               >
                 <div>
                   <strong>{event.title}</strong>
-                  {event.description && ":  " + event.description}
+                  {event.description && ':  ' + event.description}
                 </div>
               </Tooltip>
-            )
+            ),
           }}
         />
       </div>
@@ -173,7 +173,7 @@ const EventCalendar: React.FC = () => {
         <>
           <div className="text-center mt-8">
             <PrimaryButton onClick={toggleFormVisibility}>
-              {showForm ? "Hide Event Form" : "Create an Event"}
+              {showForm ? 'Hide Event Form' : 'Create an Event'}
             </PrimaryButton>
           </div>
           {showForm && (
@@ -186,7 +186,7 @@ const EventCalendar: React.FC = () => {
               <>
                 <h2 className="text-xl font-semibold mb-4 text-center">Upcoming Events</h2>
                 <div className="space-y-4">
-                  {events.map(event => (
+                  {events.map((event) => (
                     <div
                       key={event.id}
                       className="flex justify-between items-center p-5 mx-4 bg-dark-slate-600 border border-dark-slate-500 rounded-lg"
@@ -198,7 +198,7 @@ const EventCalendar: React.FC = () => {
                           {event.start.toLocaleString()} - {event.end.toLocaleString()}
                         </p>
                       </div>
-                      {(session?.user?.id === event.userId || session?.user?.role === "ADMIN") && (
+                      {(session?.user?.id === event.userId || session?.user?.role === 'ADMIN') && (
                         <button
                           onClick={() => handleDelete(event.id, event.userId)}
                           className="text-dark-slate-200 px-4 py-2"
