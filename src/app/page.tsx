@@ -1,11 +1,10 @@
-// pages/index.tsx
 "use client";
 
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
-import PrimaryButton from "./components/PrimaryButton";
+import PrimaryButton from "./../components/PrimaryButton";
 
 import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 
@@ -13,23 +12,21 @@ const Home = () => {
   const { data: session, status } = useSession();
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
       <section className="py-16 px-4 flex justify-center">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8 text-center md:text-left max-w-4xl">
-          {/* Right Column: Logo */}
           <div className="col-span-1 ">
             <div className="relative w-96 h-96 mx-auto md:mx-0">
               <Image
-                src="/philly-react-4.png" // Ensure to replace with your actual logo path
+                src="/philly-react-4.png"
                 alt="PhilaReact Logo"
-                layout="fill"
+                width={400}
+                height={400}
                 objectFit="contain"
                 className="rounded-full"
               />
             </div>
           </div>
 
-          {/* Left Column: Text and Buttons */}
           <div className="col-span-1">
             <h1 className="text-4xl md:text-4xl font-bold">
               {status === "authenticated" && (
@@ -44,13 +41,11 @@ const Home = () => {
             </p>
             <div className="mt-6 flex justify-center md:justify-start space-x-4">
               {session ? (
-                <>
-                  {/* <Link href="/forum">
-                    <PrimaryButton className="transition transform hover:scale-105 duration-300">
-                      Go to Forum
-                    </PrimaryButton>
-                  </Link> */}
-                </>
+                <Link href="/dashboard">
+                  <PrimaryButton className="transition transform hover:scale-105 duration-300">
+                    Go to Dashboard
+                  </PrimaryButton>
+                </Link>
               ) : (
                 <PrimaryButton
                   onClick={() => signIn()}
@@ -64,7 +59,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* App Functionality Section */}
       <section className="py-10 px-4 bg-dark-slate-700">
         <div className="container mx-auto">
           <div className="mx-auto p-6 border border-dark-slate-500 shadow-lg rounded-2xl bg-dark-slate-600">
@@ -78,6 +72,7 @@ const Home = () => {
               <li>Access and share resources on React, Next.js, and JavaScript</li>
               <li>Engage in discussions and ask questions in the forum</li>
               <li>Stay updated with the latest news and articles</li>
+              <li>Develop the website and build the community space together</li>
             </ul>
             <p className="text-lg px-4 text-center">
               We request your Google account information to personalize your experience and allow you to
@@ -87,12 +82,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Content Section */}
       <section className="py-10 px-4">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">Explore PhilaReact</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Card 1 - Events */}
             <div className="bg-dark-slate-600 border border-dark-slate-500 p-6 rounded-lg shadow-lg">
               <div className="flex items-center mb-4">
                 <CalendarIcon className="h-8 w-8 mr-4" />
@@ -107,8 +100,6 @@ const Home = () => {
                 </div>
               </Link>
             </div>
-
-            {/* Card 2 - Articles */}
             <div className="bg-dark-slate-600 border border-dark-slate-500 p-6 rounded-lg shadow-lg">
               <div className="flex items-center mb-4">
                 <BookOpenIcon className="h-8 w-8 mr-4" />
@@ -123,8 +114,6 @@ const Home = () => {
                 </div>
               </Link>
             </div>
-
-            {/* Card 3 - Forum */}
             <div className="bg-dark-slate-600 border border-dark-slate-500 p-6 rounded-lg shadow-lg">
               <div className="flex items-center mb-4">
                 <ChatBubbleLeftEllipsisIcon className="h-8 w-8 mr-4" />
@@ -143,8 +132,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Privacy Policy Section */}
-      <section className="py-10 px-4">
+      <section className="py-8 px-4">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto p-6 text-center">
             <h2 className="text-xl font-bold mb-4 text-center">Privacy Policy</h2>

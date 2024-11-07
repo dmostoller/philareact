@@ -6,6 +6,8 @@ import { faSignInAlt, faSignOutAlt, faBars, faTimes } from "@fortawesome/free-so
 import { useSession, signIn, signOut } from "next-auth/react";
 import { HomeIcon } from "./icons/home";
 import { usePathname } from "next/navigation";
+import { SettingsGearIcon } from "./icons";
+import { LogoutIcon } from "./icons/logout";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -43,23 +45,19 @@ const Navbar = () => {
           <Link href="/resources" className={linkClasses("/resources")}>
             Resources
           </Link>
+          <Link href="/contribute" className={linkClasses("/contribute")}>
+            Contribute
+          </Link>
         </div>
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center">
           {status === "authenticated" ? (
             <>
-              <button
-                onClick={() => signOut()}
-                className="px-2 button
-                text-gray-300
-                hover:border-b-2
-                hover:border-white
-                hover:text-white
-                py-1
-                font-semibold"
-              >
-                <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
-                Logout
-              </button>
+              <Link href="/dashboard">
+                <SettingsGearIcon />
+              </Link>
+              <div onClick={() => signOut()} className="cursor-pointer">
+                <LogoutIcon />
+              </div>
             </>
           ) : (
             <button
@@ -69,6 +67,8 @@ const Navbar = () => {
                 hover:border-b-2
                 hover:border-white
                 hover:text-white
+                hover:px-4
+                transition-all duration-300
                 py-1
                 font-semibold"
             >

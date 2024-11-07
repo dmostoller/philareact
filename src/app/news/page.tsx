@@ -1,10 +1,10 @@
 "use client"; // If required to ensure the page renders client-side
 
 import { useEffect, useState, Suspense } from "react";
-import LoadingSkeleton from "../components/LoadingSkeleton";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 import Link from "next/link";
+import Image from "next/image";
 
-// Define the decode function at the top of your file
 function decodeCloudflareImageUrl(cloudflareUrl: string): string | null {
   const regex = /\/https%3A%2F%2F(.*)/;
   const match = cloudflareUrl.match(regex);
@@ -24,7 +24,7 @@ interface Article {
   user: {
     name: string;
     profile_image: string;
-    profile_image_90: string; // Assuming this is the one you're using for images
+    profile_image_90: string;
   };
 }
 
@@ -39,10 +39,12 @@ const Articles = ({ articles }: { articles: Article[] }) => (
         >
           <div className="flex space-x-4">
             {decodedProfileImageUrl && (
-              <img
+              <Image
                 src={decodedProfileImageUrl}
                 alt={article.user.name}
-                className="h-10 w-10 rounded-full m-1"
+                width={40}
+                height={40}
+                className="rounded-full m-1 h-10 w-10"
               />
             )}
             <h3 className="text-lg font-bold mb-2">{article.title}</h3>
@@ -85,7 +87,6 @@ export default function NewsPage() {
 
   useEffect(() => {
     fetchArticles(page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {
@@ -102,7 +103,7 @@ export default function NewsPage() {
 
   return (
     <section className="container mx-auto py-12">
-      <h1 className="text-4xl font-bold text-center mb-10">Latest React & Next.js Articles</h1>
+      <h1 className="text-3xl font-bold text-center mb-10">Latest React & Next.js Articles</h1>
       <Suspense fallback={<LoadingSkeleton />}>
         <Articles articles={articles} />
         {loading && <LoadingSkeleton />}

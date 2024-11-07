@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import AddEventForm from "../components/AddEventForm";
 import Tooltip from "../components/Tooltip";
 import LoadingSpinner from "./LoadingSpinner";
+import Link from "next/link";
 
 const localizer = momentLocalizer(moment);
 
@@ -35,7 +36,7 @@ const EventCalendar: React.FC = () => {
           throw new Error(`Error fetching events: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log("API Response:", data); // Log API response
+        // console.log("API Response:", data); // Log API response
 
         // Convert start and end from strings to Date objects
         const parsedEvents = data.map((event: Event) => ({
@@ -44,7 +45,7 @@ const EventCalendar: React.FC = () => {
           end: new Date(event.end)
         }));
 
-        console.log("Parsed Events:", parsedEvents); // Log parsed events
+        // console.log("Parsed Events:", parsedEvents); // Log parsed events
         setEvents(parsedEvents);
       } catch (err) {
         if (err instanceof Error) {
@@ -135,7 +136,17 @@ const EventCalendar: React.FC = () => {
         />
       </div>
       <div className="container w-full md:w-3/4 lg:w-2/3 mx-auto p-4 border border-dark-slate-500 rounded-lg mt-4">
-        {session && <AddEventForm onEventAdded={handleEventAdded} />}
+        {session ? (
+          <AddEventForm onEventAdded={handleEventAdded} />
+        ) : (
+          <div className="text-center">
+            <p className="text-lg font-semibold">
+              <Link href="/api/auth/signin" className="hover:underline ">
+                Sign into add events to the calendar
+              </Link>
+            </p>
+          </div>
+        )}
       </div>
     </>
   );

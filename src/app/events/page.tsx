@@ -1,4 +1,4 @@
-import EventCalendar from "../components/Calendar";
+import EventCalendar from "../../components/Calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTicketAlt } from "@fortawesome/free-solid-svg-icons";
 

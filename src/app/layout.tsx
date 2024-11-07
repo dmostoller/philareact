@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import ClientSessionProvider from "./components/ClientSessionProvider";
+import Navbar from "./../components/Navbar";
+import Footer from "./../components/Footer";
+import ClientSessionProvider from "./../components/ClientSessionProvider";
 import { Toaster } from "sonner";
+import FloatingButton from "../components/FloatingButton";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,6 +37,7 @@ export default function RootLayout({
             <main className="dark flex-grow bg-dark-slate-700">{children}</main>
             <Footer />
           </div>
+          <FloatingButton />
           <Toaster theme="dark" position="bottom-right" />
         </ClientSessionProvider>
       </body>

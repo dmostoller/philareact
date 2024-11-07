@@ -4,13 +4,13 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import PostCard from "../components/PostCard";
+import PostCard from "../../components/PostCard";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { CircleCheckIcon } from "../components/icons/circle-check";
-import { DeleteIcon } from "../components/icons/delete";
+import { CircleCheckIcon } from "../../components/icons/circle-check";
+import { DeleteIcon } from "../../components/icons/delete";
 
-const CreatePostForm = dynamic(() => import("../components/CreatePostForm"), { ssr: false });
+const CreatePostForm = dynamic(() => import("../../components/CreatePostForm"), { ssr: false });
 
 interface Post {
   id: number;
