@@ -9,11 +9,14 @@ import { usePathname } from "next/navigation";
 import { SettingsGearIcon } from "./icons";
 import { LogoutIcon } from "./icons/logout";
 import { MenuIcon } from "./icons/menu";
+import { SunIcon } from "./icons/sun";
+import { useTheme } from "../components/context/ThemeProvider";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -31,11 +34,22 @@ const Navbar = () => {
   const mobileLinkClasses = (href: string) => `${linkClasses(href)} text-3xl my-4 block`;
 
   return (
-    <nav className="p-4 shadow bg-dark-slate-900 md:fixed md:top-0 md:left-0 md:right-0 md:w-full md:z-50">
+    <nav
+      className="p-4 shadow 
+  bg-dark-slate-900 
+  transition-all duration-300 ease-in-out 
+  md:fixed md:top-0 md:left-0 md:right-0 md:w-full md:z-50"
+    >
+      {" "}
       <div className="mx-auto w-full flex justify-between items-center">
-        <Link href="/" className="flex items-center">
-          <HomeIcon />
-        </Link>
+        <div className="flex items-start">
+          <Link href="/">
+            <HomeIcon />
+          </Link>
+          <button onClick={toggleTheme} title={`Theme: ${theme}`}>
+            <SunIcon />
+          </button>
+        </div>
         <div className="hidden md:flex align-center space-x-8">
           <Link href="/news" className={linkClasses("/news")}>
             Articles

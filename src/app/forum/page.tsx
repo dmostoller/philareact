@@ -145,7 +145,7 @@ const ForumPage: React.FC = () => {
       <div className="flex flex-col md:flex-row md:space-x-6">
         {/* Threads Section */}
         <div className="w-full md:w-1/3 mb-8 md:mb-0">
-          <h2 className="text-xl md:text-2xl font-bold mb-4 text-center">Threads</h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">Threads</h2>
 
           {/* Horizontal scroll on mobile, vertical list on desktop */}
           <div className="relative">
