@@ -1,19 +1,19 @@
-"use client";
-import { Suspense, useState, useEffect } from "react";
-import BugReportForm from "../../components/BugReportForm";
-import Link from "next/link";
-import Image from "next/image";
-import PrimaryButton from "../../components/PrimaryButton";
-import CopyablePre from "../../components/CopyablePre";
-import { useSearchParams } from "next/navigation";
-import LoadingSpinner from "@/components/LoadingSpinner";
+'use client';
+import { Suspense, useState, useEffect } from 'react';
+import BugReportForm from '../../components/BugReportForm';
+import Link from 'next/link';
+import Image from 'next/image';
+import PrimaryButton from '../../components/PrimaryButton';
+import CopyablePre from '../../components/CopyablePre';
+import { useSearchParams } from 'next/navigation';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const ContributePageContent = () => {
   const [showForm, setShowForm] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get("showForm") === "true") {
+    if (searchParams.get('showForm') === 'true') {
       setShowForm(true);
     }
   }, [searchParams]);
@@ -27,12 +27,12 @@ const ContributePageContent = () => {
   };
 
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="container mx-auto py-4 px-2">
       <div
         className="mx-auto max-w-5xl px-4 md:px-6 py-4 md:py-6 relative
        border-2 border-dark-slate-700 shadow-lg rounded-2xl"
       >
-        <h1 className="text-3xl font-bold mb-6 md:mb-8 pr-16 md:pr-0 text-center">
+        <h1 className="text-4xl font-bold mb-6 md:mb-8 pr-16 md:pr-0 text-center">
           Contribute to PhilaReact
         </h1>
         <div className="absolute top-0 right-0 mt-4 mr-4 md:mt-6 md:mr-6">
@@ -49,7 +49,7 @@ const ContributePageContent = () => {
         <p className="mb-4 md:mb-6 text-sm md:text-base text-center">
           We welcome contributions from the community! Here&apos;s how you can get involved:
         </p>
-        <ul className="list-disc list-outside ml-4 md:ml-6 mb-6 space-y-4 text-sm md:text-base">
+        <ul className="list-disc list-outside ml-4 md:ml-6 mb-6 space-y-4 ">
           <li>
             <strong>Fork the repository on GitHub:</strong> Click the &quot;Fork&quot; button at the top right
             corner of the repository page to create a copy of the repository under your GitHub account.
@@ -58,7 +58,7 @@ const ContributePageContent = () => {
                 href="https://github.com/dmostoller/philareact"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-deep-sapphire-400 font-semibold hover:underline text-sm md:text-base"
+                className="text-deep-sapphire-400 font-semibold hover:underline"
               >
                 https://github.com/dmostoller/philareact
               </Link>
@@ -67,9 +67,12 @@ const ContributePageContent = () => {
           <li>
             <strong>Clone your forked repository:</strong> Use the following command to clone the repository
             to your local machine:
-            <div className="mt-2 mb-4  flex justify-center">
+            <div className="mt-2 mb-4 flex justify-center">
               <CopyablePre showCopyIcon={false}>
-                git clone https://github.com/[username]/philareact.git
+                <span className="md:hidden">git clone https://github.com/...</span>
+                <span className="hidden md:inline">
+                  git clone https://github.com/[your-username]/philareact.git
+                </span>
               </CopyablePre>
             </div>
           </li>
@@ -106,7 +109,7 @@ const ContributePageContent = () => {
         </ul>
         <div className="text-center mb-6">
           <PrimaryButton onClick={toggleFormVisibility}>
-            {showForm ? "Hide Bug Report Form" : "Report a Bug"}
+            {showForm ? 'Hide Bug Report Form' : 'Report a Bug'}
           </PrimaryButton>
         </div>
       </div>

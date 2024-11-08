@@ -5,6 +5,8 @@ import { useSession } from 'next-auth/react';
 import { DeleteIcon, UpvoteIcon, DownvoteIcon } from './icons';
 import PrimaryButton from '../components/PrimaryButton';
 import { toast } from 'sonner';
+import UserAvatar from './UserAvatar';
+
 interface Reply {
   id: number;
   content: string;
@@ -116,7 +118,11 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: replyContent, author: session.user.name, postId: post.id }),
+        body: JSON.stringify({
+          content: replyContent,
+          author: session.user.name,
+          postId: post.id,
+        }),
       });
 
       if (!response.ok) {
@@ -247,53 +253,58 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
   };
 
   return (
-    <div className="bg-dark-slate-900 border border-dark-slate-700 p-6 shadow-md rounded-lg mx-2 mb-4 relative">
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold mb-2">{post.title}</h2>
-        {(session?.user.name === post.author || session?.user.role === 'ADMIN') && (
-          <button
-            onClick={handleDeletePost}
-            className="absolute top-2 right-2 text-dark-slate-400 hover:text-dark-slate-300"
-          >
-            <DeleteIcon />
-          </button>
-        )}
-      </div>
-      <p className="mb-4">{post.content}</p>
-      <p className="text-sm text-dark-slate-300">
-        Posted by <span className="font-medium">{post.author}</span> on{' '}
-        {new Date(post.createdAt).toLocaleString()}
-      </p>
-      <div className="flex items-center mt-2">
-        <button onClick={handleUpvote} className="flex items-center">
-          <UpvoteIcon />
-          <span className="ml-1 font-medium">{upvotes}</span>
-        </button>
-        <button onClick={handleDownvote} className="flex items-center ml-4">
-          <DownvoteIcon />
-          <span className="ml-1 font-medium">{downvotes}</span>
-        </button>
+    <div className="bg-dark-slate-900 border border-dark-slate-700 p-6 shadow-md rounded-lg mx-0 mb-4 relative">
+      <div className="flex items-start gap-4">
+        <UserAvatar name={post.author} size={75} />
+        <div className="flex-1">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold mb-2 mr-8">{post.title}</h2>
+            {(session?.user.name === post.author || session?.user.role === 'ADMIN') && (
+              <button onClick={handleDeletePost} className="text-dark-slate-400 hover:text-dark-slate-300">
+                <DeleteIcon />
+              </button>
+            )}
+          </div>
+          <p className="mb-4 mr-2">{post.content}</p>
+          <p className="text-sm text-dark-slate-300">
+            Posted by <span className="font-medium">{post.author}</span> on{' '}
+            {new Date(post.createdAt).toLocaleString()}
+          </p>
+          <div className="flex items-center mt-2">
+            <button onClick={handleUpvote} className="flex items-center">
+              <UpvoteIcon />
+              <span className="ml-1 font-medium">{upvotes}</span>
+            </button>
+            <button onClick={handleDownvote} className="flex items-center ml-4">
+              <DownvoteIcon />
+              <span className="ml-1 font-medium">{downvotes}</span>
+            </button>
+          </div>
+        </div>
       </div>
       <div className="mt-4">
         <h3 className="text-lg font-semibold mb-2">Replies</h3>
         {replies.length > 0 ? (
           replies.map((reply) => (
             <div key={reply.id} className="bg-dark-slate-700 p-4 rounded-lg mb-2 relative">
-              <div className="flex justify-between items-center">
-                <p>{reply.content}</p>
+              <div className="flex items-start gap-3">
+                <UserAvatar name={reply.author} size={45} />
+                <div className="flex-1">
+                  <p>{reply.content}</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Replied by <span className="font-medium">{reply.author}</span> on{' '}
+                    {new Date(reply.createdAt).toLocaleString()}
+                  </p>
+                </div>
                 {(session?.user.name === reply.author || session?.user.role === 'ADMIN') && (
                   <button
                     onClick={() => handleDeleteReply(reply.id)}
-                    className="absolute top-3 right-1 text-dark-slate-400 hover:text-dark-slate-300 size-9"
+                    className="text-dark-slate-400 hover:text-dark-slate-300"
                   >
                     <DeleteIcon />
                   </button>
                 )}
               </div>
-              <p className="text-xs text-gray-400">
-                Replied by <span className="font-medium">{reply.author}</span> on{' '}
-                {new Date(reply.createdAt).toLocaleString()}
-              </p>
             </div>
           ))
         ) : (

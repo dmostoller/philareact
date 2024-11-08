@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="container mx-auto py-6 px-4">
-      <div className="max-w-5xl mx-auto p-6 border border-dark-slate-700 shadow-lg rounded-2xl bg-dark-slate-900">
+    <div className="container mx-auto py-4 px-2">
+      <div className="max-w-5xl mx-auto p-6 border-2 border-dark-slate-700 shadow-lg rounded-2xl bg-dark-slate-950">
         <h1 className="text-4xl font-bold mb-6 text-center">Privacy Policy</h1>
         <p className="mb-4">
           Your privacy is important to us. It is PhilaReact&apos;s policy to respect your privacy regarding
@@ -46,7 +46,7 @@ const PrivacyPolicy = () => {
         </p>
         <h2 className="text-xl font-bold mb-4">Contact Us</h2>
         <p className="mb-4">
-          If you have any questions about these Terms of Service, please contact us at{" "}
+          If you have any questions about these Terms of Service, please contact us at{' '}
           <a href="mailto:support@philareacy.org" className="hover:underline">
             support@philareact.org
           </a>

@@ -1,9 +1,9 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const TermsOfService = () => {
   return (
-    <div className="container mx-auto py-6 px-4">
-      <div className="max-w-5xl mx-auto p-6 border border-dark-slate-700 shadow-lg rounded-2xl bg-dark-slate-900">
+    <div className="container mx-auto py-4 px-2">
+      <div className="max-w-5xl mx-auto p-6 border-2 border-dark-slate-700 shadow-lg rounded-2xl bg-dark-slate-950">
         <h1 className="text-3xl font-bold mb-4 text-center">Terms of Service</h1>
         <p className="mb-4">
           Welcome to PhilaReact! By using our website and services, you agree to comply with and be bound by
@@ -26,7 +26,7 @@ const TermsOfService = () => {
         <h2 className="text-xl font-bold mb-2">2. Privacy Policy</h2>
         <p className="mb-4">
           Our Privacy Policy is considered part of this Agreement. You must review our Privacy Policy by
-          clicking on this{" "}
+          clicking on this{' '}
           <Link href="/privacy-policy">
             <span className="underline">link</span>
           </Link>
@@ -81,7 +81,7 @@ const TermsOfService = () => {
         </p>
 
         <p className="mb-4">
-          If you have any questions about these Terms of Service, please contact us at{" "}
+          If you have any questions about these Terms of Service, please contact us at{' '}
           <a href="mailto:support@philareacy.org" className="hover:underline">
             support@philareact.org
           </a>

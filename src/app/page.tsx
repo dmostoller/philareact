@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useSession, signIn } from "next-auth/react";
-import PrimaryButton from "./../components/PrimaryButton";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useSession, signIn } from 'next-auth/react';
+import PrimaryButton from './../components/PrimaryButton';
 
-import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
-import DecorativeElements from "@/components/DecorativeElements";
+import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/outline';
+import DecorativeElements from '@/components/DecorativeElements';
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -28,9 +28,9 @@ const Home = () => {
           {/* Gradient overlay for better text clarity */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/85" />
         </div>
-        <div className="relative z-10 container mx-auto px-4 md:px-16 lg:px-32 py-72 md:py-72 flex flex-col items-center md:items-start">
+        <div className="relative z-10 container mx-auto px-4 md:px-16 lg:px-32 py-36 md:py-72 flex flex-col items-center md:items-start">
           <h1 className="text-3xl md:text-5xl font-bold text-white">
-            {status === "authenticated" && (
+            {status === 'authenticated' && (
               <div className="fade-in-up fade-in-up-delay-1 text-white text-2xl font-semibold mb-4 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
                 Welcome back, {session.user?.name}!
               </div>
@@ -62,16 +62,16 @@ const Home = () => {
             )}
           </div>
           {!session && (
-            <p className="fade-in-up fade-in-up-delay-2 text-sm mt-4 text-white opacity-75">
-              Become part of the most vibrant React community in Philadelphia.
+            <p className="fade-in-up fade-in-up-delay-2 text-sm mt-6 text-white opacity-75 text-center md:text-left">
+              Join Philly&apos;s top React developers.
             </p>
           )}
         </div>
       </section>
 
-      <section className="py-10 px-4">
+      <section className="py-10 px-2">
         <div className="container mx-auto">
-          <div className="w-full lg:max-w-6xl mx-auto p-6 border border-dark-slate-600 shadow-lg rounded-2xl bg-dark-slate-800">
+          <div className="w-full lg:max-w-6xl mx-auto p-6 border-2 border-dark-slate-700 shadow-lg rounded-2xl bg-dark-slate-950">
             <h2 className="text-2xl font-bold mb-4 text-center">Who We Are</h2>
             <h2 className="text-lg font-semibold mt-4 mb-4 text-center">
               PhilaReact is a community where developers meet to discuss and share knowledge on React,
@@ -91,9 +91,9 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 px-4">
+      <section className="py-4 px-2">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8">Explore PhilaReact</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Explore PhilaReact</h2>
           <div className="grid md:grid-cols-3 gap-8 w-full lg:max-w-6xl mx-auto">
             <div className="bg-dark-slate-800 border border-dark-slate-600 p-6 rounded-lg shadow-lg">
               <div className="flex items-center mb-4">
@@ -147,10 +147,10 @@ const Home = () => {
             <h2 className="text-xl font-bold mb-4 text-center">Privacy Policy</h2>
             <p className="text-md mb-4">
               We value your privacy and are committed to protecting your personal information.
-              <br></br>Please review our
+              <br></br>Please review our{' '}
               <Link href="/privacy-policy">
-                <span className="underline"> Privacy Policy </span>
-              </Link>
+                <span className="underline">Privacy Policy</span>
+              </Link>{' '}
               for more details.
             </p>
           </div>

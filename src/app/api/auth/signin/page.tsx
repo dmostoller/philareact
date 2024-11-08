@@ -23,8 +23,8 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-dark-slate-950">
-      <div className="w-full max-w-md p-8 space-y-6 bg-dark-slate-900 rounded-xl shadow-xl border border-dark-slate-700">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-dark-slate-950 px-2">
+      <div className="w-full max-w-md px-2 py-8 space-y-6 bg-dark-slate-900 rounded-xl shadow-xl border border-dark-slate-700">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-white">Welcome</h1>
           <p className="text-dark-slate-100 font-medium">Sign in or create an account to get started</p>

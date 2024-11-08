@@ -78,7 +78,7 @@ export default function CreatePostForm({ onPostCreated, threadId }: CreatePostFo
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-dark-slate-900 border border-dark-slate-700 p-4 shadow-md rounded-lg mb-6 mx-2"
+      className="bg-dark-slate-900 border border-dark-slate-700 p-4 shadow-md rounded-lg mb-6"
     >
       <h3 className="text-xl font-semibold mb-4">Create a new post</h3>
       <input
