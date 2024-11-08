@@ -28,10 +28,7 @@ const ContributePageContent = () => {
 
   return (
     <div className="container mx-auto py-4 px-2">
-      <div
-        className="mx-auto max-w-5xl px-4 md:px-6 py-4 md:py-6 relative
-       border-2 border-dark-slate-700 shadow-lg rounded-2xl"
-      >
+      <div className="mx-auto max-w-5xl px-4 md:px-6 py-4 md:py-6 relative">
         <h1 className="text-4xl font-bold mb-6 md:mb-8 pr-16 md:pr-0 text-center">
           Contribute to PhilaReact
         </h1>

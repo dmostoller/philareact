@@ -3,7 +3,7 @@ import React from 'react';
 const PrivacyPolicy = () => {
   return (
     <div className="container mx-auto py-4 px-2">
-      <div className="max-w-5xl mx-auto p-6 border-2 border-dark-slate-700 shadow-lg rounded-2xl bg-dark-slate-950">
+      <div className="max-w-5xl mx-auto p-6">
         <h1 className="text-4xl font-bold mb-6 text-center">Privacy Policy</h1>
         <p className="mb-4">
           Your privacy is important to us. It is PhilaReact&apos;s policy to respect your privacy regarding

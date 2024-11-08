@@ -71,7 +71,7 @@ const Home = () => {
 
       <section className="py-10 px-2">
         <div className="container mx-auto">
-          <div className="w-full lg:max-w-6xl mx-auto p-6 border-2 border-dark-slate-700 shadow-lg rounded-2xl bg-dark-slate-950">
+          <div className="w-full lg:max-w-6xl mx-auto p-6">
             <h2 className="text-2xl font-bold mb-4 text-center">Who We Are</h2>
             <h2 className="text-lg font-semibold mt-4 mb-4 text-center">
               PhilaReact is a community where developers meet to discuss and share knowledge on React,
