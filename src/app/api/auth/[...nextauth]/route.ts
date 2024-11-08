@@ -35,23 +35,24 @@ const authOptions: NextAuthOptions = {
       return session;
     },
     async jwt({ token, account }) {
-      // Add this callback to ensure the providerAccountId is passed to the token
       if (account) {
         token.sub = account.providerAccountId;
       }
       return token;
     },
     async signIn({ user, account }) {
-      if (!user?.email) return false;
+      if (!user?.email || !account?.providerAccountId) {
+        return false;
+      }
 
       await prisma.user.upsert({
         where: { email: user.email },
         update: {
           name: user.name,
-          id: account?.providerAccountId! // Update ID if it changes
+          id: account.providerAccountId
         },
         create: {
-          id: account?.providerAccountId!,
+          id: account.providerAccountId,
           email: user.email,
           name: user.name
         }
