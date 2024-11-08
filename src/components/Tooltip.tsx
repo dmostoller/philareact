@@ -59,7 +59,7 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content }) => {
               ref={setPopperElement}
               style={styles.popper}
               {...attributes.popper}
-              className="z-50 w-64 p-2 mt-2 text-sm text-white bg-dark-slate-800 rounded-lg shadow-lg"
+              className="z-50 w-64 p-2 mt-2 text-sm bg-dark-slate-700 rounded-lg shadow-lg"
             >
               {content}
             </div>

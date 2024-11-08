@@ -1,16 +1,16 @@
-'use client';
-import { Suspense } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import PrimaryButton from '../../components/PrimaryButton';
-import CopyablePre from '../../components/CopyablePre';
-import LoadingSpinner from '@/components/LoadingSpinner';
+"use client";
+import { Suspense } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import PrimaryButton from "../../components/PrimaryButton";
+import CopyablePre from "../../components/CopyablePre";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const ContributePageContent = () => {
   return (
-    <div className="container mx-auto py-4 px-2">
+    <div className="container mx-auto py-4 px-2 mt-2">
       <div className="mx-auto max-w-5xl px-4 md:px-6 py-4 md:py-6 relative">
-        <h1 className="text-4xl font-bold mb-6 md:mb-8 pr-16 md:pr-0 text-center">
+        <h1 className="text-3xl font-bold mb-6 md:mb-8 pr-16 md:pr-0 text-center">
           Contribute to PhilaReact
         </h1>
         <div className="absolute top-0 right-0 mt-4 mr-4 md:mt-6 md:mr-6">
@@ -20,7 +20,7 @@ const ContributePageContent = () => {
               alt="GitHub Logo"
               width={96}
               height={96}
-              className="inline-block w-10 h-10 md:w-12 md:h-12 hover:scale-105 transition-transform duration-300"
+              className="inline-block w-10 h-10 md:w-12 md:h-12 hover:scale-105 transition-transform duration-300 text-dark-slate-950"
             />
           </Link>
         </div>

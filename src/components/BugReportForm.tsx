@@ -1,9 +1,9 @@
 // components/BugReportForm.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
-import PrimaryButton from './PrimaryButton';
-import { toast } from 'sonner';
+import { useState } from "react";
+import PrimaryButton from "./PrimaryButton";
+import { toast } from "sonner";
 
 interface BugReportFormProps {
   onSubmitSuccess: () => void;
@@ -11,16 +11,16 @@ interface BugReportFormProps {
 
 const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    error: '',
-    description: '',
-    browser: '',
-    os: '',
-    steps: '',
-    expected: '',
-    actual: '',
-    severity: 'minor',
+    name: "",
+    email: "",
+    error: "",
+    description: "",
+    browser: "",
+    os: "",
+    steps: "",
+    expected: "",
+    actual: "",
+    severity: "minor"
   });
   const [loading, setLoading] = useState(false);
 
@@ -33,27 +33,27 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch('/api/report-bug', {
-        method: 'POST',
+      const response = await fetch("/api/report-bug", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
 
       if (response.ok) {
-        toast.success('Bug report submitted successfully!');
+        toast.success("Bug report submitted successfully!");
         setFormData({
-          name: '',
-          email: '',
-          error: '',
-          description: '',
-          browser: '',
-          os: '',
-          steps: '',
-          expected: '',
-          actual: '',
-          severity: 'minor',
+          name: "",
+          email: "",
+          error: "",
+          description: "",
+          browser: "",
+          os: "",
+          steps: "",
+          expected: "",
+          actual: "",
+          severity: "minor"
         });
         onSubmitSuccess();
       } else {
@@ -68,7 +68,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ onSubmitSuccess }) => {
   };
 
   const inputClassNames =
-    'w-full p-2 border rounded bg-dark-slate-950 border-dark-slate-700 focus:outline-none focus:ring focus:ring-gray-500';
+    "w-full p-2 border rounded bg-dark-slate-950 border-dark-slate-700 focus:outline-none focus:ring focus:ring-gray-500";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-2 md:space-y-4">

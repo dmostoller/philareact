@@ -1,9 +1,9 @@
 // app/dashboard/page.tsx
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { BugReport } from '@prisma/client';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import { useEffect, useState } from "react";
+import { BugReport } from "@prisma/client";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Dashboard: React.FC = () => {
   const [reports, setReports] = useState<BugReport[]>([]);
@@ -12,15 +12,15 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchBugReports = async () => {
       try {
-        const res = await fetch('/api/report-bug');
+        const res = await fetch("/api/report-bug");
         if (res.ok) {
           const data = await res.json();
           setReports(data);
         } else {
-          console.error('Failed to fetch bug reports');
+          console.error("Failed to fetch bug reports");
         }
       } catch (error) {
-        console.error('Error fetching bug reports:', error);
+        console.error("Error fetching bug reports:", error);
       } finally {
         setLoading(false);
       }
@@ -32,21 +32,21 @@ const Dashboard: React.FC = () => {
   const handleStatusChange = async (id: number, newStatus: string) => {
     try {
       const res = await fetch(`/api/report-bug/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: newStatus }),
+        body: JSON.stringify({ status: newStatus })
       });
 
       if (res.ok) {
         const updatedReport = await res.json();
-        setReports((prevReports) => prevReports.map((report) => (report.id === id ? updatedReport : report)));
+        setReports(prevReports => prevReports.map(report => (report.id === id ? updatedReport : report)));
       } else {
-        console.error('Failed to update status');
+        console.error("Failed to update status");
       }
     } catch (error) {
-      console.error('Error updating status:', error);
+      console.error("Error updating status:", error);
     }
   };
 
@@ -74,12 +74,12 @@ const Dashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {reports.map((report) => (
+            {reports.map(report => (
               <tr key={report.id}>
                 <td className="py-2 px-4 border-b border-dark-slate-500">{report.id}</td>
                 <td className="py-2 px-4 border-b border-dark-slate-500">
                   <div>{report.name}</div>
-                  <div className="text-sm text-gray-400">{report.email}</div>
+                  <div className="text-sm text-dark-slate-400">{report.email}</div>
                 </td>
                 <td className="py-2 px-4 border-b border-dark-slate-500">
                   <div className="space-y-1">
@@ -109,19 +109,19 @@ const Dashboard: React.FC = () => {
                 <td className="py-2 px-4 border-b border-dark-slate-500">{report.severity}</td>
                 <td className="py-2 px-4 border-b border-dark-slate-500">{report.status}</td>
                 <td className="py-2 px-4 border-b border-dark-slate-500">
-                  {new Date(report.createdAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
+                  {new Date(report.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
                   })}
                 </td>
                 <td className="py-2 px-4 border-b border-dark-slate-500">
                   <select
                     value={report.status}
-                    onChange={(e) => handleStatusChange(report.id, e.target.value)}
-                    className="p-1 bg-dark-slate-600 border border-dark-slate-500 rounded"
+                    onChange={e => handleStatusChange(report.id, e.target.value)}
+                    className="p-1 bg-dark-slate-800 border border-dark-slate-500 rounded"
                   >
                     <option value="Open">Open</option>
                     <option value="In Progress">In Progress</option>
@@ -136,20 +136,20 @@ const Dashboard: React.FC = () => {
 
       {/* Visible on mobile, hidden on desktop */}
       <div className="md:hidden space-y-4">
-        {reports.map((report) => (
+        {reports.map(report => (
           <div key={report.id} className="bg-dark-slate-700 rounded-lg p-4 space-y-3">
             <div className="flex justify-between items-start">
               <div>
-                <span className="text-sm text-gray-400">ID: {report.id}</span>
+                <span className="text-sm text-dark-slate-300">ID: {report.id}</span>
                 <h3 className="font-medium">{report.name}</h3>
-                <p className="text-sm text-gray-400">{report.email}</p>
-                <p className="text-sm text-gray-400">
-                  {new Date(report.createdAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
+                <p className="text-sm text-dark-slate-300">{report.email}</p>
+                <p className="text-sm text-dark-slate-300">
+                  {new Date(report.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
                   })}
                 </p>
               </div>
@@ -188,7 +188,7 @@ const Dashboard: React.FC = () => {
             <div className="pt-2">
               <select
                 value={report.status}
-                onChange={(e) => handleStatusChange(report.id, e.target.value)}
+                onChange={e => handleStatusChange(report.id, e.target.value)}
                 className="w-full p-2 bg-dark-slate-950 border border-dark-slate-700 rounded"
               >
                 <option value="Open">Open</option>

@@ -1,5 +1,5 @@
 // GOOGLEBUTTON.TSX
-import React from 'react';
+import React from "react";
 
 interface GoogleButtonProps {
   onClick: () => void;
@@ -8,7 +8,7 @@ interface GoogleButtonProps {
 const GoogleButton: React.FC<GoogleButtonProps> = ({ onClick }) => (
   <button
     aria-label="Sign in with Google"
-    className="flex items-center gap-4 border border-dark-slate-600 bg-gradient-to-b from-dark-slate-900 to-dark-slate-950 rounded-lg p-1 pr-5 transition-all duration-300 hover:from-dark-slate-800 hover:to-dark-slate-900"
+    className="flex items-center gap-4 border border-dark-slate-600 bg-gradient-to-b from-dark-slate-800 to-dark-slate-950 rounded-lg p-1 pr-5 transition-all duration-300 hover:from-dark-slate-700 hover:to-dark-slate-900"
     onClick={onClick}
   >
     <div className="flex items-center justify-center bg-white w-12 h-12 rounded-md">
@@ -33,7 +33,7 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({ onClick }) => (
         ></path>
       </svg>
     </div>
-    <span className="text-base font-semibold text-white tracking-wider">Google</span>
+    <span className="text-base font-semibold tracking-wider">Google</span>
   </button>
 );
 

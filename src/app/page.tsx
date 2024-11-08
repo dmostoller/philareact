@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useSession, signIn } from 'next-auth/react';
-import PrimaryButton from './../components/PrimaryButton';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useSession, signIn } from "next-auth/react";
+import PrimaryButton from "./../components/PrimaryButton";
 
-import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/outline';
-import DecorativeElements from '@/components/DecorativeElements';
+import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import DecorativeElements from "@/components/DecorativeElements";
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -16,21 +16,21 @@ const Home = () => {
     <div className="min-h-screen">
       <DecorativeElements />
       <section className="relative min-h-[80vh] w-full overflow-hidden">
-        <div className="mx-auto max-w-screen-2xl absolute inset-0 w-full h-full">
+        <div className="mx-auto max-w-screen-2xl absolute inset-0 w-full h-full mt-4">
           <Image
             src="/PhilaReact Background 3.png"
             alt="PhilaReact Logo"
             fill
-            className="object-cover rounded-b-3xl"
+            className="object-cover"
             sizes="100vw"
             priority
           />
           {/* Gradient overlay for better text clarity */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/85" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/50" />
         </div>
         <div className="relative z-10 container mx-auto px-4 md:px-16 lg:px-32 py-36 md:py-72 flex flex-col items-center md:items-start">
           <h1 className="text-3xl md:text-5xl font-bold text-white">
-            {status === 'authenticated' && (
+            {status === "authenticated" && (
               <div className="fade-in-up fade-in-up-delay-1 text-white text-2xl font-semibold mb-4 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
                 Welcome back, {session.user?.name}!
               </div>
@@ -147,10 +147,10 @@ const Home = () => {
             <h2 className="text-xl font-bold mb-4 text-center">Privacy Policy</h2>
             <p className="text-md mb-4">
               We value your privacy and are committed to protecting your personal information.
-              <br></br>Please review our{' '}
+              <br></br>Please review our{" "}
               <Link href="/privacy-policy">
                 <span className="underline">Privacy Policy</span>
-              </Link>{' '}
+              </Link>{" "}
               for more details.
             </p>
           </div>

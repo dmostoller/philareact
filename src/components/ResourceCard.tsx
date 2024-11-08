@@ -1,5 +1,5 @@
-'use client'; // Ensure this is a Client Component
-import Image from 'next/image';
+"use client"; // Ensure this is a Client Component
+import Image from "next/image";
 
 interface ResourceCardProps {
   title: string;

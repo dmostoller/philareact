@@ -1,5 +1,5 @@
 // GITHUBBUTTON.TSX
-import React from 'react';
+import React from "react";
 
 interface GithubButtonProps {
   onClick: () => void;
@@ -8,7 +8,7 @@ interface GithubButtonProps {
 const GithubButton: React.FC<GithubButtonProps> = ({ onClick }) => (
   <button
     aria-label="Sign in with GitHub"
-    className="flex items-center gap-4 border border-dark-slate-600 bg-gradient-to-b from-dark-slate-900 to-dark-slate-950 rounded-lg p-1 pr-5 transition-all duration-300 hover:from-dark-slate-800 hover:to-dark-slate-900"
+    className="flex items-center gap-4 border border-dark-slate-600 bg-gradient-to-b from-dark-slate-800 to-dark-slate-950 rounded-lg p-1 pr-5 transition-all duration-300 hover:from-dark-slate-700 hover:to-dark-slate-900"
     onClick={onClick}
   >
     <div className="flex items-center justify-center bg-white w-12 h-12 rounded-md">
@@ -25,7 +25,7 @@ const GithubButton: React.FC<GithubButtonProps> = ({ onClick }) => (
         ></path>
       </svg>
     </div>
-    <span className="text-base font-semibold text-white tracking-wider">GitHub</span>
+    <span className="text-base font-semibold tracking-wider">GitHub</span>
   </button>
 );
 

@@ -1,14 +1,14 @@
-'use client';
-import { Suspense } from 'react';
-import BugReportForm from '../../components/BugReportForm';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import { useRouter } from 'next/navigation';
+"use client";
+import { Suspense } from "react";
+import BugReportForm from "../../components/BugReportForm";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { useRouter } from "next/navigation";
 
 const BugReportContent = () => {
   const router = useRouter();
 
   const handleFormSubmitSuccess = () => {
-    router.push('/contribute');
+    router.push("/contribute");
   };
 
   return (
