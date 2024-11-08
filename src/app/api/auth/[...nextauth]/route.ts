@@ -1,15 +1,15 @@
-import NextAuth, { DefaultSession } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import GithubProvider from 'next-auth/providers/github';
-import { NextAuthOptions } from 'next-auth';
-import prisma from '../../../../lib/prisma';
+import NextAuth, { DefaultSession } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
+import { NextAuthOptions } from "next-auth";
+import prisma from "../../../../lib/prisma";
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       role: string;
-    } & DefaultSession['user'];
+    } & DefaultSession["user"];
   }
 }
 
@@ -17,45 +17,52 @@ const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     }),
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-    }),
+      clientSecret: process.env.GITHUB_SECRET!
+    })
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub!;
-        const adminEmails = process.env.ADMIN_EMAILS?.split(',') ?? [];
-        session.user.role = adminEmails.includes(session.user.email!) ? 'ADMIN' : 'USER';
+        const adminEmails = process.env.ADMIN_EMAILS?.split(",") ?? [];
+        session.user.role = adminEmails.includes(session.user.email!) ? "ADMIN" : "USER";
       }
       return session;
     },
-    async signIn({ user }) {
+    async jwt({ token, account }) {
+      // Add this callback to ensure the providerAccountId is passed to the token
+      if (account) {
+        token.sub = account.providerAccountId;
+      }
+      return token;
+    },
+    async signIn({ user, account }) {
       if (!user?.email) return false;
 
-      // Create the user if they don't exist
       await prisma.user.upsert({
         where: { email: user.email },
         update: {
           name: user.name,
+          id: account?.providerAccountId! // Update ID if it changes
         },
         create: {
-          id: user.id!,
+          id: account?.providerAccountId!,
           email: user.email,
-          name: user.name,
-        },
+          name: user.name
+        }
       });
 
       return true;
-    },
+    }
   },
   pages: {
-    signIn: '/auth/signin',
-  },
+    signIn: "/auth/signin"
+  }
 };
 
 const handler = NextAuth(authOptions);
