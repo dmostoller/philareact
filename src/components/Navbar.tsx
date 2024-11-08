@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,9 @@ import { usePathname } from 'next/navigation';
 import { SettingsGearIcon } from './icons';
 import { LogoutIcon } from './icons/logout';
 import { MenuIcon } from './icons/menu';
+import { GripIcon } from './icons/grip';
+import ThemePopup from './ThemePopup';
+
 // import { SunIcon } from "./icons/sun";
 // import { useTheme } from "../components/context/ThemeProvider";
 
@@ -16,7 +19,35 @@ const Navbar = () => {
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const [isThemePopupOpen, setIsThemePopupOpen] = useState(false);
+
   // const { theme, toggleTheme } = useTheme();
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'default';
+    }
+    return 'default';
+  });
+
+  const handleThemeChange = (theme: string) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    setCurrentTheme(theme);
+  };
+
+  // const toggleTheme = () => {
+  //   const themes = ['default', 'alpine', 'cobalt', 'cognac'];
+  //   const nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
+  //   const nextTheme = themes[nextIndex];
+
+  //   document.documentElement.setAttribute('data-theme', nextTheme);
+  //   localStorage.setItem('theme', nextTheme);
+  //   setCurrentTheme(nextTheme);
+  // };
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  }, [currentTheme]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -40,9 +71,13 @@ const Navbar = () => {
           <Link href="/" onClick={() => isMobileMenuOpen && setIsMobileMenuOpen(false)}>
             <HomeIcon />
           </Link>
-          {/* <button onClick={toggleTheme} title={`Theme: ${theme}`}>
-            <SunIcon />
-          </button> */}
+          <button
+            onClick={() => setIsThemePopupOpen(true)}
+            className="transition-colors"
+            aria-label="Open theme selector"
+          >
+            <GripIcon />
+          </button>
         </div>
         <div className="hidden md:flex align-center space-x-8">
           <Link href="/news" className={linkClasses('/news')}>
@@ -152,6 +187,12 @@ const Navbar = () => {
           )}
         </div>
       )}
+      <ThemePopup
+        isOpen={isThemePopupOpen}
+        onClose={() => setIsThemePopupOpen(false)}
+        onSelectTheme={handleThemeChange}
+        currentTheme={currentTheme}
+      />
     </nav>
   );
 };
