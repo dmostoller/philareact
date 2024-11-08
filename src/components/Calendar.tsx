@@ -11,6 +11,9 @@ import Link from "next/link";
 import PrimaryButton from "./PrimaryButton";
 import { toast } from "sonner";
 import { DeleteIcon } from "../components/icons/delete";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTicketAlt } from "@fortawesome/free-solid-svg-icons";
+import { CalendarCogIcon } from "./icons";
 
 const localizer = momentLocalizer(moment);
 
@@ -121,7 +124,12 @@ const EventCalendar: React.FC = () => {
   return (
     <>
       <div className="container mx-auto mt-6 p-6 bg-dark-slate-950 border-2 border-dark-slate-700 rounded-lg">
-        <h1 className="text-2xl font-semibold mb-6">Community Events</h1>
+        <h1 className="text-3xl font-semibold mb-6">
+          <div className="flex justify-center items-center">
+            <CalendarCogIcon />
+            Community Events
+          </div>
+        </h1>
         <Calendar
           localizer={localizer}
           events={events}
@@ -175,6 +183,12 @@ const EventCalendar: React.FC = () => {
             <PrimaryButton onClick={toggleFormVisibility}>
               {showForm ? "Hide Event Form" : "Create an Event"}
             </PrimaryButton>
+            <a href="https://www.eventbrite.com/o/philareact-102755209461" target="_blank" rel="noreferrer">
+              <button className="text-white bg-[#F05537] mt-2 ml-4 py-2 px-4 rounded-lg items-center justify-center hover:bg-[#D9472F] transition">
+                <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />
+                Visit Eventbrite
+              </button>
+            </a>
           </div>
           {showForm && (
             <div className="mx-4 md:max-w-3xl lg:max-w-2xl md:mx-auto p-4 border border-dark-slate-600 bg-dark-slate-900 rounded-lg mt-4">

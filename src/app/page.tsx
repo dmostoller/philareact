@@ -7,55 +7,65 @@ import { useSession, signIn } from "next-auth/react";
 import PrimaryButton from "./../components/PrimaryButton";
 
 import { CalendarIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import DecorativeElements from "@/components/DecorativeElements";
 
 const Home = () => {
   const { data: session, status } = useSession();
+
   return (
     <div className="min-h-screen">
-      <section className="py-16 px-4 flex justify-center">
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8 text-center md:text-left max-w-4xl">
-          <div className="col-span-1 ">
-            <div className="relative w-80 h-80 md:w-96 md:h-96 mx-auto md:mx-0">
-              <Image
-                src="/philly-react-4.png"
-                alt="PhilaReact Logo"
-                width={400}
-                height={400}
-                objectFit="contain"
-                className="rounded-full"
-              />
-            </div>
-          </div>
-
-          <div className="col-span-1">
-            <h1 className="text-4xl md:text-4xl font-bold">
-              {status === "authenticated" && (
-                <div className="text-dark-slate-100 text-2xl font-semibold mb-4">
-                  Hello, {session.user?.name}
-                </div>
-              )}
-              <span className="font-semibold font-xl text-dark-slate-200">Welcome to PhilaReact</span>
-            </h1>
-            <p className="text-lg md:text-xl mt-4 max-w-xl mx-auto md:mx-0">
-              A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.
-            </p>
-            <div className="mt-6 flex justify-center md:justify-start space-x-4">
-              {session ? (
-                <Link href="/dashboard">
-                  <PrimaryButton className="transition transform hover:scale-105 duration-300">
-                    Go to Dashboard
-                  </PrimaryButton>
-                </Link>
-              ) : (
-                <PrimaryButton
-                  onClick={() => signIn()}
-                  className="transition transform hover:scale-105 duration-300"
-                >
-                  Join the Community
+      <DecorativeElements />
+      <section className="relative min-h-[80vh] w-full overflow-hidden">
+        <div className="mx-auto max-w-screen-2xl absolute inset-0 w-full h-full">
+          <Image
+            src="/PhilaReact Background 3.png"
+            alt="PhilaReact Logo"
+            fill
+            className="object-cover rounded-b-3xl"
+            sizes="100vw"
+            priority
+          />
+          {/* Gradient overlay for better text clarity */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/85" />
+        </div>
+        <div className="relative z-10 container mx-auto px-4 md:px-16 lg:px-32 py-72 md:py-72 flex flex-col items-center md:items-start">
+          <h1 className="text-3xl md:text-5xl font-bold text-white">
+            {status === "authenticated" && (
+              <div className="fade-in-up fade-in-up-delay-1 text-white text-2xl font-semibold mb-4 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
+                Welcome back, {session.user?.name}!
+              </div>
+            )}
+            <span className="fade-in-up fade-in-up-delay-2 font-semibold font-xl text-white [text-shadow:_0_4px_6px_rgb(0_0_0_/_50%)]">
+              Welcome to PhilaReact
+            </span>
+          </h1>
+          <p className="fade-in-up fade-in-up-delay-2 text-md mt-2 text-white opacity-75 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
+            Philadelphia | React Community
+          </p>
+          <p className="fade-in-up fade-in-up-delay-2 text-lg md:text-xl mx-2 md:mx-0 mt-6 max-w-xl text-white text-center md:text-left font-medium [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
+            A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.
+          </p>
+          <div className="fade-in-up fade-in-up-delay-2 mt-8 space-x-4">
+            {session ? (
+              <Link href="/dashboard">
+                <PrimaryButton className="transition transform hover:scale-105 duration-300">
+                  Go to Dashboard
                 </PrimaryButton>
-              )}
-            </div>
+              </Link>
+            ) : (
+              <PrimaryButton
+                onClick={() => signIn()}
+                className="transition transform hover:scale-105 duration-300"
+              >
+                Join the Community
+              </PrimaryButton>
+            )}
           </div>
+          {!session && (
+            <p className="fade-in-up fade-in-up-delay-2 text-sm mt-4 text-white opacity-75">
+              Become part of the most vibrant React community in Philadelphia.
+            </p>
+          )}
         </div>
       </section>
 
@@ -75,8 +85,7 @@ const Home = () => {
               <li>Develop the website and build the community space together</li>
             </ul>
             <p className="text-lg px-4 text-center">
-              Ready to connect with fellow React developers in Philadelphia? Join our growing community today
-              and be part of something special!
+              Ready to connect with fellow React developers in Philadelphia? Join our growing community today!
             </p>
           </div>
         </div>

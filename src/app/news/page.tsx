@@ -1,9 +1,9 @@
-'use client'; // If required to ensure the page renders client-side
+"use client"; // If required to ensure the page renders client-side
 
-import { useEffect, useState, Suspense } from 'react';
-import LoadingSkeleton from '../../components/LoadingSkeleton';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useEffect, useState, Suspense } from "react";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
+import Link from "next/link";
+import Image from "next/image";
 
 function decodeCloudflareImageUrl(cloudflareUrl: string): string | null {
   const regex = /\/https%3A%2F%2F(.*)/;
@@ -30,7 +30,7 @@ interface Article {
 
 const Articles = ({ articles }: { articles: Article[] }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
-    {articles.map((article) => {
+    {articles.map(article => {
       const decodedProfileImageUrl = decodeCloudflareImageUrl(article.user.profile_image_90);
       return (
         <div
@@ -51,7 +51,7 @@ const Articles = ({ articles }: { articles: Article[] }) => (
           </div>
           <p className="text-sm text-dark-slate-100 mb-4">{article.description}</p>
           <div className="flex space-x-2 mb-4">
-            {article.tag_list.map((tag) => (
+            {article.tag_list.map(tag => (
               <span key={tag} className="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs">
                 {tag}
               </span>
@@ -77,9 +77,9 @@ export default function NewsPage() {
     try {
       const res = await fetch(`/api/news?page=${currentPage}`);
       const data = await res.json();
-      setArticles((prev) => [...prev, ...data]);
+      setArticles(prev => [...prev, ...data]);
     } catch (error) {
-      console.error('Error fetching articles:', error);
+      console.error("Error fetching articles:", error);
     } finally {
       setLoading(false);
     }
@@ -92,13 +92,13 @@ export default function NewsPage() {
   useEffect(() => {
     const handleScroll = () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !loading) {
-        setPage((prev) => prev + 1);
+        setPage(prev => prev + 1);
         setLoading(true);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [loading]);
 
   return (

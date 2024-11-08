@@ -9,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { CircleCheckIcon } from "../../components/icons/circle-check";
 import { DeleteIcon } from "../../components/icons/delete";
+import { MessageCircleIcon } from "@/components/icons/message";
 
 const CreatePostForm = dynamic(() => import("../../components/CreatePostForm"), { ssr: false });
 
@@ -142,13 +143,15 @@ const ForumPage: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-12">
+      <h2 className="text-3xl font-bold mb-6 text-center">
+        <div className="flex justify-center items-center">
+          <MessageCircleIcon />
+          Community Forum
+        </div>
+      </h2>
       <div className="flex flex-col md:flex-row md:space-x-6">
         {/* Threads Section */}
         <div className="w-full md:w-1/3 mb-8 md:mb-0">
-          <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
-            <span className="block md:hidden text-3xl">Forum</span>
-            <span className="hidden md:block">Threads</span>
-          </h2>
           {/* Horizontal scroll on mobile, vertical list on desktop */}
           <div className="relative">
             <ul className="mb-4 flex overflow-x-auto md:block md:overflow-visible pb-2 md:pb-0 space-x-2 md:space-x-0 scrollbar-hide">
@@ -169,7 +172,7 @@ const ForumPage: React.FC = () => {
                   border
                   ${
                     selectedThread?.id === thread.id
-                      ? "bg-dark-slate-700 border-dark-slate-500"
+                      ? "bg-dark-slate-600 border-dark-slate-500"
                       : "bg-dark-slate-900 border-dark-slate-600"
                   }
                 `}
@@ -191,7 +194,7 @@ const ForumPage: React.FC = () => {
 
           {/* New Thread Form */}
           {session && (
-            <div className="relative w-full px-2 md:px-0">
+            <div className="w-full px-2 md:px-0">
               <form
                 onSubmit={e => {
                   e.preventDefault();
@@ -200,29 +203,30 @@ const ForumPage: React.FC = () => {
                     inputRef.current.value = "";
                   }
                 }}
-                className="flex items-center"
               >
-                <input
-                  ref={inputRef}
-                  type="text"
-                  placeholder="New thread title"
-                  className="flex-1 p-2 md:p-2 border-4 border-r-4 rounded-l-md bg-dark-slate-950 border-dark-slate-600 focus:outline-none  focus:ring-gray-500"
-                  onKeyDown={e => {
-                    if (e.key === "Enter" && inputRef.current && inputRef.current.value.trim()) {
-                      e.preventDefault();
-                      const form = e.currentTarget.closest("form");
-                      if (form) {
-                        form.requestSubmit();
+                <div className="border-2 border-dark-slate-600 rounded-md flex">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    placeholder="New thread title"
+                    className="flex-1 p-2 md:p-2 bg-dark-slate-950 focus:outline-none"
+                    onKeyDown={e => {
+                      if (e.key === "Enter" && inputRef.current && inputRef.current.value.trim()) {
+                        e.preventDefault();
+                        const form = e.currentTarget.closest("form");
+                        if (form) {
+                          form.requestSubmit();
+                        }
                       }
-                    }
-                  }}
-                />
-                <button
-                  type="submit"
-                  className="text-dark-slate-400 border-y-2 border-r-2 rounded-r bg-dark-slate-950 border-dark-slate-600 hover:bg-dark-slate-800 transition-colors"
-                >
-                  <CircleCheckIcon />
-                </button>
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    className="text-dark-slate-400 bg-dark-slate-950 hover:bg-dark-slate-800 transition-colors"
+                  >
+                    <CircleCheckIcon />
+                  </button>
+                </div>
               </form>
             </div>
           )}
@@ -230,17 +234,18 @@ const ForumPage: React.FC = () => {
 
         {/* Posts Section */}
         <div className="w-full md:w-2/3">
-          {selectedThread && (
-            <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">{selectedThread.title}</h2>
-          )}
-
           {session && selectedThread && (
             <div className="mb-6">
               <CreatePostForm onPostCreated={handlePostCreated} threadId={selectedThread.id} />
             </div>
           )}
+          {selectedThread && (
+            <h2 className="text-xl border border-dark-slate-700 mx-2 p-4 bg-dark-slate-900 rounded-lg font-bold mb-6 text-center">
+              {selectedThread.title}
+            </h2>
+          )}
 
-          <div className="grid grid-cols-1 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 gap-4">
             {loading ? (
               <>
                 {Array(3)
@@ -284,7 +289,7 @@ const ForumPage: React.FC = () => {
                     ))}
                   </>
                 ) : (
-                  <div className="px-4 py-16 md:py-28 text-center bg-dark-slate-900 border border-dark-slate-700 rounded-lg">
+                  <div className="px-4 py-16 md:py-28 text-center mx-2 bg-dark-slate-900 border border-dark-slate-700 rounded-lg">
                     <p className="text-gray-400">
                       No posts in this thread yet.
                       {session ? (
