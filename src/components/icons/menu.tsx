@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import type { Variants } from "framer-motion";
-import { motion } from "framer-motion";
+import type { Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const lineVariants: Variants = {
   closed: {
     rotate: 0,
     y: 0,
-    opacity: 1
+    opacity: 1,
   },
   open: (custom: number) => ({
     rotate: custom === 1 ? 45 : custom === 3 ? -45 : 0,
     y: custom === 1 ? 6 : custom === 3 ? -6 : 0,
     opacity: custom === 2 ? 0 : 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 260,
-      damping: 20
-    }
-  })
+      damping: 20,
+    },
+  }),
 };
 
 interface MenuIconProps {
@@ -39,8 +39,8 @@ const MenuIcon = ({ isOpen, onToggle }: MenuIconProps) => {
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="34"
-        height="34"
+        width="32"
+        height="32"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -54,7 +54,7 @@ const MenuIcon = ({ isOpen, onToggle }: MenuIconProps) => {
           x2="20"
           y2="6"
           variants={lineVariants}
-          animate={isOpen ? "open" : "closed"}
+          animate={isOpen ? 'open' : 'closed'}
           custom={1}
         />
         <motion.line
@@ -63,7 +63,7 @@ const MenuIcon = ({ isOpen, onToggle }: MenuIconProps) => {
           x2="20"
           y2="12"
           variants={lineVariants}
-          animate={isOpen ? "open" : "closed"}
+          animate={isOpen ? 'open' : 'closed'}
           custom={2}
         />
         <motion.line
@@ -72,7 +72,7 @@ const MenuIcon = ({ isOpen, onToggle }: MenuIconProps) => {
           x2="20"
           y2="18"
           variants={lineVariants}
-          animate={isOpen ? "open" : "closed"}
+          animate={isOpen ? 'open' : 'closed'}
           custom={3}
         />
       </svg>

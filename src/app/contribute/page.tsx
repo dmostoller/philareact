@@ -1,31 +1,12 @@
 'use client';
-import { Suspense, useState, useEffect } from 'react';
-import BugReportForm from '../../components/BugReportForm';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import PrimaryButton from '../../components/PrimaryButton';
 import CopyablePre from '../../components/CopyablePre';
-import { useSearchParams } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 const ContributePageContent = () => {
-  const [showForm, setShowForm] = useState(false);
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    if (searchParams.get('showForm') === 'true') {
-      setShowForm(true);
-    }
-  }, [searchParams]);
-
-  const toggleFormVisibility = () => {
-    setShowForm(!showForm);
-  };
-
-  const handleFormSubmitSuccess = () => {
-    setShowForm(false);
-  };
-
   return (
     <div className="container mx-auto py-4 px-2">
       <div className="mx-auto max-w-5xl px-4 md:px-6 py-4 md:py-6 relative">
@@ -105,19 +86,11 @@ const ContributePageContent = () => {
           </li>
         </ul>
         <div className="text-center mb-6">
-          <PrimaryButton onClick={toggleFormVisibility}>
-            {showForm ? 'Hide Bug Report Form' : 'Report a Bug'}
-          </PrimaryButton>
+          <Link href="/bug-report">
+            <PrimaryButton>Report a Bug</PrimaryButton>
+          </Link>
         </div>
       </div>
-      {showForm && (
-        <div className="mb-6 mt-8 w-full bg-dark-slate-800 max-w-3xl mx-auto rounded-lg border border-dark-slate-500 p-4 md:p-6">
-          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-center">Report a Bug</h2>
-          <div className="max-w-3xl mx-auto">
-            <BugReportForm onSubmitSuccess={handleFormSubmitSuccess} />
-          </div>
-        </div>
-      )}
     </div>
   );
 };
