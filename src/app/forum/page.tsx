@@ -1,39 +1,21 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import PostCard from "../../components/PostCard";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { CircleCheckIcon } from "../../components/icons/circle-check";
-import { DeleteIcon } from "../../components/icons/delete";
 import { MessageCircleIcon } from "@/components/icons/message";
-import { ChevronLeftIcon, ChevronRightIcon, ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/24/solid";
+import { CalendarArrowDown, CalendarArrowUp, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
+import { Post, Thread } from "@/lib/types";
+import ThreadList from "../../components/ThreadList";
+import ThreadForm from "../../components/ThreadForm";
+import { Drawer } from "vaul";
 
 const CreatePostForm = dynamic(() => import("../../components/CreatePostForm"), { ssr: false });
-
-interface Post {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  upvotes: number;
-  downvotes: number;
-  createdAt: string;
-  replies: {
-    id: number;
-    content: string;
-    author: string;
-    createdAt: string;
-  }[];
-}
-interface Thread {
-  id: number;
-  title: string;
-  posts: Post[];
-}
 
 const ForumPage: React.FC = () => {
   const [threads, setThreads] = useState<Thread[]>([]);
@@ -45,8 +27,6 @@ const ForumPage: React.FC = () => {
   const [threadsLoading, setThreadsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sortDescending, setSortDescending] = useState(true);
-
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchThreads = async () => {
@@ -97,7 +77,94 @@ const ForumPage: React.FC = () => {
       setPosts([]);
     } catch (error) {
       console.error("Error creating thread:", error);
-      alert("An error occurred while creating the thread.");
+      toast.error("An error occurred while creating the thread.");
+    }
+  };
+
+  const handleDeleteThread = async (threadId: number) => {
+    if (!session) {
+      toast.error("You must be logged in to delete a thread.");
+      return;
+    }
+
+    const promise = new Promise((resolve, reject) => {
+      const confirmToast = toast("Delete Thread?", {
+        description: "Are you sure you want to delete this thread and all its posts?",
+        action: {
+          label: "Delete",
+          onClick: async () => {
+            try {
+              const response = await fetch(`/api/forum/threads`, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  id: threadId,
+                  userRole: session.user.role
+                })
+              });
+
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+
+              // Update local state
+              setThreads(threads.filter(thread => thread.id !== threadId));
+              if (selectedThread?.id === threadId) {
+                setSelectedThread(null);
+                setPosts([]);
+              }
+
+              resolve("deleted");
+              toast.dismiss(confirmToast);
+            } catch (error) {
+              console.error("Error deleting thread:", error);
+              reject(error);
+              toast.dismiss(confirmToast);
+            }
+          }
+        },
+        cancel: {
+          label: "Cancel",
+          onClick: () => {
+            reject(new Error("Action canceled"));
+            toast.dismiss(confirmToast);
+          }
+        }
+      });
+    });
+
+    toast.promise(promise, {
+      loading: "Deleting thread...",
+      success: "Thread deleted successfully",
+      error: error => (error.message === "Action canceled" ? "Action canceled" : "Failed to delete thread")
+    });
+  };
+
+  const handleUpdateThread = async (threadId: number, newTitle: string) => {
+    try {
+      const response = await fetch(`/api/forum/threads`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: threadId, title: newTitle, userRole: session?.user?.role })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update thread");
+      }
+
+      // Update threads list with new title
+      setThreads(threads.map(thread => (thread.id === threadId ? { ...thread, title: newTitle } : thread)));
+      if (selectedThread?.id === threadId) {
+        setSelectedThread(prev => (prev ? { ...prev, title: newTitle } : null));
+      }
+      toast.success("Thread updated successfully");
+    } catch (error) {
+      console.error("Error updating thread:", error);
+      toast.error("Failed to update thread");
     }
   };
 
@@ -165,126 +232,53 @@ const ForumPage: React.FC = () => {
       <div className="flex flex-col md:flex-row md:space-x-6">
         {/* Threads Section */}
         <div className="w-full md:w-1/3 mb-8 md:mb-0">
-          {/* Horizontal scroll on mobile, vertical list on desktop */}
-          <div className="relative">
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-dark-slate-950 to-transparent z-10 pointer-events-none md:hidden flex items-center">
-              <ChevronLeftIcon className="h-8 w-8 text-white/30 animate-pulse" />
-            </div>
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-dark-slate-950 to-transparent z-10 pointer-events-none md:hidden flex items-center justify-end">
-              <ChevronRightIcon className="h-8 w-8 text-white/30 animate-pulse" />
-            </div>
-            <ul className="mb-4 flex overflow-x-auto md:block md:overflow-visible pb-2 md:pb-0 space-x-2 md:space-x-0 scrollbar-hide">
-              {threadsLoading ? (
-                // Loading skeletons
-                Array(5)
-                  .fill(0)
-                  .map((_, index) => (
-                    <li
-                      key={`skeleton-${index}`}
-                      className="flex-shrink-0 w-[80vw] md:w-full relative mb-0 md:mb-2 px-4 py-6 md:py-4 rounded border border-dark-slate-600 bg-dark-slate-900"
-                    >
-                      <Skeleton height={24} baseColor="#737373" highlightColor="#454545" duration={2} />
-                    </li>
-                  ))
-              ) : (
-                <>
-                  {threads.map(thread => (
-                    <li
-                      key={thread.id}
-                      ref={el => {
-                        if (selectedThread?.id === thread.id && el) {
-                          el.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                            inline: "center"
-                          });
-                        }
-                      }}
-                      className={`
-                  flex-shrink-0 
-                  w-[80vw] 
-                  md:w-full 
-                  relative 
-                  mb-0 
-                  md:mb-2 
-                  cursor-pointer 
-                  px-4
-                  py-6
-                  md:py-4
-                  font-semibold 
-                  rounded 
-                  border
-                  ${
-                    selectedThread?.id === thread.id
-                      ? "bg-dark-slate-600 border-dark-slate-500"
-                      : "bg-dark-slate-900 border-dark-slate-600"
-                  }
-                `}
-                      onClick={() => handleThreadSelect(thread)}
-                    >
-                      <div className="truncate pr-10">{thread.title}</div>
-                      {isAdmin && (
-                        <button
-                          type="button"
-                          className="absolute right-2 top-1/2 -translate-y-2/3 size-9 text-dark-slate-400 hover:text-dark-slate-300"
-                        >
-                          <DeleteIcon />
-                        </button>
-                      )}
-                    </li>
-                  ))}
-                </>
-              )}
-            </ul>
+          {/* Desktop View */}
+          <div className="hidden md:block">
+            <ThreadList
+              threads={threads}
+              threadsLoading={threadsLoading}
+              selectedThread={selectedThread}
+              handleThreadSelect={handleThreadSelect}
+              isAdmin={isAdmin}
+              handleDeleteThread={handleDeleteThread}
+              handleUpdateThread={handleUpdateThread}
+            />
+            {isAdmin && <ThreadForm onSubmit={handleCreateThread} placeholder="New thread title" />}
           </div>
 
-          {/* New Thread Form */}
-          {session && (
-            <div className="w-full px-2 md:px-0">
-              <form
-                onSubmit={e => {
-                  e.preventDefault();
-                  if (inputRef.current && inputRef.current.value.trim()) {
-                    handleCreateThread(inputRef.current.value.trim());
-                    inputRef.current.value = "";
-                  }
-                }}
-              >
-                <div className="border-2 border-dark-slate-600 rounded-md flex">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    placeholder="New thread title"
-                    className="flex-1 p-2 md:p-2 bg-dark-slate-950 focus:outline-none"
-                    onKeyDown={e => {
-                      if (e.key === "Enter" && inputRef.current && inputRef.current.value.trim()) {
-                        e.preventDefault();
-                        const form = e.currentTarget.closest("form");
-                        if (form) {
-                          form.requestSubmit();
-                        }
-                      }
+          {/* Mobile Drawer */}
+          <Drawer.Root>
+            <Drawer.Trigger className="md:hidden w-full bg-dark-slate-900 border border-dark-slate-600 rounded-lg p-4 flex items-center justify-between">
+              <span>Show Channels</span>
+              <ChevronRight />
+            </Drawer.Trigger>
+            <Drawer.Portal>
+              <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+              <Drawer.Content className="bg-dark-slate-900 flex flex-col rounded-t-[10px] h-[96vh] mt-24 fixed bottom-0 left-0 right-0">
+                <div className="p-4 bg-dark-slate-800 rounded-t-[10px] flex-1 overflow-y-auto">
+                  <div className="w-12 h-1.5 bg-dark-slate-600 rounded-full mx-auto mb-8" />
+                  <ThreadList
+                    threads={threads}
+                    threadsLoading={threadsLoading}
+                    selectedThread={selectedThread}
+                    handleThreadSelect={thread => {
+                      handleThreadSelect(thread);
+                      const drawerClose = document.querySelector("[data-vaul-drawer-close]");
+                      if (drawerClose instanceof HTMLElement) drawerClose.click();
                     }}
+                    isAdmin={isAdmin}
+                    handleDeleteThread={handleDeleteThread}
+                    handleUpdateThread={handleUpdateThread}
                   />
-                  <button
-                    type="submit"
-                    className="text-dark-slate-400 bg-dark-slate-950 hover:bg-dark-slate-800 transition-colors"
-                  >
-                    <CircleCheckIcon />
-                  </button>
+                  {isAdmin && <ThreadForm onSubmit={handleCreateThread} placeholder="New channel name" />}
                 </div>
-              </form>
-            </div>
-          )}
+              </Drawer.Content>
+            </Drawer.Portal>
+          </Drawer.Root>
         </div>
 
         {/* Posts Section */}
         <div className="w-full md:w-2/3">
-          {session && selectedThread && (
-            <div className="mb-6">
-              <CreatePostForm onPostCreated={handlePostCreated} threadId={selectedThread.id} />
-            </div>
-          )}
           {selectedThread && (
             <div className="flex flex-col sm:flex-row items-center sm:justify-between mb-6 gap-4">
               <h2 className="text-xl border border-dark-slate-700 p-4 bg-dark-slate-900 rounded-lg font-bold w-full sm:flex-1 text-center">
@@ -296,17 +290,21 @@ const ForumPage: React.FC = () => {
               >
                 {sortDescending ? (
                   <>
-                    Newest First <ArrowDownIcon className="h-5 w-5" />
+                    Newest First <CalendarArrowDown />
                   </>
                 ) : (
                   <>
-                    Oldest First <ArrowUpIcon className="h-5 w-5" />
+                    Oldest First <CalendarArrowUp />
                   </>
                 )}
               </button>
             </div>
           )}
-
+          {session && selectedThread && (
+            <div>
+              <CreatePostForm onPostCreated={handlePostCreated} threadId={selectedThread.id} />
+            </div>
+          )}
           <div className="grid grid-cols-1 gap-4">
             {loading ? (
               <>

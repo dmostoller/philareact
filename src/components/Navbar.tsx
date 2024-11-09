@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { LogIn } from "lucide-react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { HomeIcon } from "./icons/home";
 import { usePathname } from "next/navigation";
@@ -99,9 +98,11 @@ const Navbar = () => {
                 hover:px-4
                 transition-all duration-300
                 py-1
-                font-semibold"
+                font-semibold
+                flex
+                items-center"
             >
-              <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
+              <LogIn className="mr-2" />
               Login
             </button>
           )}
@@ -150,20 +151,10 @@ const Navbar = () => {
                 signIn();
                 toggleMobileMenu();
               }}
-              className="mt-8 px-2 button
-                text-dark-slate-100
-                hover:border-b-2
-                hover:border-foreground
-                hover:text-foreground
-                hover:px-4
-                flex
-                items-center
-                transition-all duration-300
-                py-1
-                text-3xl
-                font-semibold"
+              className="mt-8 px-2 button text-dark-slate-100 hover:border-b-2 hover:border-foreground hover:text-foreground hover:px-4 flex
+                items-center transition-all duration-300 py-1 text-3xl font-semibold"
             >
-              <FontAwesomeIcon icon={faSignInAlt} className="mr-2 w-8 h-8" />
+              <LogIn className="mr-2 w-8 h-8" />
               Login
             </button>
           )}

@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
 import Link from "next/link";
 import Image from "next/image";
+import { NewspaperIcon } from "lucide-react";
 
 function decodeCloudflareImageUrl(cloudflareUrl: string): string | null {
   const regex = /\/https%3A%2F%2F(.*)/;
@@ -103,7 +104,12 @@ export default function NewsPage() {
 
   return (
     <section className="container mx-auto py-12">
-      <h1 className="text-3xl font-bold text-center mb-10">Latest React & Next.js Articles</h1>
+      <h1 className="text-3xl font-bold text-center mb-10">
+        <div className="flex justify-center items-center">
+          <NewspaperIcon size={28} className="mr-2" />
+          Latest React & Next.js Articles
+        </div>
+      </h1>
       <Suspense fallback={<LoadingSkeleton />}>
         <Articles articles={articles} />
         {loading && <LoadingSkeleton />}

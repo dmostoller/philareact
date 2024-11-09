@@ -4,7 +4,6 @@
 import { useState } from "react";
 import PrimaryButton from "./PrimaryButton";
 import { toast } from "sonner";
-
 interface BugReportFormProps {
   onSubmitSuccess: () => void;
 }

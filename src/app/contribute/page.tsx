@@ -4,13 +4,17 @@ import Link from "next/link";
 import PrimaryButton from "../../components/PrimaryButton";
 import CopyablePre from "../../components/CopyablePre";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { GitPullRequestIcon } from "@/components/icons/gitpull";
 
 const ContributePageContent = () => {
   return (
     <div className="container mx-auto py-4 px-2 mt-2">
       <div className="mx-auto max-w-5xl px-4 md:px-6 py-4 md:py-6 relative">
         <h1 className="text-3xl font-bold mb-6 md:mb-8 pr-16 md:pr-0 text-center">
-          Contribute to PhilaReact
+          <div className="flex justify-center items-center">
+            <GitPullRequestIcon />
+            Contribute to PhilaReact
+          </div>
         </h1>
         <div className="absolute top-0 right-0 mt-4 mr-4 md:mt-6 md:mr-6">
           <Link href="https://github.com/dmostoller/philareact" target="_blank" rel="noopener noreferrer">
