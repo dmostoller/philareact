@@ -8,14 +8,14 @@ interface ThemePopupProps {
 
 const ThemePopup = ({ isOpen, onClose, onSelectTheme, currentTheme }: ThemePopupProps) => {
   const themes = [
-    { name: "default", color: "#454545" },
+    { name: "black", color: "#000000" },
     { name: "light", color: "#e7e7e7" },
-    { name: "alpine", color: "#6d5416" },
     { name: "forest-green", color: "#067513" },
     { name: "cobalt", color: "#0842c5" },
     { name: "cognac", color: "#a92e0f" },
     { name: "purple", color: "#8000cb" },
-    { name: "persian-green", color: "#0a6565" }
+    { name: "persian-green", color: "#0a6565" },
+    { name: "greyscale", color: "#454545" }
   ];
 
   if (!isOpen) return null;

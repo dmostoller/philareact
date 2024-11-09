@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import LoadingSpinner from "../../../../components/LoadingSpinner";
 import GoogleButton from "../../../../components/GoogleButton";
 import GithubButton from "@/components/GithubButton";
-import Link from "next/link";
 
 export default function SignInPage() {
   const { status } = useSession();
@@ -31,7 +30,7 @@ export default function SignInPage() {
         </div>
 
         <div className="space-y-6">
-          <div className="py-6 border border-dark-slate-600 rounded-lg bg-dark-slate-700">
+          <div className="py-8 border border-dark-slate-600 rounded-lg bg-dark-slate-700">
             <h2 className="text-lg font-semibold mb-4 text-center">Continue with</h2>
             <div className="flex justify-center space-x-4">
               <GoogleButton onClick={() => signIn("google")} />
@@ -53,10 +52,14 @@ export default function SignInPage() {
 
         <div className="text-center text-sm text-dark-slate-200">
           <p>
-            Questions?{" "}
-            <Link href="/forum" className="text-blue-400 hover:text-blue-300">
-              Ask the community
-            </Link>
+            Need help?{" "}
+            <a
+              href="mailto:support@philareact.org"
+              className="text-blue-400 hover:text-blue-300"
+              title="Email Support"
+            >
+              contact support
+            </a>
           </p>
         </div>
       </div>
