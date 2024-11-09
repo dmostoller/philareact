@@ -107,7 +107,7 @@ export default function NewsPage() {
       <h1 className="text-3xl font-bold text-center mb-10">
         <div className="flex justify-center items-center">
           <NewspaperIcon size={28} className="mr-2" />
-          Latest React & Next.js Articles
+          React & Next.js Articles
         </div>
       </h1>
       <Suspense fallback={<LoadingSkeleton />}>

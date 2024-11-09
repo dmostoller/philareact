@@ -12,7 +12,7 @@ const resources = [
     title: "Next.js Documentation",
     description: "The official Next.js documentation for building full-stack React applications.",
     link: "https://nextjs.org/docs",
-    logoSrc: "https://cdn.worldvectorlogo.com/logos/next-js.svg" // Placeholder for the Next.js logo
+    logoSrc: "/nextjs-icon-svgrepo-com.svg"
   },
   {
     title: "JavaScript Info",
@@ -68,7 +68,7 @@ export default function ResourcesPage() {
       <h1 className="text-3xl font-bold text-center mb-10">
         <div className="flex justify-center items-center">
           <Library size={28} className="mr-2" />
-          React & Front-End Resources
+          Front-End Resources
         </div>
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-2">
