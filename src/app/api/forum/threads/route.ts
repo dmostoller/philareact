@@ -8,9 +8,13 @@ export async function GET() {
       include: {
         posts: {
           include: {
-            replies: {},
             votes: true,
-            author: false,
+            author: true,
+            replies: {
+              include: {
+                author: true,
+              },
+            },
           },
         },
       },
