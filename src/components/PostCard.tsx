@@ -7,6 +7,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import { toast } from 'sonner';
 import UserAvatar from './UserAvatar';
 import { Reply } from '@/lib/types';
+import { MessageCircleReply, MessageCircleX } from 'lucide-react';
 
 interface PostCardProps {
   post: {
@@ -251,7 +252,12 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
   return (
     <div className="bg-dark-slate-900 border border-dark-slate-700 p-6 shadow-md rounded-lg mx-0 mb-4 relative">
       <div className="flex items-start gap-4">
-        <UserAvatar name={post.author} size={75} />
+        <span className="block md:hidden">
+          <UserAvatar name={post.author} size={50} />
+        </span>
+        <span className="hidden md:block">
+          <UserAvatar name={post.author} size={75} />
+        </span>
         <div className="flex-1">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold mb-2 mr-8">{post.title}</h2>
@@ -266,16 +272,21 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
             Posted by <span className="font-medium">{post.author}</span> on{' '}
             {new Date(post.createdAt).toLocaleString()}
           </p>
-          <div className="flex items-center mt-2">
-            <button onClick={handleUpvote} className="flex items-center">
-              <UpvoteIcon />
-              <span className="ml-1 font-medium">{upvotes}</span>
-            </button>
-            <button onClick={handleDownvote} className="flex items-center ml-4">
-              <DownvoteIcon />
-              <span className="ml-1 font-medium">{downvotes}</span>
-            </button>
-          </div>
+          {session && (
+            <div className="flex items-center mt-2">
+              <button onClick={handleUpvote} className="flex items-center">
+                <UpvoteIcon />
+                <span className="ml-1 font-medium">{upvotes}</span>
+              </button>
+              <button onClick={handleDownvote} className="flex items-center ml-4">
+                <DownvoteIcon />
+                <span className="ml-1 font-medium">{downvotes}</span>
+              </button>
+              <button onClick={() => setShowReplyForm(!showReplyForm)} className="ml-6">
+                {showReplyForm ? <MessageCircleX size={32} /> : <MessageCircleReply size={32} />}
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="mt-4">
@@ -309,10 +320,6 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
       </div>
       {session && (
         <>
-          <PrimaryButton onClick={() => setShowReplyForm(!showReplyForm)} className="w-full mt-4">
-            {showReplyForm ? 'Cancel Reply' : 'Reply'}
-          </PrimaryButton>
-
           {showReplyForm && (
             <form onSubmit={handleReplySubmit} className="mt-4">
               <textarea

@@ -15,6 +15,7 @@ import ThreadList from '../../components/ThreadList';
 import ThreadForm from '../../components/ThreadForm';
 import { Drawer } from 'vaul';
 import PrimaryButton from '../../components/PrimaryButton';
+import { MessageCirclePlus, ChevronsUp } from 'lucide-react';
 
 const CreatePostForm = dynamic(() => import('../../components/CreatePostForm'), { ssr: false });
 
@@ -326,6 +327,41 @@ const ForumPage: React.FC = () => {
           </Drawer.Root>
         </div>
 
+        <div>
+          <Drawer.Root>
+            <Drawer.Trigger>
+              <span
+                className="fixed bottom-6 right-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-3 rounded-full shadow-lg 
+               hover:bg-dark-slate-200 hover:text-dark-slate-900
+               transition-colors duration-200 z-50"
+              >
+                <MessageCirclePlus aria-hidden="true" />
+              </span>
+            </Drawer.Trigger>
+            <Drawer.Portal>
+              <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+              <Drawer.Content className="bg-dark-slate-900 flex flex-col rounded-t-[10px] h-[96vh] mt-24 fixed bottom-0 left-0 right-0">
+                <div className="p-4 bg-dark-slate-800 rounded-t-[10px] flex-1 overflow-y-auto">
+                  <div className="w-12 h-1.5 bg-dark-slate-600 rounded-full mx-auto mb-8" />
+                  {selectedThread ? (
+                    <CreatePostForm
+                      onPostCreated={(post) => {
+                        handlePostCreated(post);
+                        const drawerClose = document.querySelector('[data-vaul-drawer-close]');
+                        if (drawerClose instanceof HTMLElement) drawerClose.click();
+                      }}
+                      threadId={selectedThread.id}
+                      defaultOpen={true}
+                    />
+                  ) : (
+                    <div className="text-center text-dark-slate-400">Please select a channel first</div>
+                  )}
+                </div>
+              </Drawer.Content>
+            </Drawer.Portal>
+          </Drawer.Root>
+        </div>
+
         {/* Posts Section */}
         <div className="w-full md:w-2/3">
           {selectedThread && (
@@ -356,7 +392,7 @@ const ForumPage: React.FC = () => {
             </>
           )}
           {session && selectedThread && (
-            <div>
+            <div className="hidden md:block">
               <CreatePostForm onPostCreated={handlePostCreated} threadId={selectedThread.id} />
             </div>
           )}
@@ -425,6 +461,15 @@ const ForumPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed bottom-6 left-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-3 rounded-full shadow-lg 
+               hover:bg-dark-slate-200 hover:text-dark-slate-900
+               transition-colors duration-200 z-50"
+      >
+        <ChevronsUp aria-hidden="true" />
+      </button>
     </div>
   );
 };
