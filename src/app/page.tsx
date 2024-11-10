@@ -18,8 +18,8 @@ const Home = () => {
       <section className="relative min-h-[80vh] w-full overflow-hidden">
         <div className="mx-auto max-w-screen-2xl absolute inset-0 w-full h-full mt-4">
           <Image
-            src="/PhilaReact Background 3.png"
-            alt="PhilaReact Logo"
+            src="/PhilaReact-Background-3.png"
+            alt="PhilaReact Background"
             fill
             className="object-cover"
             sizes="100vw"
