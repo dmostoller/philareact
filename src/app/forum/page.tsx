@@ -431,8 +431,7 @@ const ForumPage: React.FC = () => {
           <Drawer.Trigger>
             <span
               className="fixed bottom-6 right-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-4 rounded-full shadow-lg 
-               hover:bg-dark-slate-200 hover:text-dark-slate-900
-               transition-colors duration-200 z-50"
+               hover:bg-dark-slate-200 hover:text-dark-slate-900 z-999"
             >
               <MessageCirclePlus aria-hidden="true" size={32} />
             </span>
@@ -464,8 +463,7 @@ const ForumPage: React.FC = () => {
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         className="fixed bottom-6 left-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-4 rounded-full shadow-lg 
-               hover:bg-dark-slate-200 hover:text-dark-slate-900
-               transition-colors duration-200 z-50"
+               hover:bg-dark-slate-200 hover:text-dark-slate-900 z-999"
       >
         <ChevronsUp aria-hidden="true" size={32} />
       </button>
