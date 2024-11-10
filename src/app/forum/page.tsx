@@ -332,12 +332,15 @@ const ForumPage: React.FC = () => {
           {selectedThread && (
             <>
               <div className="flex flex-col sm:flex-row items-center sm:justify-between mb-4 gap-4">
-                <h2 className="text-xl border border-dark-slate-700 p-4 bg-dark-slate-900 rounded-lg font-bold w-full sm:flex-1 text-center">
+                <h2 className="text-2xl border border-dark-slate-700 p-4 bg-dark-slate-900 rounded-lg font-bold w-full sm:flex-1 text-center">
                   {selectedThread.title}
+                  <div className="block md:hidden text-sm text-dark-slate-100">
+                    {selectedThread.description || 'No description provided'}
+                  </div>
                 </h2>
                 <button
                   onClick={() => setSortDescending(!sortDescending)}
-                  className="w-full sm:w-auto p-4 bg-dark-slate-900 border border-dark-slate-700 hover:bg-dark-slate-700 rounded-lg flex items-center justify-center sm:justify-start gap-2 text-lg font-normal"
+                  className="hidden md:flex p-4 bg-dark-slate-900 border border-dark-slate-700 hover:bg-dark-slate-700 rounded-lg items-center gap-2 text-lg font-normal"
                 >
                   {sortDescending ? (
                     <>
@@ -351,7 +354,7 @@ const ForumPage: React.FC = () => {
                 </button>
               </div>
 
-              <div className="relative text-md font-medium text-center border border-dark-slate-700 p-4 bg-dark-slate-900 rounded-lg w-full mb-4">
+              <div className="hidden md:block relative text-md font-medium text-center border border-dark-slate-700 p-4 bg-dark-slate-900 rounded-lg w-full mb-4">
                 {selectedThread.description || 'No description provided'}
               </div>
             </>

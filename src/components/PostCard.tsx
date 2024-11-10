@@ -262,7 +262,7 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold mb-2 mr-8">{post.title}</h2>
             {(session?.user.name === post.author || session?.user.role === 'ADMIN') && (
-              <button onClick={handleDeletePost} className="text-dark-slate-400 hover:text-dark-slate-300">
+              <button onClick={handleDeletePost} className="text-dark-slate-300 hover:text-dark-slate-200">
                 <DeleteIcon />
               </button>
             )}
