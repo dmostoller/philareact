@@ -6,10 +6,10 @@ export async function GET() {
   try {
     const posts = await prisma.post.findMany({
       include: {
-        author: true, // Include author details
+        author: true,
         replies: {
           include: {
-            author: true, // Include reply author details
+            author: true,
           },
         },
       },
