@@ -6,7 +6,13 @@ export async function GET() {
   try {
     const threads = await prisma.thread.findMany({
       include: {
-        posts: true,
+        posts: {
+          include: {
+            replies: {},
+            votes: true,
+            author: false,
+          },
+        },
       },
     });
     return NextResponse.json(threads);

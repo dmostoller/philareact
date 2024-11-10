@@ -4,17 +4,24 @@ import prisma from '../../../../lib/prisma';
 
 export async function POST(request: Request) {
   try {
-    const { content, author, postId } = await request.json();
+    const { content, authorId, postId } = await request.json();
 
-    if (!content || !author || !postId) {
+    if (!content || !authorId || !postId) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
     const newReply = await prisma.reply.create({
       data: {
         content,
-        author,
-        postId,
+        author: {
+          connect: { id: authorId },
+        },
+        post: {
+          connect: { id: postId },
+        },
+      },
+      include: {
+        author: true,
       },
     });
 
@@ -27,15 +34,22 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const { id, author, userRole } = await request.json();
+    const { id, authorId, userRole } = await request.json();
 
-    if (!id || !author || !userRole) {
+    if (!id || !authorId || !userRole) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
-    const reply = await prisma.reply.findUnique({ where: { id } });
+    const reply = await prisma.reply.findUnique({
+      where: { id },
+      include: { author: true },
+    });
 
-    if (reply?.author !== author && userRole !== 'ADMIN') {
+    if (!reply) {
+      return NextResponse.json({ error: 'Reply not found' }, { status: 404 });
+    }
+
+    if (reply.authorId !== authorId && userRole !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 

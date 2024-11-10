@@ -8,7 +8,7 @@ generator client {
 }
 
 model Thread {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String
   description String  @default("")
   posts       Post[]
@@ -18,11 +18,12 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String
   content   String
-  author    String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
   threadId  Int
   thread    Thread   @relation(fields: [threadId], references: [id])
-  replies   Reply[]  // Relation to Reply model
+  replies   Reply[]
   upvotes   Int      @default(0)
   downvotes Int      @default(0)
   votes     Vote[]
@@ -31,9 +32,10 @@ model Post {
 model Reply {
   id        Int      @id @default(autoincrement())
   content   String
-  author    String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
-  postId    Int      // Foreign key to Post model
+  postId    Int      
   post      Post     @relation(fields: [postId], references: [id])
 }
 
@@ -64,6 +66,8 @@ model User {
   votes     Vote[]
   provider  String?
   events    Event[]
+  posts     Post[]   
+  replies   Reply[]  
 }
 
 model BugReport {
@@ -78,7 +82,7 @@ model BugReport {
   expected    String
   actual      String
   severity    String
-  status      String   @default("Open") // Add this line
+  status      String   @default("Open")
   createdAt   DateTime @default(now())
 }
 

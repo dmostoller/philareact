@@ -6,20 +6,11 @@ import { DeleteIcon, UpvoteIcon, DownvoteIcon } from './icons';
 import PrimaryButton from '../components/PrimaryButton';
 import { toast } from 'sonner';
 import UserAvatar from './UserAvatar';
-import { Reply } from '@/lib/types';
+import { Post } from '@/lib/types';
 import { MessageCircleReply, MessageCircleX } from 'lucide-react';
 
 interface PostCardProps {
-  post: {
-    id: number;
-    title: string;
-    content: string;
-    author: string;
-    upvotes: number;
-    downvotes: number;
-    createdAt: string;
-    replies: Reply[];
-  };
+  post: Post;
   onDeletePost: (postId: number) => void;
 }
 
@@ -116,7 +107,7 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
         },
         body: JSON.stringify({
           content: replyContent,
-          author: session.user.name,
+          authorId: session.user.id,
           postId: post.id,
         }),
       });
@@ -157,7 +148,7 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
                 },
                 body: JSON.stringify({
                   id: post.id,
-                  author: session.user.name,
+                  authorId: session.user.id,
                   userRole: session.user.role,
                 }),
               });
@@ -213,7 +204,7 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
                 },
                 body: JSON.stringify({
                   id: replyId,
-                  author: session.user.name,
+                  authorId: session.user.id,
                   userRole: session.user.role,
                 }),
               });
@@ -253,15 +244,15 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
     <div className="bg-dark-slate-900 border border-dark-slate-700 p-6 shadow-md rounded-lg mx-0 mb-4 relative">
       <div className="flex items-start gap-4">
         <span className="block md:hidden">
-          <UserAvatar name={post.author} size={50} />
+          {post.author?.name && <UserAvatar name={post.author.name} size={50} />}
         </span>
         <span className="hidden md:block">
-          <UserAvatar name={post.author} size={75} />
+          {post.author?.name && <UserAvatar name={post.author.name} size={75} />}
         </span>
         <div className="flex-1">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold mb-2 mr-8">{post.title}</h2>
-            {(session?.user.name === post.author || session?.user.role === 'ADMIN') && (
+            {(session?.user.name === post.author?.name || session?.user.role === 'ADMIN') && (
               <button onClick={handleDeletePost} className="text-dark-slate-300 hover:text-dark-slate-200">
                 <DeleteIcon />
               </button>
@@ -269,7 +260,7 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
           </div>
           <p className="mb-4 mr-2">{post.content}</p>
           <p className="text-sm text-dark-slate-300">
-            Posted by <span className="font-medium">{post.author}</span> on{' '}
+            Posted by <span className="font-medium">{post.author?.name || 'Unknown User'}</span> on{' '}
             {new Date(post.createdAt).toLocaleString()}
           </p>
           {session && (
@@ -295,15 +286,15 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
           replies.map((reply) => (
             <div key={reply.id} className="bg-dark-slate-700 p-4 rounded-lg mb-2 relative">
               <div className="flex items-start gap-3">
-                <UserAvatar name={reply.author} size={45} />
+                <UserAvatar name={reply.author?.name || 'Unknown User'} size={45} />
                 <div className="flex-1">
                   <p>{reply.content}</p>
                   <p className="text-xs text-dark-slate-400 mt-1">
-                    Replied by <span className="font-medium">{reply.author}</span> on{' '}
+                    Replied by <span className="font-medium">{reply.author?.name || 'Unknown User'}</span> on{' '}
                     {new Date(reply.createdAt).toLocaleString()}
                   </p>
                 </div>
-                {(session?.user.name === reply.author || session?.user.role === 'ADMIN') && (
+                {(session?.user.name === reply.author?.name || session?.user.role === 'ADMIN') && (
                   <button
                     onClick={() => handleDeleteReply(reply.id)}
                     className="text-dark-slate-400 hover:text-dark-slate-300"

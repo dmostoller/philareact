@@ -239,12 +239,12 @@ const ForumPage: React.FC = () => {
 
   return (
     <div className="container mx-auto px-2 py-6 md:py-12">
-      <h2 className="text-3xl font-bold mb-6 text-center">
+      <h1 className="text-3xl font-bold mb-6 text-center">
         <div className="flex justify-center items-center">
           <MessageCircleIcon />
           Community Forum
         </div>
-      </h2>
+      </h1>
       <div className="flex flex-col md:flex-row md:space-x-6">
         {/* Threads Section */}
         <div className="w-full md:w-1/3 mb-8 md:mb-0">

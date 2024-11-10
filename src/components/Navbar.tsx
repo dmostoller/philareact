@@ -1,31 +1,38 @@
-"use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { LogIn } from "lucide-react";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { HomeIcon } from "./icons/home";
-import { usePathname } from "next/navigation";
-import { SettingsGearIcon } from "./icons";
-import { LogoutIcon } from "./icons/logout";
-import { MenuIcon } from "./icons/menu";
-import { GripIcon } from "./icons/grip";
-import ThemePopup from "./ThemePopup";
+'use client';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { LogIn } from 'lucide-react';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import { HomeIcon } from './icons/home';
+import { usePathname } from 'next/navigation';
+import { UserIcon } from './icons/user';
+import { LogoutIcon } from './icons/logout';
+import { MenuIcon } from './icons/menu';
+import { GripIcon } from './icons/grip';
+import ThemePopup from './ThemePopup';
 
 const Navbar = () => {
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const [isThemePopupOpen, setIsThemePopupOpen] = useState(false);
+  const router = useRouter();
 
-  const [currentTheme, setCurrentTheme] = useState("default");
+  const [currentTheme, setCurrentTheme] = useState('default');
 
   useEffect(() => {
-    setCurrentTheme(document.documentElement.getAttribute("data-theme") || "default");
+    setCurrentTheme(document.documentElement.getAttribute('data-theme') || 'default');
   }, []);
 
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/');
+  };
+
   const handleThemeChange = (theme: string) => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
     document.cookie = `theme=${theme}; path=/; max-age=31536000`;
     setCurrentTheme(theme);
   };
@@ -40,7 +47,7 @@ const Navbar = () => {
 
   const linkClasses = (href: string) =>
     `mx-2 text-dark-slate-100 hover:border-b-2 hover:border-dark-slate-50 hover:text-dark-slate-50 hover:px-4 py-1 transition-all duration-300 font-semibold ${
-      isActive(href) ? "border-b-2 border-dark-slate-50 px-4 text-dark-slate-50" : ""
+      isActive(href) ? 'border-b-2 border-dark-slate-50 px-4 text-dark-slate-50' : ''
     }`;
 
   const mobileLinkClasses = (href: string) => `${linkClasses(href)} text-3xl my-4 block`;
@@ -61,19 +68,19 @@ const Navbar = () => {
           </button>
         </div>
         <div className="hidden md:flex align-center space-x-8">
-          <Link href="/news" className={linkClasses("/news")}>
+          <Link href="/news" className={linkClasses('/news')}>
             Articles
           </Link>
-          <Link href="/events" className={linkClasses("/events")}>
+          <Link href="/events" className={linkClasses('/events')}>
             Events
           </Link>
-          <Link href="/forum" className={linkClasses("/forum")}>
+          <Link href="/forum" className={linkClasses('/forum')}>
             Forum
           </Link>
-          <Link href="/resources" className={linkClasses("/resources")}>
+          <Link href="/resources" className={linkClasses('/resources')}>
             Resources
           </Link>
-          <Link href="/contribute" className={linkClasses("/contribute")}>
+          <Link href="/contribute" className={linkClasses('/contribute')}>
             Contribute
           </Link>
         </div>
@@ -81,9 +88,9 @@ const Navbar = () => {
           {session ? (
             <>
               <Link href="/dashboard">
-                <SettingsGearIcon />
+                <UserIcon />
               </Link>
-              <div onClick={() => signOut()} className="cursor-pointer">
+              <div onClick={handleSignOut} className="cursor-pointer">
                 <LogoutIcon />
               </div>
             </>
@@ -115,25 +122,25 @@ const Navbar = () => {
       </div>
       {isMobileMenuOpen && (
         <div className="md:hidden bg-dark-slate-900 p-4 absolute top-18 left-0 w-full h-[calc(100vh-2rem)] z-50 flex flex-col items-center justify-center">
-          <Link href="/news" className={mobileLinkClasses("/news")} onClick={toggleMobileMenu}>
+          <Link href="/news" className={mobileLinkClasses('/news')} onClick={toggleMobileMenu}>
             Articles
           </Link>
-          <Link href="/events" className={mobileLinkClasses("/events")} onClick={toggleMobileMenu}>
+          <Link href="/events" className={mobileLinkClasses('/events')} onClick={toggleMobileMenu}>
             Events
           </Link>
-          <Link href="/forum" className={mobileLinkClasses("/forum")} onClick={toggleMobileMenu}>
+          <Link href="/forum" className={mobileLinkClasses('/forum')} onClick={toggleMobileMenu}>
             Forum
           </Link>
-          <Link href="/resources" className={mobileLinkClasses("/resources")} onClick={toggleMobileMenu}>
+          <Link href="/resources" className={mobileLinkClasses('/resources')} onClick={toggleMobileMenu}>
             Resources
           </Link>
-          <Link href="/contribute" className={mobileLinkClasses("/contribute")} onClick={toggleMobileMenu}>
+          <Link href="/contribute" className={mobileLinkClasses('/contribute')} onClick={toggleMobileMenu}>
             Contribute
           </Link>
-          {status === "authenticated" ? (
+          {status === 'authenticated' ? (
             <div className="flex flex-row items-center space-x-4 mt-8">
               <Link href="/dashboard" onClick={toggleMobileMenu}>
-                <SettingsGearIcon />
+                <UserIcon />
               </Link>
               <div
                 onClick={() => {
@@ -148,7 +155,7 @@ const Navbar = () => {
           ) : (
             <button
               onClick={() => {
-                signIn();
+                handleSignOut();
                 toggleMobileMenu();
               }}
               className="mt-8 px-2 button text-dark-slate-100 hover:border-b-2 hover:border-foreground hover:text-foreground hover:px-4 flex

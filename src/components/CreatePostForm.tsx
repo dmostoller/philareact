@@ -47,7 +47,7 @@ export default function CreatePostForm({
           title,
           content,
           threadId,
-          author: session.user.name, // Use session's user name as the author
+          authorId: session.user.id, // Use session's user name as the author
         }),
       });
 

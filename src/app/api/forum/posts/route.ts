@@ -6,7 +6,12 @@ export async function GET() {
   try {
     const posts = await prisma.post.findMany({
       include: {
-        replies: true, // Include replies in the response
+        author: true, // Include author details
+        replies: {
+          include: {
+            author: true, // Include reply author details
+          },
+        },
       },
     });
     return NextResponse.json(posts);
@@ -18,9 +23,9 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { title, content, author, threadId } = await request.json();
+    const { title, content, authorId, threadId } = await request.json();
 
-    if (!title || !content || !author || !threadId) {
+    if (!title || !content || !authorId || !threadId) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
@@ -28,10 +33,15 @@ export async function POST(request: Request) {
       data: {
         title,
         content,
-        author,
+        author: {
+          connect: { id: authorId },
+        },
         thread: {
           connect: { id: threadId },
         },
+      },
+      include: {
+        author: true, // Include author details in response
       },
     });
 
@@ -44,19 +54,22 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const { id, author, userRole } = await request.json();
+    const { id, authorId, userRole } = await request.json();
 
-    if (!id || !author || !userRole) {
+    if (!id || !authorId || !userRole) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
-    const post = await prisma.post.findUnique({ where: { id } });
+    const post = await prisma.post.findUnique({
+      where: { id },
+      include: { author: true },
+    });
 
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
 
-    if (userRole !== 'ADMIN' && post.author !== author) {
+    if (userRole !== 'ADMIN' && post.authorId !== authorId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
