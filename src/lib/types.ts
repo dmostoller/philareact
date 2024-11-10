@@ -19,5 +19,6 @@ export interface Post {
 export interface Thread {
   id: number;
   title: string;
+  description: string;
   posts: Post[];
 }

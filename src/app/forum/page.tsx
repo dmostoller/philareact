@@ -1,52 +1,55 @@
-"use client";
+'use client';
 
-import { useSession } from "next-auth/react";
-import { useEffect, useState, useMemo } from "react";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import PostCard from "../../components/PostCard";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { MessageCircleIcon } from "@/components/icons/message";
-import { CalendarArrowDown, CalendarArrowUp, ChevronRight } from "lucide-react";
-import { toast } from "sonner";
-import { Post, Thread } from "@/lib/types";
-import ThreadList from "../../components/ThreadList";
-import ThreadForm from "../../components/ThreadForm";
-import { Drawer } from "vaul";
+import { useSession } from 'next-auth/react';
+import { useEffect, useState, useMemo } from 'react';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import PostCard from '../../components/PostCard';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { MessageCircleIcon } from '@/components/icons/message';
+import { CalendarArrowDown, CalendarArrowUp, ChevronRight } from 'lucide-react';
+import { toast } from 'sonner';
+import { Post, Thread } from '@/lib/types';
+import ThreadList from '../../components/ThreadList';
+import ThreadForm from '../../components/ThreadForm';
+import { Drawer } from 'vaul';
+import PrimaryButton from '../../components/PrimaryButton';
 
-const CreatePostForm = dynamic(() => import("../../components/CreatePostForm"), { ssr: false });
+const CreatePostForm = dynamic(() => import('../../components/CreatePostForm'), { ssr: false });
 
 const ForumPage: React.FC = () => {
   const [threads, setThreads] = useState<Thread[]>([]);
   const [selectedThread, setSelectedThread] = useState<Thread | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const { data: session } = useSession();
-  const isAdmin = session?.user?.role === "ADMIN";
+  const isAdmin = session?.user?.role === 'ADMIN';
   const [loading, setLoading] = useState(true);
   const [threadsLoading, setThreadsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sortDescending, setSortDescending] = useState(true);
+  const [showThreadForm, setShowThreadForm] = useState(false);
 
   useEffect(() => {
     const fetchThreads = async () => {
       setThreadsLoading(true);
       try {
-        const response = await fetch("/api/forum/threads");
+        const response = await fetch('/api/forum/threads');
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setThreads(data);
-        if (data.length > 0) {
-          setSelectedThread(data[0]);
-          setPosts(data[0].posts || []);
+        const sortedThreads: Thread[] = data.sort((a: Thread, b: Thread) => a.id - b.id);
+        setThreads(sortedThreads);
+        if (sortedThreads.length > 0) {
+          setSelectedThread(sortedThreads[0]);
+          setPosts(sortedThreads[0].posts || []);
         }
       } catch (error) {
         if (error instanceof Error) {
-          setError(error.message || "Error fetching threads");
+          setError(error.message || 'Error fetching threads');
         } else {
-          setError("Error fetching threads");
+          setError('Error fetching threads');
         }
       } finally {
         setLoading(false);
@@ -57,18 +60,18 @@ const ForumPage: React.FC = () => {
     fetchThreads();
   }, []);
 
-  const handleCreateThread = async (title: string) => {
+  const handleCreateThread = async (title: string, description: string) => {
     try {
-      const response = await fetch("/api/forum/threads", {
-        method: "POST",
+      const response = await fetch('/api/forum/threads', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title })
+        body: JSON.stringify({ title, description }),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
 
       const newThread = await response.json();
@@ -76,95 +79,105 @@ const ForumPage: React.FC = () => {
       setSelectedThread(newThread);
       setPosts([]);
     } catch (error) {
-      console.error("Error creating thread:", error);
-      toast.error("An error occurred while creating the thread.");
+      console.error('Error creating thread:', error);
+      toast.error('An error occurred while creating the thread.');
     }
   };
 
   const handleDeleteThread = async (threadId: number) => {
     if (!session) {
-      toast.error("You must be logged in to delete a thread.");
+      toast.error('You must be logged in to delete a thread.');
       return;
     }
 
     const promise = new Promise((resolve, reject) => {
-      const confirmToast = toast("Delete Thread?", {
-        description: "Are you sure you want to delete this thread and all its posts?",
+      const confirmToast = toast('Delete Thread?', {
+        description: 'Are you sure you want to delete this thread and all its posts?',
         action: {
-          label: "Delete",
+          label: 'Delete',
           onClick: async () => {
             try {
               const response = await fetch(`/api/forum/threads`, {
-                method: "DELETE",
+                method: 'DELETE',
                 headers: {
-                  "Content-Type": "application/json"
+                  'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                   id: threadId,
-                  userRole: session.user.role
-                })
+                  userRole: session.user.role,
+                }),
               });
 
               if (!response.ok) {
-                throw new Error("Network response was not ok");
+                throw new Error('Network response was not ok');
               }
 
               // Update local state
-              setThreads(threads.filter(thread => thread.id !== threadId));
+              setThreads(threads.filter((thread) => thread.id !== threadId));
               if (selectedThread?.id === threadId) {
                 setSelectedThread(null);
                 setPosts([]);
               }
 
-              resolve("deleted");
+              resolve('deleted');
               toast.dismiss(confirmToast);
             } catch (error) {
-              console.error("Error deleting thread:", error);
+              console.error('Error deleting thread:', error);
               reject(error);
               toast.dismiss(confirmToast);
             }
-          }
+          },
         },
         cancel: {
-          label: "Cancel",
+          label: 'Cancel',
           onClick: () => {
-            reject(new Error("Action canceled"));
+            reject(new Error('Action canceled'));
             toast.dismiss(confirmToast);
-          }
-        }
+          },
+        },
       });
     });
 
     toast.promise(promise, {
-      loading: "Deleting thread...",
-      success: "Thread deleted successfully",
-      error: error => (error.message === "Action canceled" ? "Action canceled" : "Failed to delete thread")
+      loading: 'Deleting thread...',
+      success: 'Thread deleted successfully',
+      error: (error) => (error.message === 'Action canceled' ? 'Action canceled' : 'Failed to delete thread'),
     });
   };
 
-  const handleUpdateThread = async (threadId: number, newTitle: string) => {
+  const handleUpdateThread = async (threadId: number, title: string, description: string) => {
     try {
       const response = await fetch(`/api/forum/threads`, {
-        method: "PATCH",
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: threadId, title: newTitle, userRole: session?.user?.role })
+        body: JSON.stringify({
+          id: threadId,
+          title,
+          description,
+          userRole: session?.user?.role,
+        }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update thread");
+        throw new Error('Failed to update thread');
       }
 
-      // Update threads list with new title
-      setThreads(threads.map(thread => (thread.id === threadId ? { ...thread, title: newTitle } : thread)));
+      // Update threads list
+      setThreads(
+        threads.map((thread) => (thread.id === threadId ? { ...thread, title, description } : thread))
+      );
+
+      // Update selected thread
       if (selectedThread?.id === threadId) {
-        setSelectedThread(prev => (prev ? { ...prev, title: newTitle } : null));
+        setSelectedThread((prev) => (prev ? { ...prev, title, description } : null));
       }
-      toast.success("Thread updated successfully");
+
+      toast.success('Thread updated successfully');
     } catch (error) {
-      console.error("Error updating thread:", error);
-      toast.error("Failed to update thread");
+      console.error('Error updating thread:', error);
+      toast.error('Failed to update thread');
     }
   };
 
@@ -174,18 +187,20 @@ const ForumPage: React.FC = () => {
         ...newPost,
         replies: newPost.replies || [],
         upvotes: newPost.upvotes || 0,
-        downvotes: newPost.downvotes || 0
+        downvotes: newPost.downvotes || 0,
       };
       const updatedPosts = [...posts, postWithReplies];
       setPosts(updatedPosts);
       setThreads(
-        threads.map(thread => (thread.id === selectedThread.id ? { ...thread, posts: updatedPosts } : thread))
+        threads.map((thread) =>
+          thread.id === selectedThread.id ? { ...thread, posts: updatedPosts } : thread
+        )
       );
     }
   };
 
   const handleDeletePost = (postId: number) => {
-    setPosts(posts.filter(post => post.id !== postId));
+    setPosts(posts.filter((post) => post.id !== postId));
   };
 
   const sortPosts = (postsToSort: Post[], descending: boolean) => {
@@ -201,13 +216,13 @@ const ForumPage: React.FC = () => {
     try {
       const response = await fetch(`/api/forum/threads/${thread.id}`);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
       const data = await response.json();
       setPosts(sortPosts(data.posts, sortDescending));
     } catch (error) {
-      console.error("Error fetching posts:", error);
-      setError("Error fetching posts");
+      console.error('Error fetching posts:', error);
+      setError('Error fetching posts');
     } finally {
       setLoading(false);
     }
@@ -243,7 +258,24 @@ const ForumPage: React.FC = () => {
               handleDeleteThread={handleDeleteThread}
               handleUpdateThread={handleUpdateThread}
             />
-            {isAdmin && <ThreadForm onSubmit={handleCreateThread} placeholder="New thread title" />}
+            {isAdmin && (
+              <div className="space-y-4">
+                <PrimaryButton onClick={() => setShowThreadForm(!showThreadForm)} className="w-full">
+                  {showThreadForm ? 'Cancel' : 'Create New Channel'}
+                </PrimaryButton>
+                {showThreadForm && (
+                  <ThreadForm onSubmit={handleCreateThread} placeholder="New channel name" />
+                )}
+              </div>
+            )}
+            {!session && (
+              <div className="text-center mt-4">
+                <Link href="/api/auth/signin" className="text-blue-400 hover:text-blue-300">
+                  Sign in
+                </Link>{' '}
+                to use the forum.
+              </div>
+            )}
           </div>
 
           {/* Mobile Drawer */}
@@ -261,16 +293,33 @@ const ForumPage: React.FC = () => {
                     threads={threads}
                     threadsLoading={threadsLoading}
                     selectedThread={selectedThread}
-                    handleThreadSelect={thread => {
+                    handleThreadSelect={(thread) => {
                       handleThreadSelect(thread);
-                      const drawerClose = document.querySelector("[data-vaul-drawer-close]");
+                      const drawerClose = document.querySelector('[data-vaul-drawer-close]');
                       if (drawerClose instanceof HTMLElement) drawerClose.click();
                     }}
                     isAdmin={isAdmin}
                     handleDeleteThread={handleDeleteThread}
                     handleUpdateThread={handleUpdateThread}
                   />
-                  {isAdmin && <ThreadForm onSubmit={handleCreateThread} placeholder="New channel name" />}
+                  {isAdmin && (
+                    <div className="space-y-4">
+                      <PrimaryButton onClick={() => setShowThreadForm(!showThreadForm)} className="w-full">
+                        {showThreadForm ? 'Cancel' : 'Create New Channel'}
+                      </PrimaryButton>
+                      {showThreadForm && (
+                        <ThreadForm onSubmit={handleCreateThread} placeholder="New channel name" />
+                      )}
+                    </div>
+                  )}
+                  {!session && (
+                    <div className="text-center mt-4">
+                      <Link href="/api/auth/signin" className="text-blue-400 hover:text-blue-300">
+                        Sign in
+                      </Link>{' '}
+                      to use the forum.
+                    </div>
+                  )}
                 </div>
               </Drawer.Content>
             </Drawer.Portal>
@@ -280,25 +329,31 @@ const ForumPage: React.FC = () => {
         {/* Posts Section */}
         <div className="w-full md:w-2/3">
           {selectedThread && (
-            <div className="flex flex-col sm:flex-row items-center sm:justify-between mb-6 gap-4">
-              <h2 className="text-xl border border-dark-slate-700 p-4 bg-dark-slate-900 rounded-lg font-bold w-full sm:flex-1 text-center">
-                {selectedThread.title}
-              </h2>
-              <button
-                onClick={() => setSortDescending(!sortDescending)}
-                className="w-full sm:w-auto p-4 bg-dark-slate-900 border border-dark-slate-700 hover:bg-dark-slate-700 rounded-lg flex items-center justify-center sm:justify-start gap-2 text-lg font-normal"
-              >
-                {sortDescending ? (
-                  <>
-                    Newest First <CalendarArrowDown />
-                  </>
-                ) : (
-                  <>
-                    Oldest First <CalendarArrowUp />
-                  </>
-                )}
-              </button>
-            </div>
+            <>
+              <div className="flex flex-col sm:flex-row items-center sm:justify-between mb-4 gap-4">
+                <h2 className="text-xl border border-dark-slate-700 p-4 bg-dark-slate-900 rounded-lg font-bold w-full sm:flex-1 text-center">
+                  {selectedThread.title}
+                </h2>
+                <button
+                  onClick={() => setSortDescending(!sortDescending)}
+                  className="w-full sm:w-auto p-4 bg-dark-slate-900 border border-dark-slate-700 hover:bg-dark-slate-700 rounded-lg flex items-center justify-center sm:justify-start gap-2 text-lg font-normal"
+                >
+                  {sortDescending ? (
+                    <>
+                      <CalendarArrowDown /> Newest First
+                    </>
+                  ) : (
+                    <>
+                      <CalendarArrowUp /> Oldest First
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <div className="relative text-md font-medium text-center border border-dark-slate-700 p-4 bg-dark-slate-900 rounded-lg w-full mb-4">
+                {selectedThread.description || 'No description provided'}
+              </div>
+            </>
           )}
           {session && selectedThread && (
             <div>
@@ -353,12 +408,12 @@ const ForumPage: React.FC = () => {
                     <p className="text-gray-400">
                       No posts in this thread yet.
                       {session ? (
-                        " Start the discussion!"
+                        ' Start the discussion!'
                       ) : (
                         <>
                           <Link href="/api/auth/signin" className="text-blue-400 hover:text-blue-300 ml-1">
                             Sign in
-                          </Link>{" "}
+                          </Link>{' '}
                           to start the discussion!
                         </>
                       )}

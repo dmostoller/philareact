@@ -1,8 +1,8 @@
 // ThreadCard.tsx
-import React, { useState, useRef, useEffect } from "react";
-import { Thread } from "@/lib/types";
-import { DeleteIcon, EditIcon } from "./icons";
-import ThreadForm from "./ThreadForm";
+import React, { useState, useRef, useEffect } from 'react';
+import { Thread } from '@/lib/types';
+import { DeleteIcon, EditIcon } from './icons';
+import ThreadForm from './ThreadForm';
 
 interface ThreadCardProps {
   thread: Thread;
@@ -10,10 +10,10 @@ interface ThreadCardProps {
   onSelect: (thread: Thread) => void;
   isAdmin: boolean;
   onDelete: (threadId: number) => void;
-  onUpdate: (threadId: number, newName: string) => void;
+  onUpdate: (threadId: number, newName: string, newDescription: string) => void;
 }
 
-const ThreadCard: React.FC<ThreadCardProps> = props => {
+const ThreadCard: React.FC<ThreadCardProps> = (props) => {
   const { thread, isSelected, onSelect, isAdmin, onDelete, onUpdate } = props;
   const [isEditing, setIsEditing] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
@@ -21,9 +21,9 @@ const ThreadCard: React.FC<ThreadCardProps> = props => {
   useEffect(() => {
     if (isSelected && ref.current) {
       ref.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "center"
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
       });
     }
   }, [isSelected]);
@@ -44,21 +44,27 @@ const ThreadCard: React.FC<ThreadCardProps> = props => {
     setIsEditing(true);
   };
 
-  const handleUpdate = (newTitle: string) => {
-    onUpdate(thread.id, newTitle);
+  const handleUpdate = (newTitle: string, newDescription?: string) => {
+    onUpdate(thread.id, newTitle, newDescription || '');
     setIsEditing(false);
   };
 
   return (
     <li
       ref={ref}
-      className={`flex-shrink-0 w-[80vw] md:w-full relative mb-0 md:mb-2 cursor-pointer px-4 py-6 md:py-4 font-semibold rounded border
-        ${isSelected ? "bg-dark-slate-600 border-dark-slate-500" : "bg-dark-slate-900 border-dark-slate-600"}
+      className={`flex-shrink-0 md:w-full relative mb-0 md:mb-2 cursor-pointer px-4 py-6 md:py-4 font-semibold rounded border
+        ${isSelected ? 'bg-dark-slate-600 border-dark-slate-500' : 'bg-dark-slate-900 border-dark-slate-600'}
       `}
       onClick={handleClick}
     >
       {isEditing ? (
-        <ThreadForm onSubmit={handleUpdate} initialValue={thread.title} placeholder="Edit thread title" />
+        <ThreadForm
+          onSubmit={handleUpdate}
+          initialValue={thread.title}
+          onCancel={() => setIsEditing(false)}
+          initialDescription={thread.description}
+          placeholder="Edit thread title"
+        />
       ) : (
         <>
           <div className="truncate pr-10">{thread.title}</div>

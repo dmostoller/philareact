@@ -1,7 +1,7 @@
 // ThreadList.tsx
-import { Thread } from "@/lib/types";
-import ThreadCard from "./ThreadCard";
-import Skeleton from "react-loading-skeleton";
+import { Thread } from '@/lib/types';
+import ThreadCard from './ThreadCard';
+import Skeleton from 'react-loading-skeleton';
 
 interface ThreadListProps {
   threads: Thread[];
@@ -10,7 +10,7 @@ interface ThreadListProps {
   handleThreadSelect: (thread: Thread) => void;
   isAdmin: boolean;
   handleDeleteThread: (threadId: number) => void;
-  handleUpdateThread: (threadId: number, newTitle: string) => void;
+  handleUpdateThread: (threadId: number, newTitle: string, newDescription: string) => void;
 }
 
 const ThreadList: React.FC<ThreadListProps> = ({
@@ -20,7 +20,7 @@ const ThreadList: React.FC<ThreadListProps> = ({
   handleThreadSelect,
   isAdmin,
   handleDeleteThread,
-  handleUpdateThread
+  handleUpdateThread,
 }) => {
   return (
     <ul className="mb-4 space-y-2">
@@ -37,7 +37,7 @@ const ThreadList: React.FC<ThreadListProps> = ({
           ))
       ) : (
         <>
-          {threads.map(thread => (
+          {threads.map((thread) => (
             <ThreadCard
               key={thread.id}
               thread={thread}
