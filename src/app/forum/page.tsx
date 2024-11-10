@@ -282,7 +282,7 @@ const ForumPage: React.FC = () => {
           {/* Mobile Drawer */}
           <Drawer.Root>
             <Drawer.Trigger className="md:hidden w-full bg-dark-slate-900 border border-dark-slate-600 rounded-lg p-4 flex items-center justify-between">
-              <span>Show Channels</span>
+              <span className="font-semibold">Show Channels</span>
               <ChevronRight />
             </Drawer.Trigger>
             <Drawer.Portal>
@@ -320,41 +320,6 @@ const ForumPage: React.FC = () => {
                       </Link>{' '}
                       to use the forum.
                     </div>
-                  )}
-                </div>
-              </Drawer.Content>
-            </Drawer.Portal>
-          </Drawer.Root>
-        </div>
-
-        <div>
-          <Drawer.Root>
-            <Drawer.Trigger>
-              <span
-                className="fixed bottom-6 right-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-3 rounded-full shadow-lg 
-               hover:bg-dark-slate-200 hover:text-dark-slate-900
-               transition-colors duration-200 z-50"
-              >
-                <MessageCirclePlus aria-hidden="true" />
-              </span>
-            </Drawer.Trigger>
-            <Drawer.Portal>
-              <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-              <Drawer.Content className="bg-dark-slate-900 flex flex-col rounded-t-[10px] h-[96vh] mt-24 fixed bottom-0 left-0 right-0">
-                <div className="p-4 bg-dark-slate-800 rounded-t-[10px] flex-1 overflow-y-auto">
-                  <div className="w-12 h-1.5 bg-dark-slate-600 rounded-full mx-auto mb-8" />
-                  {selectedThread ? (
-                    <CreatePostForm
-                      onPostCreated={(post) => {
-                        handlePostCreated(post);
-                        const drawerClose = document.querySelector('[data-vaul-drawer-close]');
-                        if (drawerClose instanceof HTMLElement) drawerClose.click();
-                      }}
-                      threadId={selectedThread.id}
-                      defaultOpen={true}
-                    />
-                  ) : (
-                    <div className="text-center text-dark-slate-400">Please select a channel first</div>
                   )}
                 </div>
               </Drawer.Content>
@@ -461,14 +426,48 @@ const ForumPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <div>
+        <Drawer.Root>
+          <Drawer.Trigger>
+            <span
+              className="fixed bottom-6 right-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-4 rounded-full shadow-lg 
+               hover:bg-dark-slate-200 hover:text-dark-slate-900
+               transition-colors duration-200 z-50"
+            >
+              <MessageCirclePlus aria-hidden="true" size={32} />
+            </span>
+          </Drawer.Trigger>
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+            <Drawer.Content className="bg-dark-slate-900 flex flex-col rounded-t-[10px] h-[96vh] mt-24 fixed bottom-0 left-0 right-0">
+              <div className="p-4 bg-dark-slate-800 rounded-t-[10px] flex-1 overflow-y-auto">
+                <div className="w-12 h-1.5 bg-dark-slate-600 rounded-full mx-auto mb-8" />
+                {selectedThread ? (
+                  <CreatePostForm
+                    onPostCreated={(post) => {
+                      handlePostCreated(post);
+                      const drawerClose = document.querySelector('[data-vaul-drawer-close]');
+                      if (drawerClose instanceof HTMLElement) drawerClose.click();
+                    }}
+                    threadId={selectedThread.id}
+                    defaultOpen={true}
+                  />
+                ) : (
+                  <div className="text-center text-dark-slate-400">Please select a channel first</div>
+                )}
+              </div>
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
+      </div>
       <button
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-6 left-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-3 rounded-full shadow-lg 
+        className="fixed bottom-6 left-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-4 rounded-full shadow-lg 
                hover:bg-dark-slate-200 hover:text-dark-slate-900
                transition-colors duration-200 z-50"
       >
-        <ChevronsUp aria-hidden="true" />
+        <ChevronsUp aria-hidden="true" size={32} />
       </button>
     </div>
   );

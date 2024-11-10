@@ -105,7 +105,7 @@ export default function CreatePostForm({
         />
         <textarea
           placeholder="What's on your mind?"
-          rows={4}
+          rows={3}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           className="w-full p-2 mb-4 border rounded bg-dark-slate-950 border-dark-slate-700 focus:outline-none focus:ring focus:ring-gray-500"
