@@ -22,19 +22,46 @@ const Navbar = () => {
   const [currentTheme, setCurrentTheme] = useState('default');
 
   useEffect(() => {
-    setCurrentTheme(document.documentElement.getAttribute('data-theme') || 'default');
+    // Get theme from cookie
+    const cookieTheme = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('theme='))
+      ?.split('=')[1];
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = (theme: string) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      setCurrentTheme(theme);
+      document.cookie = `theme=${theme}; path=/; max-age=31536000`;
+    };
+
+    const handleSystemThemeChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      if (!cookieTheme) {
+        const systemTheme = e.matches ? 'default' : 'light';
+        applyTheme(systemTheme);
+      }
+    };
+
+    if (cookieTheme) {
+      applyTheme(cookieTheme);
+    } else {
+      handleSystemThemeChange(mediaQuery);
+    }
+
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+    return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
   }, []);
+
+  const handleThemeChange = (theme: string) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.cookie = `theme=${theme}; path=/; max-age=31536000`;
+    setCurrentTheme(theme);
+  };
 
   const handleSignOut = async () => {
     await signOut();
     router.push('/');
-  };
-
-  const handleThemeChange = (theme: string) => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    document.cookie = `theme=${theme}; path=/; max-age=31536000`;
-    setCurrentTheme(theme);
   };
 
   const toggleMobileMenu = () => {
