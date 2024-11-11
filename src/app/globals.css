@@ -17,7 +17,7 @@
   --slate-900: #0f0f0f; /* Significantly lightened */
   --slate-950: #000000; /* Kept as true black */
 }
-[data-theme="greyscale"] {
+[data-theme='greyscale'] {
   --slate-50: #f6f6f6;
   --slate-100: #e7e7e7;
   --slate-200: #d1d1d1;
@@ -30,22 +30,22 @@
   --slate-900: #3d3d3d;
   --slate-950: #262626;
 }
-[data-theme="light"] {
+[data-theme='light'] {
   --background: #ffffff;
   --foreground: #0a0a0a;
-  --slate-50: #262626;
-  --slate-100: #3d3d3d;
-  --slate-200: #454545;
-  --slate-300: #4f4f4f;
-  --slate-400: #5d5d5d;
-  --slate-500: #737373;
-  --slate-600: #888888;
-  --slate-700: #b0b0b0;
-  --slate-800: #d1d1d1;
-  --slate-900: #e7e7e7;
-  --slate-950: #f6f6f6;
+  --slate-50: #404040; /* Darkest */
+  --slate-100: #525252;
+  --slate-200: #6e6e6e;
+  --slate-300: #8c8c8c;
+  --slate-400: #a8a8a8;
+  --slate-500: #c0c0c0;
+  --slate-600: #d4d4d4;
+  --slate-700: #e2e2e2;
+  --slate-800: #ebebeb;
+  --slate-900: #f4f4f4;
+  --slate-950: #fafafa;
 }
-[data-theme="alpine"] {
+[data-theme='alpine'] {
   --slate-50: #fafde9;
   --slate-100: #f2fbc6;
   --slate-200: #edf98f;
@@ -58,7 +58,7 @@
   --slate-900: #6d5416;
   --slate-950: #3f2d09;
 }
-[data-theme="forest-green"] {
+[data-theme='forest-green'] {
   --slate-50: #edffee;
   --slate-100: #d6ffda;
   --slate-200: #afffb7;
@@ -71,7 +71,7 @@
   --slate-900: #085f13;
   --slate-950: #003607;
 }
-[data-theme="cobalt"] {
+[data-theme='cobalt'] {
   --slate-50: #edf7ff;
   --slate-100: #d6ecff;
   --slate-200: #b5dfff;
@@ -84,7 +84,7 @@
   --slate-900: #0f42a9;
   --slate-950: #0e265d;
 }
-[data-theme="cognac"] {
+[data-theme='cognac'] {
   --slate-50: #fff6ec;
   --slate-100: #ffebd4;
   --slate-200: #ffd3a8;
@@ -97,7 +97,7 @@
   --slate-900: #7f260f;
   --slate-950: #451005;
 }
-[data-theme="purple"] {
+[data-theme='purple'] {
   --slate-50: #fbf2ff;
   --slate-100: #f6e2ff;
   --slate-200: #edcaff;
@@ -110,7 +110,7 @@
   --slate-900: #6a00a3;
   --slate-950: #49007c;
 }
-[data-theme="persian-green"] {
+[data-theme='persian-green'] {
   --slate-50: #effefc;
   --slate-100: #c7fff8;
   --slate-200: #90fff1;
@@ -131,22 +131,22 @@
   }
 }
 @font-face {
-  font-family: "Geist";
-  src: url("./fonts/GeistVF.woff") format("woff");
+  font-family: 'Geist';
+  src: url('./fonts/GeistVF.woff') format('woff');
   font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "GeistMono";
-  src: url("./fonts/GeistMonoVF.woff") format("woff");
+  font-family: 'GeistMono';
+  src: url('./fonts/GeistMonoVF.woff') format('woff');
   font-weight: 100 900;
   font-style: normal;
 }
 
 body {
   @apply bg-dark-slate-900 text-dark-slate-50 dark:bg-dark-slate-900 dark:text-dark-slate-50;
-  font-family: "Geist", Arial, Helvetica, sans-serif;
+  font-family: 'Geist', Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
