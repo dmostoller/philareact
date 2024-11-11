@@ -71,7 +71,7 @@ export default function RootLayout({
         <ClientSessionProvider>
           <div className="flex flex-col min-h-screen dark">
             <Navbar />
-            <main className="dark flex-grow bg-dark-slate-950 md:pt-[72px]">{children}</main>
+            <main className="dark flex-grow bg-dark-slate-950 pt-[72px]">{children}</main>
             <Footer />
           </div>
           <BugButton />

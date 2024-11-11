@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { LogIn } from 'lucide-react';
@@ -16,8 +16,11 @@ const Navbar = () => {
   const { data: session, status } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [isThemePopupOpen, setIsThemePopupOpen] = useState(false);
   const router = useRouter();
+  const [isVisible, setIsVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   const [currentTheme, setCurrentTheme] = useState('default');
 
@@ -53,6 +56,20 @@ const Navbar = () => {
     return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+
+      // Show navbar if scrolling up or at top of page
+      setIsVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos]);
+
   const handleThemeChange = (theme: string) => {
     document.documentElement.setAttribute('data-theme', theme);
     document.cookie = `theme=${theme}; path=/; max-age=31536000`;
@@ -80,19 +97,30 @@ const Navbar = () => {
   const mobileLinkClasses = (href: string) => `${linkClasses(href)} text-3xl my-4 block`;
 
   return (
-    <nav className="p-4 shadow bg-dark-slate-900 transition-all duration-300 ease-in-out md:fixed md:top-0 md:left-0 md:right-0 md:w-full md:z-50">
+    <nav
+      className={`p-4 shadow bg-dark-slate-900 transition-all duration-300 ease-in-out fixed top-0 left-0 right-0 md:w-full z-50 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
+    >
       <div className="container mx-auto w-full flex justify-between items-center">
         <div className="flex items-start">
           <Link href="/" onClick={() => isMobileMenuOpen && setIsMobileMenuOpen(false)}>
             <HomeIcon />
           </Link>
-          <button
-            onClick={() => setIsThemePopupOpen(true)}
-            className="transition-colors"
-            aria-label="Open theme selector"
-          >
-            <GripIcon />
-          </button>
+          <div className="relative">
+            <button
+              ref={buttonRef}
+              onClick={() => setIsThemePopupOpen(true)}
+              className="transition-colors"
+              aria-label="Open theme selector"
+            >
+              <GripIcon />
+            </button>
+            <ThemePopup
+              isOpen={isThemePopupOpen}
+              onClose={() => setIsThemePopupOpen(false)}
+              onSelectTheme={handleThemeChange}
+              currentTheme={currentTheme}
+            />
+          </div>
         </div>
         <div className="hidden md:flex align-center space-x-8">
           <Link href="/news" className={linkClasses('/news')}>
@@ -194,12 +222,6 @@ const Navbar = () => {
           )}
         </div>
       )}
-      <ThemePopup
-        isOpen={isThemePopupOpen}
-        onClose={() => setIsThemePopupOpen(false)}
-        onSelectTheme={handleThemeChange}
-        currentTheme={currentTheme}
-      />
     </nav>
   );
 };

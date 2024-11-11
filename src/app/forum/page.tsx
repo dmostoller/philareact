@@ -465,7 +465,7 @@ const ForumPage: React.FC = () => {
       <button
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-6 left-6 block md:hidden bg-dark-slate-600 text-dark-slate-100 p-4 rounded-full shadow-lg 
+        className="fixed bottom-6 left-6 block md:hidden bg-dark-slate-950 text-dark-slate-100 p-4 rounded-full shadow-lg 
                hover:bg-dark-slate-200 hover:text-dark-slate-900 z-[999] min-w-[48px] min-h-[48px]"
       >
         <ChevronsUp aria-hidden="true" size={32} />

@@ -17,7 +17,7 @@
   --slate-900: #0f0f0f; /* Significantly lightened */
   --slate-950: #000000; /* Kept as true black */
 }
-[data-theme='greyscale'] {
+[data-theme='grey'] {
   --slate-50: #f6f6f6;
   --slate-100: #e7e7e7;
   --slate-200: #d1d1d1;
@@ -58,7 +58,7 @@
   --slate-900: #6d5416;
   --slate-950: #3f2d09;
 }
-[data-theme='forest-green'] {
+[data-theme='forest'] {
   --slate-50: #edffee;
   --slate-100: #d6ffda;
   --slate-200: #afffb7;
@@ -110,7 +110,7 @@
   --slate-900: #6a00a3;
   --slate-950: #49007c;
 }
-[data-theme='persian-green'] {
+[data-theme='teal'] {
   --slate-50: #effefc;
   --slate-100: #c7fff8;
   --slate-200: #90fff1;
