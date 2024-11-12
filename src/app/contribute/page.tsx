@@ -1,17 +1,17 @@
-"use client";
-import { Suspense } from "react";
-import Link from "next/link";
-import PrimaryButton from "../../components/PrimaryButton";
-import CopyablePre from "../../components/CopyablePre";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import { GitPullRequestIcon } from "@/components/icons/gitpull";
+'use client';
+import { Suspense } from 'react';
+import Link from 'next/link';
+import PrimaryButton from '../../components/PrimaryButton';
+import CopyablePre from '../../components/CopyablePre';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import { GitPullRequestIcon } from '@/components/icons/gitpull';
 
 const ContributePageContent = () => {
   return (
     <div className="container mx-auto py-4 px-2 mt-2">
       <div className="mx-auto max-w-5xl px-4 md:px-6 py-4 md:py-6 relative">
         <h1 className="text-3xl font-bold mb-6 md:mb-8 pr-16 md:pr-0 text-center">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-start md:items-center">
             <GitPullRequestIcon />
             Contribute to PhilaReact
           </div>

@@ -1,7 +1,6 @@
 // layout.tsx
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import Head from 'next/head';
 import Script from 'next/script';
 import './globals.css';
 import Navbar from './../components/Navbar';
@@ -28,6 +27,20 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 export const metadata: Metadata = {
   title: 'PhilaReact',
   description: 'A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.',
+  viewport: 'width=device-width, initial-scale=1',
+  openGraph: {
+    type: 'website',
+    title: 'PhilaReact',
+    description: 'A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.',
+    url: 'https://philareact.org',
+    images: [{ url: 'https://philareact.com/og-image.png' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PhilaReact',
+    description: 'A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.',
+    images: ['https://philareact.com/PhilaReact-Background-3.png', 'https://philareact.com/og-image.png'],
+  },
 };
 
 export default function RootLayout({
@@ -41,32 +54,6 @@ export default function RootLayout({
 
   return (
     <html lang="en" data-theme={initialTheme}>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="PhilaReact" />
-        <meta
-          property="og:description"
-          content="A community for React, Next.js, and JavaScript enthusiasts in Philadelphia."
-        />
-        <meta property="og:url" content="https://philareact.org" />
-        <meta property="og:image" content="https://philareact.com/og-image.png" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="PhilaReact" />
-        <meta
-          name="twitter:description"
-          content="A community for React, Next.js, and JavaScript enthusiasts in Philadelphia."
-        />
-        <meta name="twitter:image" content="https://philareact.com/PhilaReact-Background-3.png" />
-        <meta
-          name="twitter:description"
-          content="A community for React, Next.js, and JavaScript enthusiasts in Philadelphia."
-        />
-        <meta name="twitter:image" content="https://philareact.com/og-image.png" />
-      </Head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClientSessionProvider>
           <div className="flex flex-col min-h-screen dark">

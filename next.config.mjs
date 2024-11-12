@@ -9,16 +9,6 @@ const nextConfig = {
       'i0.wp.com',
     ],
   },
-  webpack: (config) => {
-    return config;
-  },
-  webpackDevMiddleware: (config) => {
-    return config;
-  },
-  server: {
-    hostname: '0.0.0.0',
-    port: 3000,
-  },
 };
 
 export default nextConfig;
