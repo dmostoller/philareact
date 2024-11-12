@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Drawer } from "vaul";
+import { Drawer } from 'vaul';
 
 export default function VaulDrawer() {
   return (

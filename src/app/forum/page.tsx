@@ -287,7 +287,7 @@ const ForumPage: React.FC = () => {
             </Drawer.Trigger>
             <Drawer.Portal>
               <Drawer.Overlay className="fixed inset-0 bg-black/40 z-[60]" />
-              <Drawer.Content className="bg-dark-slate-900 flex flex-col rounded-t-[10px] h-[96vh] mt-24 fixed bottom-0 left-0 right-0 z-[60]">
+              <Drawer.Content className="bg-dark-slate-900 flex flex-col rounded-t-[10px] h-[89vh] mt-24 fixed bottom-0 left-0 right-0 z-[60]">
                 <div className="p-4 bg-dark-slate-800 rounded-t-[10px] flex-1 overflow-y-auto">
                   <div className="w-12 h-1.5 bg-dark-slate-600 rounded-full mx-auto mb-8" />
                   <ThreadList
@@ -441,7 +441,7 @@ const ForumPage: React.FC = () => {
           </Drawer.Trigger>
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 bg-black/40 z-[60]" />
-            <Drawer.Content className="bg-dark-slate-900 flex flex-col rounded-t-[10px] h-[96vh] mt-24 fixed bottom-0 left-0 right-0 z-[60]">
+            <Drawer.Content className="bg-dark-slate-900 flex flex-col rounded-t-[10px] h-[89vh] mt-24 fixed bottom-0 left-0 right-0 z-[60]">
               <div className="p-4 bg-dark-slate-800 rounded-t-[10px] flex-1 overflow-y-auto">
                 <div className="w-12 h-1.5 bg-dark-slate-600 rounded-full mx-auto mb-8" />
                 {selectedThread ? (
