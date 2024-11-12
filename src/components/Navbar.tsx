@@ -176,7 +176,7 @@ const Navbar = () => {
         </div>
       </div>
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-dark-slate-900 p-4 absolute top-18 left-0 w-full h-[calc(100vh-2rem)] z-50 flex flex-col items-center justify-center">
+        <div className="md:hidden bg-dark-slate-900 p-4 absolute top-18 left-0 w-full h-[calc(100vh-2rem)] z-50 flex flex-col items-center pt-32">
           <Link href="/news" className={mobileLinkClasses('/news')} onClick={toggleMobileMenu}>
             Articles
           </Link>
