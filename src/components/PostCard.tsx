@@ -7,14 +7,16 @@ import PrimaryButton from '../components/PrimaryButton';
 import { toast } from 'sonner';
 import UserAvatar from './UserAvatar';
 import { Post } from '@/lib/types';
-import { MessageCircleReply, MessageCircleX } from 'lucide-react';
+import { MessageCircleReply, MessageCircleX, Pin, PinOff } from 'lucide-react';
 
 interface PostCardProps {
   post: Post;
   onDeletePost: (postId: number) => void;
+  onPinToggle?: (postId: number) => void;
 }
 
-export default function PostCard({ post, onDeletePost }: PostCardProps) {
+export default function PostCard(props: PostCardProps) {
+  const { post, onDeletePost, onPinToggle } = props;
   const [replies, setReplies] = useState(post.replies || []);
   const [replyContent, setReplyContent] = useState('');
   const { data: session } = useSession();
@@ -240,6 +242,39 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
     });
   };
 
+  const handlePinToggle = async () => {
+    if (!session) {
+      toast.error('You must be logged in.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/forum/pin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          postId: post.id,
+          userRole: session.user.role,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const updatedPost = await response.json();
+      if (onPinToggle) {
+        onPinToggle(post.id);
+      }
+      toast.success(updatedPost.pinned ? 'Post pinned successfully' : 'Post unpinned successfully');
+    } catch (error) {
+      console.error('Error toggling pin:', error);
+      toast.error('Failed to toggle pin status');
+    }
+  };
+
   return (
     <div className="bg-dark-slate-900 border border-dark-slate-700 p-6 shadow-md rounded-lg mx-0 mb-4 relative">
       <div className="flex items-start gap-4">
@@ -252,11 +287,29 @@ export default function PostCard({ post, onDeletePost }: PostCardProps) {
         <div className="flex-1">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold mb-2 mr-8">{post.title}</h2>
-            {(session?.user.name === post.author?.name || session?.user.role === 'ADMIN') && (
-              <button onClick={handleDeletePost} className="text-dark-slate-300 hover:text-dark-slate-200">
-                <DeleteIcon />
-              </button>
+            {post.pinned && (
+              <div className="absolute top-2 right-2 bg-dark-slate-500 text-dark-slate-900 px-2 py-1 rounded-full text-xs font-bold">
+                Pinned
+              </div>
             )}
+            <div className="flex items-center gap-2">
+              {session?.user.role === 'ADMIN' && (
+                <button
+                  onClick={handlePinToggle}
+                  className={`text-dark-slate-300 hover:text-dark-slate-200 ${
+                    post.pinned ? 'text-yellow-500' : ''
+                  }`}
+                  title={post.pinned ? 'Unpin post' : 'Pin post'}
+                >
+                  {post.pinned ? <PinOff size={28} /> : <Pin size={28} />}
+                </button>
+              )}
+              {(session?.user.name === post.author?.name || session?.user.role === 'ADMIN') && (
+                <button onClick={handleDeletePost} className="text-dark-slate-300 hover:text-dark-slate-200">
+                  <DeleteIcon />
+                </button>
+              )}
+            </div>
           </div>
           <p className="mb-4 mr-2">{post.content}</p>
           <p className="text-sm text-dark-slate-300">

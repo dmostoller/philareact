@@ -206,9 +206,17 @@ const ForumPage: React.FC = () => {
 
   const sortPosts = (postsToSort: Post[], descending: boolean) => {
     return [...postsToSort].sort((a, b) => {
+      // First sort by pinned status
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+
+      // Then sort by date
       const comparison = new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       return descending ? comparison : -comparison;
     });
+  };
+  const handlePinToggle = (postId: number) => {
+    setPosts(posts.map((post) => (post.id === postId ? { ...post, pinned: !post.pinned } : post)));
   };
 
   const handleThreadSelect = async (thread: Thread) => {
@@ -404,7 +412,12 @@ const ForumPage: React.FC = () => {
                 {sortedPosts.length > 0 ? (
                   <>
                     {sortedPosts.map((post: Post) => (
-                      <PostCard key={post.id} post={post} onDeletePost={handleDeletePost} />
+                      <PostCard
+                        key={post.id}
+                        post={post}
+                        onDeletePost={handleDeletePost}
+                        onPinToggle={handlePinToggle}
+                      />
                     ))}
                   </>
                 ) : (

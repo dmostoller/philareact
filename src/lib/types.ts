@@ -22,6 +22,7 @@ export interface Post {
   downvotes: number;
   createdAt: string;
   replies: Reply[];
+  pinned: boolean;
 }
 
 export interface Thread {

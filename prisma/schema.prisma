@@ -27,6 +27,7 @@ model Post {
   upvotes   Int      @default(0)
   downvotes Int      @default(0)
   votes     Vote[]
+  pinned    Boolean  @default(false)
 }
 
 model Reply {
