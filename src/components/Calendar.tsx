@@ -180,11 +180,16 @@ const EventCalendar: React.FC = () => {
       </div>
       {session ? (
         <>
-          <div className="flex justify-center items-center text-center mt-8 px-4">
-            <a href="https://technical.ly/events/" target="_blank" rel="noreferrer">
-              <button className="text-white bg-[#37f084] mr-4  py-2 px-4 rounded-lg flex items-center justify-center hover:bg-[#2fd99b] transition">
+          <div className="flex flex-col md:flex-row justify-center items-center text-center mt-8 px-4 space-y-4 md:space-y-0">
+            <a
+              href="https://technical.ly/events/"
+              target="_blank"
+              rel="noreferrer"
+              className="w-full md:w-auto order-1 md:order-1"
+            >
+              <button className="w-full text-white bg-[#37f084] md:mr-4 py-2 px-4 rounded-lg flex items-center justify-center hover:bg-[#2fd99b] transition">
                 <Image
-                  src="/technically-logo-icon.svg"
+                  src="https://philareact.s3.us-east-2.amazonaws.com/technically-logo-icon.svg"
                   alt="Technicaly Logo"
                   width={20}
                   height={20}
@@ -193,15 +198,22 @@ const EventCalendar: React.FC = () => {
                 Visit Technical.ly
               </button>
             </a>
-            <PrimaryButton onClick={toggleFormVisibility}>
-              {showForm ? 'Hide Event Form' : 'Create an Event'}
-            </PrimaryButton>
-            <a href="https://www.eventbrite.com/o/philareact-102755209461" target="_blank" rel="noreferrer">
-              <button className="text-white bg-[#F05537] ml-4 py-2 px-4 rounded-lg items-center justify-center hover:bg-[#D9472F] transition">
+            <a
+              href="https://www.eventbrite.com/o/philareact-102755209461"
+              target="_blank"
+              rel="noreferrer"
+              className="w-full md:w-auto order-2 md:order-3"
+            >
+              <button className="w-full text-white bg-[#F05537] md:ml-4 py-2 px-4 rounded-lg flex items-center justify-center hover:bg-[#D9472F] transition">
                 <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />
                 Visit Eventbrite
               </button>
             </a>
+            <div className="w-full md:w-auto order-3 md:order-2 md:ml-4">
+              <PrimaryButton onClick={toggleFormVisibility} className="w-full">
+                {showForm ? 'Hide Event Form' : 'Create an Event'}
+              </PrimaryButton>
+            </div>
           </div>
           {showForm && (
             <div className="mx-4 md:max-w-3xl lg:max-w-2xl md:mx-auto p-4 border border-dark-slate-600 bg-dark-slate-900 rounded-lg mt-4">

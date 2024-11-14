@@ -33,13 +33,16 @@ export const metadata: Metadata = {
     title: 'PhilaReact',
     description: 'A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.',
     url: 'https://philareact.org',
-    images: [{ url: 'https://philareact.com/og-image.png' }],
+    images: [{ url: 'https://philareact.s3.us-east-2.amazonaws.com/og-image.png' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'PhilaReact',
     description: 'A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.',
-    images: ['https://philareact.com/PhilaReact-Background-3.png', 'https://philareact.com/og-image.png'],
+    images: [
+      'https://philareact.s3.us-east-2.amazonaws.com/PhilaReact-Background-3.png',
+      'https://philareact.s3.us-east-2.amazonaws.com/og-image.png',
+    ],
   },
 };
 

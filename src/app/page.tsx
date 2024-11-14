@@ -18,7 +18,7 @@ const Home = () => {
       <section className="relative min-h-[80vh] w-full overflow-hidden">
         <div className="mx-auto max-w-screen-2xl absolute inset-0 w-full h-full mt-1">
           <Image
-            src="/PhilaReact-Background-3.png"
+            src="https://philareact.s3.us-east-2.amazonaws.com/PhilaReact-Background-3.png"
             alt="PhilaReact Background"
             fill
             className="object-cover"
@@ -43,7 +43,7 @@ const Home = () => {
             Philadelphia | React Community
           </p>
           <p className="fade-in-up fade-in-up-delay-2 text-lg md:text-xl mx-2 md:mx-0 mt-6 max-w-xl text-white text-center md:text-left font-medium [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
-            A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.
+            A community for React, Next.js, and JavaScript enthusiasts in Philadelphia and beyond.
           </p>
           <div className="fade-in-up fade-in-up-delay-2 mt-8 space-x-4">
             {session ? (
@@ -85,7 +85,7 @@ const Home = () => {
               <li>Develop the website and build the community space together</li>
             </ul>
             <p className="text-lg px-4 text-center">
-              Ready to connect with fellow React developers in Philadelphia? Join our growing community today!
+              Ready to connect with fellow React developers? Join our growing community today!
             </p>
           </div>
         </div>

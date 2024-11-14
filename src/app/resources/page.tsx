@@ -6,58 +6,55 @@ const resources = [
     title: 'React Documentation',
     description: 'The official React documentation for learning and reference.',
     link: 'https://reactjs.org/docs/getting-started.html',
-    logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg', // Placeholder for the React logo
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/React-icon.svg', // Placeholder for the React logo
   },
   {
     title: 'Next.js Documentation',
     description: 'The official Next.js documentation for building full-stack React applications.',
     link: 'https://nextjs.org/docs',
-    logoSrc: '/nextjs-icon-svgrepo-com.svg',
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/nextjs-icon-svgrepo-com.svg',
   },
   {
     title: 'JavaScript Info',
     description: 'A comprehensive guide to modern JavaScript, from basics to advanced topics.',
     link: 'https://javascript.info/',
-    logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png', // Placeholder for the JS logo
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/JavaScript-logo.png', // Placeholder for the JS logo
   },
   {
     title: 'Tailwind CSS Documentation',
     description: 'Learn how to style your apps quickly with the utility-first Tailwind CSS framework.',
     link: 'https://tailwindcss.com/docs',
-    logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg', // Placeholder for the Tailwind logo
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/Tailwind_CSS_Logo.svg', // Placeholder for the Tailwind logo
   },
   {
     title: 'Frontend Masters',
     description: 'Advanced JavaScript and front-end development training from industry experts.',
     link: 'https://frontendmasters.com/',
-    logoSrc:
-      'https://imgs.search.brave.com/S05vYKgqxiTYj8fjXx994CzZQJrwxJttMy-B6ys_zNM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dC5icmFuZGZldGNo/LmlvL2lkUFlTUWs2/LVovaWRleGk4N0Vo/Ty5qcGVnP3VwZGF0/ZWQ9MTcwOTQxNjI2/MjM5MQ', // Placeholder for the Frontend Masters logo
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/idexi87EhO.webp', // Placeholder for the Frontend Masters logo
   },
   {
     title: 'MDN Web Docs',
     description: 'The best resource for documentation on HTML, CSS, and JavaScript from Mozilla.',
     link: 'https://developer.mozilla.org/',
-    logoSrc:
-      'https://imgs.search.brave.com/_fG2eHXeKsLxlJievxDa6CtV6EFEUT4d76xsaNIHLzI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL00vbWRuLWxv/Z28tNkRCOUIwMDkz/Ri1zZWVrbG9nby5j/b20ucG5n', // Placeholder for the MDN logo
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/mdn-logo-6DB9B0093F-seeklogo.com.webp', // Placeholder for the MDN logo
   },
   {
     title: 'CSS-Tricks',
     description: 'A comprehensive resource for CSS, JavaScript, and front-end development tips.',
     link: 'https://css-tricks.com/',
-    logoSrc: '/CSS-Tricks-star.png', // Placeholder for the CSS-Tricks logo
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/CSS-Tricks-star.png',
   },
   {
     title: 'Wes Bos Tutorials',
     description: 'High-quality tutorials on modern JavaScript, React, and more by Wes Bos.',
     link: 'https://wesbos.com/',
-    logoSrc:
-      'https://imgs.search.brave.com/_Lu2CnhwnGW_UFtNfrHSgapAkMkEvPgBVCX4Cv0z9FI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jb3Vy/c2VzLndlc2Jvcy5j/b20vaW1hZ2VzL3dl/c2Jvcy1sb2dvLnBu/Zw', // Placeholder for the Wes Bos logo
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/wesbos-logo.webp', // Placeholder for the Wes Bos logo
   },
   {
     title: 'Egghead.io',
     description: 'Bite-sized video tutorials for learning React, JavaScript, and front-end development.',
     link: 'https://egghead.io/',
-    logoSrc: 'https://i0.wp.com/hiroko.io/wp-content/uploads/2020/08/egglogo.jpg?resize=300%2C300&ssl=1/', // Placeholder for the Egghead logo
+    logoSrc: 'https://philareact.s3.us-east-2.amazonaws.com/egglogo.webp', // Placeholder for the Egghead logo
   },
 ];
 
