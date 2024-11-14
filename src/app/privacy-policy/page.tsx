@@ -1,6 +1,6 @@
-import React from "react";
+export const revalidate = false;
 
-const PrivacyPolicy = () => {
+export default function PrivacyPolicy() {
   return (
     <div className="container mx-auto py-4 px-2">
       <div className="max-w-5xl mx-auto p-6">
@@ -17,22 +17,20 @@ const PrivacyPolicy = () => {
           collecting it and how it will be used.
         </p>
         <h2 className="text-xl font-bold mb-4">How We Use Information</h2>
-        <p className="mb-4">
-          We use the information we collect in various ways, including to:
-          <ul className="list-disc list-inside">
-            <li>Provide, operate, and maintain our website</li>
-            <li>Improve, personalize, and expand our website</li>
-            <li>Understand and analyze how you use our website</li>
-            <li>Develop new products, services, features, and functionality</li>
-            <li>
-              Communicate with you, either directly or through one of our partners, including for customer
-              service, to provide you with updates and other information relating to the website, and for
-              marketing and promotional purposes
-            </li>
-            <li>Send you emails</li>
-            <li>Find and prevent fraud</li>
-          </ul>
-        </p>
+        <p className="mb-4">We use the information we collect in various ways, including to:</p>
+        <ul className="list-disc list-inside mb-4">
+          <li>Provide, operate, and maintain our website</li>
+          <li>Improve, personalize, and expand our website</li>
+          <li>Understand and analyze how you use our website</li>
+          <li>Develop new products, services, features, and functionality</li>
+          <li>
+            Communicate with you, either directly or through one of our partners, including for customer
+            service, to provide you with updates and other information relating to the website, and for
+            marketing and promotional purposes
+          </li>
+          <li>Send you emails</li>
+          <li>Find and prevent fraud</li>
+        </ul>
         <h2 className="text-xl font-bold mb-4">Data Retention</h2>
         <p className="mb-4">
           We will retain your personal information only for as long as is necessary for the purposes set out
@@ -46,7 +44,7 @@ const PrivacyPolicy = () => {
         </p>
         <h2 className="text-xl font-bold mb-4">Contact Us</h2>
         <p className="mb-4">
-          If you have any questions about these Terms of Service, please contact us at{" "}
+          If you have any questions about these Terms of Service, please contact us at{' '}
           <a href="mailto:support@philareacy.org" className="hover:underline">
             support@philareact.org
           </a>
@@ -55,6 +53,4 @@ const PrivacyPolicy = () => {
       </div>
     </div>
   );
-};
-
-export default PrivacyPolicy;
+}

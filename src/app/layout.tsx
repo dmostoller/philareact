@@ -27,7 +27,6 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 export const metadata: Metadata = {
   title: 'PhilaReact',
   description: 'A community for React, Next.js, and JavaScript enthusiasts in Philadelphia.',
-  viewport: 'width=device-width, initial-scale=1',
   openGraph: {
     type: 'website',
     title: 'PhilaReact',
@@ -44,6 +43,11 @@ export const metadata: Metadata = {
       'https://philareact.s3.us-east-2.amazonaws.com/og-image.png',
     ],
   },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({

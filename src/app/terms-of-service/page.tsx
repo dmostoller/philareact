@@ -1,4 +1,5 @@
 import Link from 'next/link';
+export const revalidate = false;
 
 const TermsOfService = () => {
   return (
