@@ -187,7 +187,7 @@ const EventCalendar: React.FC = () => {
               rel="noreferrer"
               className="w-full md:w-auto order-1 md:order-1"
             >
-              <button className="w-full text-white bg-[#37f084] md:mr-4 py-2 px-4 rounded-lg flex items-center justify-center hover:bg-[#2fd99b] transition">
+              <button className="w-full text-white bg-gradient-to-b from-[#37f084] to-[#2fd99b] md:mr-4 py-2 px-4 rounded-lg flex items-center justify-center hover:from-[#32d877] hover:to-[#2ac088] transition">
                 <Image
                   src="https://philareact.s3.us-east-2.amazonaws.com/technically-logo-icon.svg"
                   alt="Technicaly Logo"
@@ -204,7 +204,7 @@ const EventCalendar: React.FC = () => {
               rel="noreferrer"
               className="w-full md:w-auto order-2 md:order-3"
             >
-              <button className="w-full text-white bg-[#F05537] md:ml-4 py-2 px-4 rounded-lg flex items-center justify-center hover:bg-[#D9472F] transition">
+              <button className="w-full text-white bg-gradient-to-b from-[#F05537] to-[#D9472F] md:ml-4 py-2 px-4 rounded-lg flex items-center justify-center hover:from-[#E04931] hover:to-[#C73F2A] transition">
                 <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />
                 Visit Eventbrite
               </button>
@@ -253,17 +253,22 @@ const EventCalendar: React.FC = () => {
           </div>
         </>
       ) : (
-        <div className="container w-full md:w-3/4 lg:w-2/3 mx-auto text-center p-4 border border-dark-slate-500 rounded-lg my-4">
+        <div className="container w-full md:w-3/4 lg:w-2/3 mx-auto text-center p-4 border border-dark-slate-500 rounded-lg">
           <p className="text-lg font-semibold">
             <Link href="/api/auth/signin" className="hover:underline ">
               Sign in to add events to the calendar
             </Link>
           </p>
-          <div className="flex justify-center items-center text-center mt-8 px-4">
-            <a href="https://technical.ly/events/" target="_blank" rel="noreferrer">
-              <button className="text-white bg-[#37f084] mr-4  py-2 px-4 rounded-lg flex items-center justify-center hover:bg-[#2fd99b] transition">
+          <div className="flex flex-col md:flex-row justify-center items-center text-center mt-8 px-4 space-y-4 md:space-y-0">
+            <a
+              href="https://technical.ly/events/"
+              target="_blank"
+              rel="noreferrer"
+              className="w-full md:w-auto"
+            >
+              <button className="w-full text-white bg-gradient-to-b from-[#37f084] to-[#2fd99b] md:mr-4 py-2 px-4 rounded-lg flex items-center justify-center hover:from-[#32d877] hover:to-[#2ac088] transition">
                 <Image
-                  src="/technically-logo-icon.svg"
+                  src="https://philareact.s3.us-east-2.amazonaws.com/technically-logo-icon.svg"
                   alt="Technicaly Logo"
                   width={20}
                   height={20}
@@ -272,8 +277,13 @@ const EventCalendar: React.FC = () => {
                 Visit Technical.ly
               </button>
             </a>
-            <a href="https://www.eventbrite.com/o/philareact-102755209461" target="_blank" rel="noreferrer">
-              <button className="text-white bg-[#F05537] ml-4 py-2 px-4 rounded-lg items-center justify-center hover:bg-[#D9472F] transition">
+            <a
+              href="https://www.eventbrite.com/o/philareact-102755209461"
+              target="_blank"
+              rel="noreferrer"
+              className="w-full md:w-auto"
+            >
+              <button className="w-full text-white bg-gradient-to-b from-[#F05537] to-[#D9472F] md:space-y-0 md:ml-4 py-2 px-4 rounded-lg items-center justify-center hover:from-[#E04931] hover:to-[#C73F2A] transition">
                 <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />
                 Visit Eventbrite
               </button>
